@@ -10,4 +10,8 @@ import javafx.scene.layout.Priority;
 
 public class PrimaryController {
 
+    @FXML
+    private void projectBtn() {
+
+    }
 }
