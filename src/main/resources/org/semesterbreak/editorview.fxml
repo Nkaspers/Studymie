@@ -1,33 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TreeView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.PrimaryController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.PrimaryController">
    <left>
       <VBox prefHeight="900.0" prefWidth="297.0" styleClass="left-bar" stylesheets="@editorview.css" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="50.0">
+            <HBox alignment="CENTER_LEFT" maxWidth="Infinity" prefHeight="50.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#projectBtn" prefWidth="100.0" styleClass="project-button" stylesheets="@editorview.css" text="Projekt" textFill="WHITE">
+                  <Button fx:id="projectButton" mnemonicParsing="false" onAction="#projectBtn" prefWidth="100.0" styleClass="project-button" stylesheets="@editorview.css" text="Projekt" textFill="WHITE">
                      <HBox.margin>
                         <Insets right="40.0" />
                      </HBox.margin></Button>
-                  <Button mnemonicParsing="false" prefWidth="32.0" styleClass="undo-button" stylesheets="@editorview.css" />
-                  <Button mnemonicParsing="false" prefWidth="32.0" styleClass="redo-button" stylesheets="@editorview.css" />
-                  <Button mnemonicParsing="false" prefWidth="32.0" styleClass="export-button" stylesheets="@editorview.css">
+                  <Button fx:id="undoButton" mnemonicParsing="false" maxWidth="Infinity" styleClass="undo-button" stylesheets="@editorview.css" />
+                  <Button fx:id="redoButton" mnemonicParsing="false" maxWidth="Infinity" styleClass="redo-button" stylesheets="@editorview.css" />
+                  <Button fx:id="exportButton" mnemonicParsing="false" maxWidth="Infinity" styleClass="export-button" stylesheets="@editorview.css">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -42,9 +32,9 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" spacing="25.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" styleClass="add-flashcard-button" stylesheets="@editorview.css" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" styleClass="add-stack-button" stylesheets="@editorview.css" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" styleClass="play-button" stylesheets="@editorview.css" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="addFlashcardButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" styleClass="add-flashcard-button" stylesheets="@editorview.css" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="addStackButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" styleClass="add-stack-button" stylesheets="@editorview.css" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="playButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="75.0" styleClass="play-button" stylesheets="@editorview.css" HBox.hgrow="ALWAYS" />
                </children></HBox>
             <GridPane>
               <columnConstraints>

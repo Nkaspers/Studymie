@@ -23,52 +23,112 @@
 }
 
 .undo-button {
-    -fx-background-image: url(icons/undo.png);
-    -fx-background-size: 25px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
     -fx-background-color: transparent;
+}
+
+.undo-button .svg{
+    -fx-fill: transparent;
+    -fx-stroke: #46BCFF;
+    -fx-stroke-width: 1.565;
+}
+
+.undo-button:hover{
+    -fx-background-color: #e3e3e3;
+}
+
+.undo-button:pressed{
+    -fx-background-color: #b5b5b5;
 }
 
 .redo-button {
-    -fx-background-image: url(icons/redo.png);
-    -fx-background-size: 25px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
     -fx-background-color: transparent;
+}
+
+.redo-button .svg{
+    -fx-fill: transparent;
+    -fx-stroke: #46BCFF;
+    -fx-stroke-width: 1.565;
+}
+
+.redo-button:hover{
+    -fx-background-color: #e3e3e3;
+}
+
+.redo-button:pressed{
+    -fx-background-color: #b5b5b5;
 }
 
 .export-button {
-    -fx-background-image: url(icons/export_arrow.png);
-    -fx-background-size: 25px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
     -fx-background-color: transparent;
+}
+
+.export-button .svg{
+    -fx-fill: #46BCFF;
+}
+
+.export-button:hover {
+    -fx-background-color: #e3e3e3;
+}
+
+.export-button:pressed {
+    -fx-background-color: #b5b5b5;
+}
+
+.add-flashcard-button{
+    -fx-background-color: transparent;
+
+}
+
+.add-flashcard-button .svg{
+    -fx-fill: white;
+    -fx-stroke-width: 1.57553;
+    -fx-stroke: #46BCFF;
+    -stroke-linecap: round;
+}
+
+.add-flashcard-button:hover{
+     -fx-background-color: #e3e3e3;
+ }
+
+.add-flashcard-button:pressed{
+    -fx-background-color: #b5b5b5;
 }
 
 .play-button{
-    -fx-background-image: url(icons/lernmodus_button.png);
-    -fx-background-size: 20px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
     -fx-background-color: transparent;
 }
 
+.play-button .svg {
+    -fx-fill: white;
+    -fx-stroke: #46BCFF;
+    -fx-stroke-width: 3;
+}
 
-.add-flashcard-button{
-    -fx-background-image: url(icons/add_flashcard.png);
-    -fx-background-size: 40px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-    -fx-background-color: transparent;
+.play-button:hover{
+    -fx-background-color: #e3e3e3;
+
+}.play-button:pressed{
+     -fx-background-color: #b5b5b5;
 }
 
 .add-stack-button{
-    -fx-background-image: url(icons/add_stack.png);
-    -fx-background-size: 40px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
     -fx-background-color: transparent;
+}
+
+.add-stack-button .svg{
+    -fx-fill: white;
+    -fx-stroke-width: 1.57553;
+    -fx-stroke: #46BCFF;
+    -stroke-linejoin: round;
+}
+
+.add-stack-button:hover{
+    -fx-background-color: #e3e3e3;
+
+}
+
+.add-stack-button:pressed {
+    -fx-background-color: #b5b5b5;
 }
 
 .duplicate-button{
