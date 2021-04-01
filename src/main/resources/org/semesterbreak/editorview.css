@@ -25,93 +25,23 @@
     -fx-border-color: #B6B6B6;
 }
 
-.undo-button {
+.undo-button, .redo-button, .export-button, .add-flashcard-button,
+.play-button, .add-stack-button, .duplicate-button, .preview-flashcard,
+.move-down-button, .move-up-button, .move-up-button
+{
     -fx-background-color: transparent;
 }
 
-.undo-button:hover{
+.undo-button:hover, .redo-button:hover, .export-button:hover,
+.add-flashcard-button:hover, .play-button:hover, .add-stack-button:hover,
+.move-down-button:hover, .move-up-button:hover, .duplicate-button:hover{
     -fx-background-color: #e3e3e3;
 }
 
-.undo-button:pressed{
+.undo-button:pressed, .redo-button:pressed, .export-button:pressed,
+.add-flashcard-button:pressed, .play-button:pressed, .add-stack-button:pressed,
+.move-down-button:pressed, .move-up-button:pressed, .duplicate-button:pressed {
     -fx-background-color: #b5b5b5;
-}
-
-.redo-button {
-    -fx-background-color: transparent;
-}
-
-.redo-button:hover{
-    -fx-background-color: #e3e3e3;
-}
-
-.redo-button:pressed{
-    -fx-background-color: #b5b5b5;
-}
-
-.export-button {
-    -fx-background-color: transparent;
-}
-
-.export-button:hover {
-    -fx-background-color: #e3e3e3;
-}
-
-.export-button:pressed {
-    -fx-background-color: #b5b5b5;
-}
-
-.add-flashcard-button{
-    -fx-background-color: transparent;
-
-}
-
-.add-flashcard-button:hover{
-     -fx-background-color: #e3e3e3;
- }
-
-.add-flashcard-button:pressed{
-    -fx-background-color: #b5b5b5;
-}
-
-.play-button{
-    -fx-background-color: transparent;
-}
-
-.play-button:hover{
-    -fx-background-color: #e3e3e3;
-
-}.play-button:pressed{
-     -fx-background-color: #b5b5b5;
-}
-
-.add-stack-button{
-    -fx-background-color: transparent;
-}
-
-.add-stack-button:hover{
-    -fx-background-color: #e3e3e3;
-
-}
-
-.add-stack-button:pressed {
-    -fx-background-color: #b5b5b5;
-}
-
-.duplicate-button{
-    -fx-background-color: transparent;
-}
-
-.preview-flashcard {
-    -fx-background-color: transparent;
-}
-
-.move-down-button{
-    -fx-background-color: transparent;
-}
-
-.move-up-button{
-    -fx-background-color: transparent;
 }
 
 .font-box {

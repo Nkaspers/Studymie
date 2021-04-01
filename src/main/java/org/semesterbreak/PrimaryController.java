@@ -15,6 +15,10 @@ public class PrimaryController {
     public Button redoButton;
     public Button exportButton;
     public Button projectButton;
+    public Button moveFlashcardUpButton;
+    public Button moveFlashcardDownButton;
+    public Button duplicateFlashcardButton;
+
 
 
     @FXML
@@ -26,11 +30,12 @@ public class PrimaryController {
             addStackButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/add_stack.svg"));
             playButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/play_button.svg"));
             addFlashcardButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/add_flashcard.svg"));
+            moveFlashcardDownButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/move_down.svg"));
+            moveFlashcardUpButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/move_up.svg"));
+            duplicateFlashcardButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/duplicate.svg"));
         } catch (JDOMException | IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @FXML
