@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class EditorUI {
+public class Utilities {
 
     public static Group getIconGroup(String filepath) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder();
@@ -24,10 +24,9 @@ public class EditorUI {
 
     private static SVGPath createPath(Element pathElement) {
         SVGPath path = new SVGPath();
-        path.setContent(pathElement.getAttributeValue("d"));
         StringBuilder attributesSb = new StringBuilder();
         for(Attribute attribute: pathElement.getAttributes()){
-            if(attribute.getName().equals("d")) continue;
+            if(attribute.getName().equals("d")) path.setContent(attribute.getValue());
             String string = "-fx-" + attribute.getName() + ":" + attribute.getValue() + ";";
             attributesSb.append(string);
         }

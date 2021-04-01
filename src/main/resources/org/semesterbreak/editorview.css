@@ -53,11 +53,18 @@
 }
 
 .font-color-box {
-    -fx-background-color: white;
+    -fx-background-color: transparent;
     -fx-background-radius: 0;
     -fx-background-insets: 1;
-    -fx-border-color: #B6B6B6;
     -fx-effect: dropshadow(gaussian, #d0d0d0, 5, 0, 0, 5);
+    -fx-color-label-visible: false;
+    -fx-color-rect-width: 55px;
+    -fx-color-rect-height: 30px;
+    -fx-color-rect-x: 30px;
+}
+
+.font-color-box > .choice-box{
+    -fx-background-color: transparent;
 }
 
 .font-size-box {
