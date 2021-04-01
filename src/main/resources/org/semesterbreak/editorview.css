@@ -107,9 +107,14 @@
 .tree-view {
     -fx-background-color: none;
 }
-
 .tree-view .tree-cell {
     -fx-background-color: #F3F3F3;
+    -fx-text-fill: black;
+}
+
+.tree-view .tree-cell:selected {
+    -fx-background-color: #e3e3e3;
+    -fx-text-fill: black;
 }
 
 .scroll {

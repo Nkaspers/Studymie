@@ -32,6 +32,9 @@ public class PrimaryController {
     public ToggleButton rightAlignButton;
     public Button addBulletListButton;
     public Button addNumberedListButton;
+    public TreeView<String> stacksTreeView;
+
+
 
 
     @FXML
@@ -64,6 +67,9 @@ public class PrimaryController {
 
         fontTypeCB.getItems().addAll(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
         fontTypeCB.setValue("Arial");
+
+        stacksTreeView.setRoot(getExampleTree());
+        stacksTreeView.setShowRoot(false);
     }
 
     @FXML
@@ -71,5 +77,35 @@ public class PrimaryController {
 
     }
 
+    public TreeItem<String> getExampleTree(){
+         TreeItem<String> project1 = new TreeItem<>("Projekt1");
+         try{
+
+         TreeItem<String> stack1 = new TreeItem<>("Stapel1",Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/stack_icon.svg"));
+         TreeItem<String> stack2 = new TreeItem<>("Stapel2",Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/stack_icon.svg"));
+
+            stack1.getChildren().addAll(
+                    new TreeItem<String>("Karte1", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
+                    new TreeItem<String>("Karte2", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
+                    new TreeItem<String>("Karte3", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
+                    new TreeItem<String>("Karte4", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg"))
+            );
+            stack2.getChildren().addAll(
+                    new TreeItem<String>("Karte1", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
+                    new TreeItem<String>("Karte2", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
+                    new TreeItem<String>("Karte3", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
+                    new TreeItem<String>("Karte4", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg"))
+            );
+
+             stack1.setExpanded(true);
+             stack2.setExpanded(true);
+             project1.getChildren().addAll(stack1,stack2);
+             return(project1);
+
+        } catch (JDOMException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
