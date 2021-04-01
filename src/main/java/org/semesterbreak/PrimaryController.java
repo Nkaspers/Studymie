@@ -1,8 +1,8 @@
 package org.semesterbreak;
 import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import org.jdom2.JDOMException;
 
@@ -25,6 +25,13 @@ public class PrimaryController {
     public ChoiceBox<String> fontTypeCB;
     public ColorPicker fontColorPicker;
     public ChoiceBox<Integer> fontSizeCB;
+    public Label projectNameLabel;
+    public Label activeFlashcardLabel;
+    public ToggleButton leftAlignButton;
+    public ToggleButton blockAlignButton;
+    public ToggleButton rightAlignButton;
+    public Button addBulletListButton;
+    public Button addNumberedListButton;
 
 
     @FXML
@@ -36,6 +43,13 @@ public class PrimaryController {
             addStackButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/add_stack.svg"));
             playButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/play_button.svg"));
             addFlashcardButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/add_flashcard.svg"));
+
+            leftAlignButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/text_left_align.svg"));
+            blockAlignButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/text_block_align.svg"));
+            rightAlignButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/text_right_align.svg"));
+            addBulletListButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/add_bullet_list.svg"));
+            addNumberedListButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/add_numbered_list.svg"));
+
             moveFlashcardDownButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/move_down.svg"));
             moveFlashcardUpButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/move_up.svg"));
             duplicateFlashcardButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/duplicate.svg"));

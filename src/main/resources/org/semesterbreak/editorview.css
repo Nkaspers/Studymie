@@ -58,7 +58,7 @@
     -fx-background-insets: 1;
     -fx-effect: dropshadow(gaussian, #d0d0d0, 5, 0, 0, 5);
     -fx-color-label-visible: false;
-    -fx-color-rect-width: 55px;
+    -fx-color-rect-width: 50px;
     -fx-color-rect-height: 30px;
     -fx-color-rect-x: 30px;
 }
@@ -90,7 +90,7 @@
 .bold-button:selected, .italic-button:selected, .underlined-button:selected, .left-align-button:selected, .block-align-button:selected, .right-align-button:selected, .add-numbered-list-button:pressed, .add-bullet-list-button:pressed{
     -fx-effect: none;
     -fx-background-color: #B6B6B6;
-    -fx-border-width: 1 1 1 1;
+
 }
 
 .editor-toolbar {

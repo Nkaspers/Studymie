@@ -60,35 +60,35 @@
                      </GridPane.margin></ChoiceBox>
                   <ColorPicker fx:id="fontColorPicker" prefHeight="30.0" prefWidth="70.0" styleClass="font-color-box" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets left="10.0" right="30.0" />
+                        <Insets left="10.0" right="35.0" />
                      </GridPane.margin></ColorPicker>
                   <ChoiceBox fx:id="fontSizeCB" prefHeight="30.0" prefWidth="65.0" styleClass="font-size-box" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3">
                      <children>
-                        <Button prefHeight="26.0" prefWidth="37.0" styleClass="add-bullet-list-button" HBox.hgrow="ALWAYS" />
-                        <Button prefHeight="26.0" prefWidth="40.0" styleClass="add-numbered-list-button" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="addBulletListButton" prefHeight="31.0" prefWidth="40.0" styleClass="add-bullet-list-button" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="addNumberedListButton" prefHeight="31.0" prefWidth="40.0" styleClass="add-numbered-list-button" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="176.0" spacing="10" GridPane.columnSpan="3" GridPane.rowIndex="2">
                      <children>
                         <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
-                           <ToggleButton maxWidth="Infinity" prefHeight="26.0" prefWidth="55.0" styleClass="bold-button" stylesheets="@editorview.css" text="B" HBox.hgrow="ALWAYS">
+                           <ToggleButton maxWidth="Infinity" prefHeight="31.0" prefWidth="43.0" styleClass="bold-button" stylesheets="@editorview.css" text="B" HBox.hgrow="ALWAYS">
                               <font>
                                  <Font name="System Bold" size="13.0" />
                               </font></ToggleButton>
-                           <ToggleButton maxWidth="Infinity" prefHeight="20.0" prefWidth="55.0" styleClass="underlined-button" stylesheets="@editorview.css" text="U" underline="true" HBox.hgrow="ALWAYS">
+                           <ToggleButton maxWidth="Infinity" prefHeight="31.0" prefWidth="43.0" styleClass="underlined-button" stylesheets="@editorview.css" text="U" underline="true" HBox.hgrow="ALWAYS">
                               <font>
                                  <Font name="System Bold" size="13.0" />
                               </font></ToggleButton>
-                           <ToggleButton maxWidth="Infinity" prefHeight="20.0" prefWidth="55.0" styleClass="italic-button" stylesheets="@editorview.css" text="/" HBox.hgrow="ALWAYS">
+                           <ToggleButton maxWidth="Infinity" prefHeight="31.0" prefWidth="43.0" styleClass="italic-button" stylesheets="@editorview.css" text="I" HBox.hgrow="ALWAYS">
                               <font>
-                                 <Font name="System Bold Italic" size="13.0" />
+                                 <Font name="Times New Roman Bold Italic" size="14.0" />
                               </font></ToggleButton>
                         </HBox>
                         <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
-                           <ToggleButton maxWidth="Infinity" prefHeight="20.0" styleClass="left-align-button" text="Button" HBox.hgrow="ALWAYS" />
-                           <ToggleButton maxWidth="Infinity" prefHeight="20.0" styleClass="block-align-button" text="Button" HBox.hgrow="ALWAYS" />
-                           <ToggleButton maxWidth="Infinity" prefHeight="20.0" styleClass="right-align-button" text="Button" HBox.hgrow="ALWAYS" />
+                           <ToggleButton fx:id="leftAlignButton" maxWidth="Infinity" prefHeight="31.0" prefWidth="42.0" styleClass="left-align-button" HBox.hgrow="ALWAYS" />
+                           <ToggleButton fx:id="blockAlignButton" maxWidth="Infinity" prefHeight="31.0" prefWidth="42.0" styleClass="block-align-button" HBox.hgrow="ALWAYS" />
+                           <ToggleButton fx:id="rightAlignButton" maxWidth="Infinity" prefHeight="31.0" prefWidth="42.0" styleClass="right-align-button" HBox.hgrow="ALWAYS" />
                         </HBox>
                      </children>
                   </HBox>
@@ -100,7 +100,7 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
             </GridPane>
-            <Label prefWidth="Infinity" style="-fx-border-width: 1 0 0 0; -fx-border-color: #B6B6B6;" text="Projekt Name">
+            <Label fx:id="projectNameLabel" prefWidth="Infinity" style="-fx-border-width: 1 0 0 0; -fx-border-color: #B6B6B6;" text="Projekt Name">
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
@@ -132,7 +132,7 @@
                   </StackPane>
                   <StackPane HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="3./8" />
+                        <Label fx:id="activeFlashcardLabel" text="3./8" />
                      </children>
                   </StackPane>
                </children>
