@@ -9,12 +9,15 @@
    <left>
       <VBox prefWidth="300.0" styleClass="left-bar" stylesheets="@editorview.css" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="50.0">
+            <HBox alignment="CENTER_LEFT" maxWidth="Infinity" prefHeight="50.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#projectBtn" prefWidth="100.0" styleClass="project-button" text="Projekt" textFill="WHITE" />
-                  <Button mnemonicParsing="false" prefWidth="32.0" styleClass="undo-button" />
-                  <Button mnemonicParsing="false" prefWidth="32.0" styleClass="redo-button" />
-                  <Button mnemonicParsing="false" prefWidth="32.0" styleClass="export-button">
+                  <Button fx:id="projectButton" mnemonicParsing="false" onAction="#projectBtn" prefWidth="100.0" styleClass="project-button" stylesheets="@editorview.css" text="Projekt" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets right="40.0" />
+                     </HBox.margin></Button>
+                  <Button fx:id="undoButton" mnemonicParsing="false" maxWidth="Infinity" styleClass="undo-button" stylesheets="@editorview.css" />
+                  <Button fx:id="redoButton" mnemonicParsing="false" maxWidth="Infinity" styleClass="redo-button" stylesheets="@editorview.css" />
+                  <Button fx:id="exportButton" mnemonicParsing="false" maxWidth="Infinity" styleClass="export-button" stylesheets="@editorview.css">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -29,12 +32,11 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" spacing="25.0" styleClass="editor-toolbar">
                <children>
-                  <Button prefHeight="35.0" prefWidth="75.0" styleClass="add-flashcard-button" HBox.hgrow="ALWAYS" />
-                  <Button prefHeight="35.0" prefWidth="75.0" styleClass="add-stack-button" HBox.hgrow="ALWAYS" />
-                  <Button prefHeight="35.0" prefWidth="75.0" styleClass="play-button" HBox.hgrow="ALWAYS" />
-               </children>
-            </HBox>
-            <GridPane alignment="CENTER" vgap="10.0" VBox.vgrow="NEVER">
+                  <Button fx:id="addFlashcardButton" prefHeight="35.0" prefWidth="75.0" styleClass="add-flashcard-button" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="addStackButton" prefHeight="35.0" prefWidth="75.0" styleClass="add-stack-button" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="playButton" prefHeight="35.0" prefWidth="75.0" styleClass="play-button" HBox.hgrow="ALWAYS" />
+               </children></HBox>
+            <GridPane>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" />
                 <ColumnConstraints hgrow="SOMETIMES" />

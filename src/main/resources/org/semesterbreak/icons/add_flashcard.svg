@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   width="35"
+   height="21"
+   viewBox="0 0 35 21"
+   fill="none"
+   version="1.1">
+
+  <path
+     fill="#ffffff"
+     stroke="#46bcff"
+     stroke-linejoin="round"
+     d="M 0.5,0.5 H 34.2598 V 20.2547 H 0.5 Z" />
+  <path
+     d="M16.9248 7V13.8996"
+     stroke="#46BCFF"
+     stroke-width="1.49473"
+     stroke-linecap="round"/>
+  <path
+     d="M13 10.468H21.0087"
+     stroke="#46BCFF"
+     stroke-width="1.49473"
+     stroke-linecap="round"/>
+</svg>

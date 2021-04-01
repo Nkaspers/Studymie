@@ -1,1 +1,4 @@
+org\semesterbreak\App.class
 module-info.class
+org\semesterbreak\EditorUI.class
+org\semesterbreak\PrimaryController.class
