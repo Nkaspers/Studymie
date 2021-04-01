@@ -1,7 +1,9 @@
 package org.semesterbreak;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import org.jdom2.JDOMException;
+
+import java.io.IOException;
 
 public class PrimaryController {
 
@@ -17,13 +19,17 @@ public class PrimaryController {
 
     @FXML
     public void initialize(){
-        //projectButton.setGraphic(EditorUI.projectButtonIcon);
-        undoButton.setGraphic(EditorUI.undoButtonIcon);
-        redoButton.setGraphic(EditorUI.redoButtonIcon);
-        exportButton.setGraphic(EditorUI.exportButtonIcon);
-        addStackButton.setGraphic(EditorUI.addStackButtonIcon);
-        playButton.setGraphic(EditorUI.PlayButtonIcon);
-        addFlashcardButton.setGraphic(EditorUI.addFlashCardButtonIcon);
+        try {
+            undoButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/undo.svg"));
+            redoButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/redo.svg"));
+            exportButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/export.svg"));
+            addStackButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/add_stack.svg"));
+            playButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/play_button.svg"));
+            addFlashcardButton.setGraphic(EditorUI.getIconGroup("src/main/resources/org/semesterbreak/icons/add_flashcard.svg"));
+        } catch (JDOMException | IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

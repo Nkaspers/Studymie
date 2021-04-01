@@ -26,12 +26,6 @@
     -fx-background-color: transparent;
 }
 
-.undo-button .svg{
-    -fx-fill: transparent;
-    -fx-stroke: #46BCFF;
-    -fx-stroke-width: 1.565;
-}
-
 .undo-button:hover{
     -fx-background-color: #e3e3e3;
 }
@@ -44,12 +38,6 @@
     -fx-background-color: transparent;
 }
 
-.redo-button .svg{
-    -fx-fill: transparent;
-    -fx-stroke: #46BCFF;
-    -fx-stroke-width: 1.565;
-}
-
 .redo-button:hover{
     -fx-background-color: #e3e3e3;
 }
@@ -60,10 +48,6 @@
 
 .export-button {
     -fx-background-color: transparent;
-}
-
-.export-button .svg{
-    -fx-fill: #46BCFF;
 }
 
 .export-button:hover {
@@ -79,13 +63,6 @@
 
 }
 
-.add-flashcard-button .svg{
-    -fx-fill: white;
-    -fx-stroke-width: 1.57553;
-    -fx-stroke: #46BCFF;
-    -stroke-linecap: round;
-}
-
 .add-flashcard-button:hover{
      -fx-background-color: #e3e3e3;
  }
@@ -96,12 +73,6 @@
 
 .play-button{
     -fx-background-color: transparent;
-}
-
-.play-button .svg {
-    -fx-fill: white;
-    -fx-stroke: #46BCFF;
-    -fx-stroke-width: 3;
 }
 
 .play-button:hover{
@@ -115,13 +86,6 @@
     -fx-background-color: transparent;
 }
 
-.add-stack-button .svg{
-    -fx-fill: white;
-    -fx-stroke-width: 1.57553;
-    -fx-stroke: #46BCFF;
-    -stroke-linejoin: round;
-}
-
 .add-stack-button:hover{
     -fx-background-color: #e3e3e3;
 
@@ -132,33 +96,17 @@
 }
 
 .duplicate-button{
-    -fx-background-image: url(icons/duplicate.png);
-    -fx-background-size: 25px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
     -fx-background-color: transparent;
 }
 
 .preview-flashcard {
-    -fx-background-image: url(icons/preview_flashcard.png);
-    -fx-background-size: 25px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
     -fx-background-color: transparent;
 }
 
 .move-down-button{
-    -fx-background-image: url(icons/move_down.png);
-    -fx-background-size: 25px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
     -fx-background-color: transparent;
 }
 
 .move-up-button{
-    -fx-background-image: url(icons/move_up.png);
-    -fx-background-size: 25px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
     -fx-background-color: transparent;
 }
