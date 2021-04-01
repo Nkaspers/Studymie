@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+
 
 import java.io.IOException;
 
@@ -17,8 +19,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("editorview"), 1300, 900);
+        double height = Screen.getPrimary().getBounds().getHeight() * 0.8;
+        double width = Screen.getPrimary().getBounds().getWidth() * 0.7;
+        //for this to have effect, remove borderpane prefWidth,height attributes
+        scene = new Scene(loadFXML("editorview"), width, height);
         stage.setScene(scene);
+        stage.setTitle("Microbiology.stdmi*");
         stage.show();
     }
 

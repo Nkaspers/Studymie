@@ -1,9 +1,10 @@
 /* Colors: */
 /*
-    main blue accent color: #46BCFF
+    main blue accent color: #46BCFF;
     light blue accent color: #BBE6FF;
 
     left-bar background color: #F3F3F3;
+    grey border color (also the color of the dividers): #B6B6B6;
  */
 
 .project-button {
@@ -20,6 +21,8 @@
 
 .left-bar {
     -fx-background-color: #F3F3F3;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #B6B6B6;
 }
 
 .undo-button {
@@ -102,3 +105,69 @@
     -fx-background-position: center;
     -fx-background-color: transparent;
 }
+
+.font-box {
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-background-insets: 1;
+    -fx-border-color: #B6B6B6;
+    -fx-effect: dropshadow(gaussian, #d0d0d0, 5, 0, 0, 5);
+}
+
+.font-color-box {
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-background-insets: 1;
+    -fx-border-color: #B6B6B6;
+    -fx-effect: dropshadow(gaussian, #d0d0d0, 5, 0, 0, 5);
+}
+
+.font-size-box {
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-background-insets: 1;
+    -fx-border-color: #B6B6B6;
+    -fx-effect: dropshadow(gaussian, #d0d0d0, 5, 0, 0, 5);
+}
+
+.bold-button, .underlined-button, .italic-button, .left-align-button, .block-align-button, .right-align-button, .add-numbered-list-button, .add-bullet-list-button{
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-background-insets: 1;
+    -fx-border-color: #B6B6B6;
+    -fx-effect: dropshadow(gaussian, #d0d0d0, 5, 0, 0, 5);;
+}
+
+.underlined-button, .block-align-button, .add-numbered-list-button, .italic-button, .right-align-button{
+    -fx-border-width: 1 1 1 0;
+}
+
+.bold-button:selected, .italic-button:selected, .underlined-button:selected, .left-align-button:selected, .block-align-button:selected, .right-align-button:selected, .add-numbered-list-button:pressed, .add-bullet-list-button:pressed{
+    -fx-effect: none;
+    -fx-background-color: #B6B6B6;
+    -fx-border-width: 1 1 1 1;
+}
+
+.editor-toolbar {
+    -fx-border-color: #B6B6B6;
+    -fx-border-width: 1 0 1 0;
+}
+
+.tree-view-toolbar {
+    -fx-background-color: #EAEAEA;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: #D1D1D1;
+}
+
+.tree-view {
+    -fx-background-color: none;
+}
+
+.tree-view .tree-cell {
+    -fx-background-color: #F3F3F3;
+}
+
+.scroll {
+    -fx-background-color: none;
+}
+
