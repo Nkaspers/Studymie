@@ -1,17 +1,12 @@
 package org.semesterbreak;
+
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 import org.jdom2.JDOMException;
 
 import java.awt.*;
@@ -40,10 +35,9 @@ public class PrimaryController {
     public ToggleButton rightAlignButton;
     public Button addBulletListButton;
     public Button addNumberedListButton;
-    public TreeView<String> stacksTreeView;
-
-
-
+    public TreeView<TreeViewElement> stacksTreeView;
+    public TreeItem<TreeViewElement> lastSelectedStack;
+    public FlashcardManager flashcardManager = new FlashcardManager();
 
     @FXML
     public void initialize(){
@@ -76,58 +70,28 @@ public class PrimaryController {
         fontTypeCB.getItems().addAll(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
         fontTypeCB.setValue("Arial");
         stacksTreeView.setEditable(true);
-        stacksTreeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
-            private int lastSelected = -1;
-            //Funktioniert noch nicht optimal werden wir eh umstrukturieren müssen
-            //z.B. clicke auf eine karte, dann klappe den elternstapel ein und auf, die karte ist weiterhin
-            //blau
+        stacksTreeView.setCellFactory(new Callback<TreeView<TreeViewElement>, TreeCell<TreeViewElement>>() {
             @Override
-            public TreeCell<String> call(TreeView<String> stringTreeView) {
-                stringTreeView.getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
-                    @Override
-                    public void onChanged(Change<? extends Integer> change) {
-                        if(change.getList().isEmpty()) return;
-
-                        try {
-                            TreeItem<String> item = stringTreeView.getTreeItem(lastSelected);
-                            if(item != null && lastSelected != -1) {
-                                item.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg"));
-                            }
-                            int selectedIndex = change.getList().get(0);
-
-                            //Nur mal beispielhaft:
-                            activeFlashcardLabel.setText(String.valueOf(selectedIndex+1));
-                            var selectedItem = stringTreeView.getTreeItem(selectedIndex);
-                            if(selectedItem.isLeaf()) {
-                                selectedItem.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard_selected.svg"));
-                                lastSelected = selectedIndex;
-                            }
-                        } catch (JDOMException | IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-                var renderedCell = new TextFieldTreeCell<String>();
-                renderedCell.setConverter(new StringConverter<String>() {
-                    @Override
-                    public String toString(String s) {
-                        return s;
-                    }
-
-                    @Override
-                    public String fromString(String s) {
-                        return s;
-                    }
-                });
-
-                renderedCell.prefWidthProperty().bind(stacksTreeView.prefWidthProperty().subtract(1));
-                return renderedCell;
+            public TreeCell<TreeViewElement> call(TreeView<TreeViewElement> treeViewElementTreeView) {
+                return new CustomCell();
+            }
+        });
+        stacksTreeView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<TreeItem<TreeViewElement>>() {
+            @Override
+            public void onChanged(Change<? extends TreeItem<TreeViewElement>> change) {
+                if(change.getList().isEmpty()) return;
+                TreeItem<TreeViewElement> item = change.getList().get(0);
+                if(!item.getValue().isFlashcard()) {
+                    lastSelectedStack = item;
+                }else {
+                    lastSelectedStack = item.getParent();
+                }
             }
         });
 
         stacksTreeView.setRoot(getExampleTree());
         stacksTreeView.setShowRoot(false);
+        stacksTreeView.setEditable(true);
     }
 
     @FXML
@@ -135,31 +99,24 @@ public class PrimaryController {
 
     }
 
-    public TreeItem<String> getExampleTree(){
-         TreeItem<String> project1 = new TreeItem<>("Projekt1");
-         try{
+    @FXML
+    private void addFlashcardAction() {
+        if(lastSelectedStack == null) return;
+        var flashcard = flashcardManager.addFlashcard((FlashcardStack) lastSelectedStack.getValue());
+        lastSelectedStack.getChildren().add(new TreeItem<>(flashcard));
+    }
 
-             TreeItem<String> stack1 = new TreeItem<>("Stapel1",Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/stack_icon.svg"));
-             TreeItem<String> stack2 = new TreeItem<>("Stapel2",Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/stack_icon.svg"));
-
-             for(int i = 0; i<5; i++) {
-                 stack1.getChildren().add(new TreeItem<>("Karte hier könnte ihre Werbung stehen mit einem super langem Werbetext!!!" + i, Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")));
-             }
-
-             for(int i = 0; i<5; i++) {
-                 TreeItem<String> treeItem = new TreeItem<>("Karte " + i, Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg"));
-                 stack2.getChildren().add(treeItem);
-             }
-
-             stack1.setExpanded(true);
-             stack2.setExpanded(true);
-             project1.getChildren().addAll(stack1,stack2);
-
-             return(project1);
-        } catch (JDOMException | IOException e) {
-            e.printStackTrace();
+    public TreeItem<TreeViewElement> createTree(){
+        TreeItem<TreeViewElement> project1 = new TreeItem<TreeViewElement>(null);
+        for(FlashcardStack stack : flashcardManager.getStackList()) {
+            TreeItem<TreeViewElement> treeItem = new TreeItem<>(stack);
+            for (Flashcard f : stack.getFlashcards()) {
+                TreeItem<TreeViewElement> flashcardTreeItem = new TreeItem<>(f);
+                treeItem.getChildren().add(flashcardTreeItem);
+            }
+            project1.getChildren().add(treeItem);
         }
-        return null;
+        return project1;
     }
 
 }
