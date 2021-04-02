@@ -53,18 +53,14 @@
 }
 
 .font-color-box {
-    -fx-background-color: transparent;
     -fx-background-radius: 0;
     -fx-background-insets: 1;
+    -fx-background-color: transparent;
     -fx-effect: dropshadow(gaussian, #d0d0d0, 5, 0, 0, 5);
     -fx-color-label-visible: false;
     -fx-color-rect-width: 50px;
     -fx-color-rect-height: 30px;
     -fx-color-rect-x: 30px;
-}
-
-.font-color-box > .choice-box{
-    -fx-background-color: transparent;
 }
 
 .font-size-box {
@@ -110,14 +106,30 @@
 .tree-view .tree-cell {
     -fx-background-color: #F3F3F3;
     -fx-text-fill: black;
+    -fx-padding: 8px;
 }
 
 .tree-view .tree-cell:selected {
     -fx-background-color: #e3e3e3;
+    -fx-border-width: 0 0 0 2;
+    -fx-border-color: #46BCFF;
     -fx-text-fill: black;
 }
 
-.scroll {
-    -fx-background-color: none;
+.scroll-bar:vertical {
+    -fx-pref-width: 13px;
+    -fx-background-color: transparent;
+}
+
+.scroll-bar > .increment-button > .increment-arrow,
+.scroll-bar > .decrement-button > .decrement-arrow{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+
+    -fx-background-color: #797979;
+    -fx-background-radius: 10px;
 }
 

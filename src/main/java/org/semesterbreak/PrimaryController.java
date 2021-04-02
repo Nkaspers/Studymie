@@ -1,9 +1,16 @@
 package org.semesterbreak;
+import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import org.jdom2.JDOMException;
 
 import java.awt.*;
@@ -68,6 +75,44 @@ public class PrimaryController {
         fontTypeCB.getItems().addAll(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
         fontTypeCB.setValue("Arial");
 
+        stacksTreeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
+            private int lastSelected = -1;
+            //Funktioniert noch nicht optimal werden wir eh umstrukturieren müssen
+            //z.B. clicke auf eine karte, dann klappe den elternstapel ein und auf, die karte ist weiterhin
+            //blau
+            @Override
+            public TreeCell<String> call(TreeView<String> stringTreeView) {
+                stringTreeView.getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
+                    @Override
+                    public void onChanged(Change<? extends Integer> change) {
+                        if(change.getList().isEmpty()) return;
+
+                        try {
+                            TreeItem<String> item = stringTreeView.getTreeItem(lastSelected);
+                            if(item != null && lastSelected != -1) {
+                                item.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg"));
+                            }
+                            int selectedIndex = change.getList().get(0);
+
+                            //Nur mal beispielhaft:
+                            activeFlashcardLabel.setText(String.valueOf(selectedIndex+1));
+                            var selectedItem = stringTreeView.getTreeItem(selectedIndex);
+                            if(selectedItem.isLeaf()) {
+                                selectedItem.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard_selected.svg"));
+                                lastSelected = selectedIndex;
+                            }
+                        } catch (JDOMException | IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                var renderedCell = new TextFieldTreeCell<String>();
+                renderedCell.prefWidthProperty().bind(stacksTreeView.prefWidthProperty().subtract(1));
+                return renderedCell;
+            }
+        });
+
         stacksTreeView.setRoot(getExampleTree());
         stacksTreeView.setShowRoot(false);
     }
@@ -81,27 +126,23 @@ public class PrimaryController {
          TreeItem<String> project1 = new TreeItem<>("Projekt1");
          try{
 
-         TreeItem<String> stack1 = new TreeItem<>("Stapel1",Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/stack_icon.svg"));
-         TreeItem<String> stack2 = new TreeItem<>("Stapel2",Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/stack_icon.svg"));
+             TreeItem<String> stack1 = new TreeItem<>("Stapel1",Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/stack_icon.svg"));
+             TreeItem<String> stack2 = new TreeItem<>("Stapel2",Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/stack_icon.svg"));
 
-            stack1.getChildren().addAll(
-                    new TreeItem<String>("Karte1", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
-                    new TreeItem<String>("Karte2", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
-                    new TreeItem<String>("Karte3", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
-                    new TreeItem<String>("Karte4", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg"))
-            );
-            stack2.getChildren().addAll(
-                    new TreeItem<String>("Karte1", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
-                    new TreeItem<String>("Karte2", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
-                    new TreeItem<String>("Karte3", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")),
-                    new TreeItem<String>("Karte4", Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg"))
-            );
+             for(int i = 0; i<5; i++) {
+                 stack1.getChildren().add(new TreeItem<>("Karte hier könnte ihre Werbung stehen mit einem super langem Werbetext!!!" + i, Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg")));
+             }
+
+             for(int i = 0; i<5; i++) {
+                 TreeItem<String> treeItem = new TreeItem<>("Karte " + i, Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg"));
+                 stack2.getChildren().add(treeItem);
+             }
 
              stack1.setExpanded(true);
              stack2.setExpanded(true);
              project1.getChildren().addAll(stack1,stack2);
-             return(project1);
 
+             return(project1);
         } catch (JDOMException | IOException e) {
             e.printStackTrace();
         }
