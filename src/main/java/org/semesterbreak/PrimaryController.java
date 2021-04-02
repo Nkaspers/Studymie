@@ -40,7 +40,7 @@ public class PrimaryController {
     public FlashcardManager flashcardManager = new FlashcardManager();
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         try {
             undoButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/undo.svg"));
             redoButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/redo.svg"));
@@ -89,7 +89,7 @@ public class PrimaryController {
             }
         });
 
-        stacksTreeView.setRoot(getExampleTree());
+        stacksTreeView.setRoot(createTree());
         stacksTreeView.setShowRoot(false);
         stacksTreeView.setEditable(true);
     }
