@@ -83,6 +83,7 @@ public class PrimaryController {
                 TreeItem<TreeViewElement> item = change.getList().get(0);
                 if(!item.getValue().isFlashcard()) {
                     lastSelectedStack = item;
+                    activeFlashcardLabel.setText(String.valueOf(((FlashcardStack)item.getValue()).getFlashcards().size()));
                 }else {
                     lastSelectedStack = item.getParent();
                 }
@@ -103,7 +104,14 @@ public class PrimaryController {
     private void addFlashcardAction() {
         if(lastSelectedStack == null) return;
         var flashcard = flashcardManager.addFlashcard((FlashcardStack) lastSelectedStack.getValue());
-        lastSelectedStack.getChildren().add(new TreeItem<>(flashcard));
+        TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcard);
+        lastSelectedStack.getChildren().add(treeItem);
+        stacksTreeView.getSelectionModel().select(treeItem);
+    }
+
+    @FXML
+    private void addFlashcardStackAction() {
+
     }
 
     public TreeItem<TreeViewElement> createTree(){

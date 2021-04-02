@@ -1,23 +1,23 @@
 package org.semesterbreak;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class FlashcardStack implements TreeViewElement{
-    public List<Flashcard> flashcards;
-    public String title;
+    private List<Flashcard> flashcards;
+    private String title;
 
-    public FlashcardStack(String s) {
-        title = s;
+    public FlashcardStack(String title) {
+        this.title = title;
+        flashcards = new ArrayList<>();
     }
 
     public String getTitle() {
-        return "Titel";
+        return title;
     }
 
     public List<Flashcard> getFlashcards() {
-        return new ArrayList<>(Arrays.asList(new Flashcard("Frage"), new Flashcard("Frage2")));
+        return flashcards;
     }
 
     @Override
