@@ -6,6 +6,9 @@
     left-bar background color: #F3F3F3;
     grey border color (also the color of the dividers): #B6B6B6;
  */
+@font-face {
+    src: url("Roboto-Regular.ttf");
+}
 
 .project-button {
     -fx-background-color: #46BCFF;
@@ -103,10 +106,13 @@
 .tree-view {
     -fx-background-color: none;
 }
+
+
 .tree-view .tree-cell {
     -fx-background-color: #F3F3F3;
-    -fx-text-fill: black;
-    -fx-padding: 8px 8px 8px 50px;
+    -fx-text-fill: #515151;
+   -fx-padding: 8px 8px 8px 35px;
+    -fx-font-family: "Roboto";
 }
 
 .tree-view .tree-cell:selected {
@@ -132,4 +138,3 @@
     -fx-background-color: #797979;
     -fx-background-radius: 10px;
 }
-

@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 import org.jdom2.JDOMException;
 
 import java.awt.*;
@@ -74,7 +75,7 @@ public class PrimaryController {
 
         fontTypeCB.getItems().addAll(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
         fontTypeCB.setValue("Arial");
-
+        stacksTreeView.setEditable(true);
         stacksTreeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
             private int lastSelected = -1;
             //Funktioniert noch nicht optimal werden wir eh umstrukturieren müssen
@@ -108,6 +109,18 @@ public class PrimaryController {
                 });
 
                 var renderedCell = new TextFieldTreeCell<String>();
+                renderedCell.setConverter(new StringConverter<String>() {
+                    @Override
+                    public String toString(String s) {
+                        return s;
+                    }
+
+                    @Override
+                    public String fromString(String s) {
+                        return s;
+                    }
+                });
+
                 renderedCell.prefWidthProperty().bind(stacksTreeView.prefWidthProperty().subtract(1));
                 return renderedCell;
             }
