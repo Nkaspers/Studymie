@@ -109,7 +109,6 @@ public class PrimaryController {
 
                 var renderedCell = new TextFieldTreeCell<String>();
                 renderedCell.prefWidthProperty().bind(stacksTreeView.prefWidthProperty().subtract(1));
-                renderedCell.setStyle("-fx-padding: 8px 8px 8px 50px;");
                 return renderedCell;
             }
         });

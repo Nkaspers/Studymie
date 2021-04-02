@@ -106,6 +106,7 @@
 .tree-view .tree-cell {
     -fx-background-color: #F3F3F3;
     -fx-text-fill: black;
+    -fx-padding: 8px 8px 8px 50px;
 }
 
 .tree-view .tree-cell:selected {
