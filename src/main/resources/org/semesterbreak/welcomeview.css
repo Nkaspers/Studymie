@@ -1,0 +1,38 @@
+/* Colors: */
+/*
+    main blue accent color: #46BCFF;
+    light blue accent color: #BBE6FF;
+
+    left-bar background color: #F3F3F3;
+    grey border color (also the color of the dividers): #B6B6B6;
+ */
+
+.project-button {
+    -fx-background-color: #46BCFF;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-border-color: #BBE6FF;
+    -fx-border-width: 1px;
+}
+
+.project-button:pressed, .open-project-button:pressed, .add-stack-button:pressed {
+    -fx-background-color: #24637d;
+}
+
+.add-stack-button {
+    -fx-background-color: #46BCFF;
+}
+
+.open-project-button {
+    -fx-background-color: #46BCFF;
+}
+
+.add-stack-button:hover {
+    -fx-background-color: #e3e3e3;
+}
+
+.add-stack-button:pressed {
+    -fx-background-color: #b5b5b5;
+
+}
+
