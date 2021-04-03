@@ -1,6 +1,7 @@
 package org.semesterbreak;
 
 import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -106,6 +107,12 @@ public class PrimaryController {
         lastSelectedStack.getChildren().add(new TreeItem<>(flashcard));
     }
 
+    @FXML
+    public void addStackAction() {
+        var stack = flashcardManager.addStack();
+        stacksTreeView.getRoot().getChildren().add(new TreeItem<>(stack));
+    }
+
     public TreeItem<TreeViewElement> createTree(){
         TreeItem<TreeViewElement> project1 = new TreeItem<TreeViewElement>(null);
         for(FlashcardStack stack : flashcardManager.getStackList()) {
@@ -118,5 +125,6 @@ public class PrimaryController {
         }
         return project1;
     }
+
 
 }

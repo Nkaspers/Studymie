@@ -17,4 +17,10 @@ public class FlashcardManager {
         return flashcard;
     }
 
+    public FlashcardStack addStack(){
+        FlashcardStack stack = new FlashcardStack("Neuer Stapel");
+        stackList.add(stack);
+        return stack;
+    }
+
 }
