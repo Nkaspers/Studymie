@@ -32,7 +32,7 @@ public class FlashcardManager {
     }
 
     public FlashcardStack addFlashcardStack() {
-        FlashcardStack flashcardStack = new FlashcardStack("new Stack");
+        FlashcardStack flashcardStack = new FlashcardStack("neuer Stapel");
         stackList.add(flashcardStack);
         return flashcardStack;
     }

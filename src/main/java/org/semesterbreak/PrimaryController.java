@@ -112,14 +112,10 @@ public class PrimaryController {
 
     @FXML
     private void addFlashcardStackAction() {
-
-    }
-
-    @FXML
-    public void addStackAction() {
-        var stack = flashcardManager.addStack();
+        var stack = flashcardManager.addFlashcardStack();
         stacksTreeView.getRoot().getChildren().add(new TreeItem<>(stack));
     }
+
 
     public TreeItem<TreeViewElement> createTree(){
         TreeItem<TreeViewElement> project1 = new TreeItem<TreeViewElement>(null);
