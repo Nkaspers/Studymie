@@ -2,6 +2,7 @@ package org.semesterbreak;
 
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -37,11 +38,13 @@ public class PrimaryController {
     public Button addBulletListButton;
     public Button addNumberedListButton;
     public TreeView<TreeViewElement> stacksTreeView;
-    public TreeItem<TreeViewElement> lastSelectedStack;
-    public FlashcardManager flashcardManager = new FlashcardManager();
+    public TreeItem<TreeViewElement> lastSelectedTreeViewItem;
+    public FlashcardManager flashcardManager;
 
     @FXML
     public void initialize() {
+       flashcardManager = new FlashcardManager();
+
         try {
             undoButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/undo.svg"));
             redoButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/redo.svg"));
@@ -70,23 +73,61 @@ public class PrimaryController {
 
         fontTypeCB.getItems().addAll(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
         fontTypeCB.setValue("Arial");
+
         stacksTreeView.setEditable(true);
+
+        stacksTreeView.setOnEditCommit(new EventHandler<TreeView.EditEvent<TreeViewElement>>() {
+            @Override
+            public void handle(TreeView.EditEvent<TreeViewElement> treeViewElementEditEvent) {
+                System.out.println("Cell was edited");
+            }
+        });
+
         stacksTreeView.setCellFactory(new Callback<TreeView<TreeViewElement>, TreeCell<TreeViewElement>>() {
             @Override
             public TreeCell<TreeViewElement> call(TreeView<TreeViewElement> treeViewElementTreeView) {
-                return new CustomCell();
+                var custom = new CustomCell();
+                custom.prefWidthProperty().bind(stacksTreeView.prefWidthProperty().subtract(5));
+
+                custom.getAddFlashcardElementMenuItem().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        lastSelectedTreeViewItem = custom.getTreeItem();
+                        addFlashcardAction();
+                    }
+                });
+
+                custom.getDuplicateElementMenuItem().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        lastSelectedTreeViewItem = custom.getTreeItem();
+                        duplicateElementAction();
+                    }
+                });
+
+                custom.getDeleteElementMenuItem().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        lastSelectedTreeViewItem = custom.getTreeItem();
+                        deleteElementAction();
+                    }
+                });
+
+                return custom;
             }
         });
+
         stacksTreeView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<TreeItem<TreeViewElement>>() {
             @Override
             public void onChanged(Change<? extends TreeItem<TreeViewElement>> change) {
                 if(change.getList().isEmpty()) return;
                 TreeItem<TreeViewElement> item = change.getList().get(0);
+
                 if(!item.getValue().isFlashcard()) {
-                    lastSelectedStack = item;
+                    lastSelectedTreeViewItem = item;
                     activeFlashcardLabel.setText(String.valueOf(((FlashcardStack)item.getValue()).getFlashcards().size()));
                 }else {
-                    lastSelectedStack = item.getParent();
+                    lastSelectedTreeViewItem = item.getParent();
                 }
             }
         });
@@ -96,6 +137,23 @@ public class PrimaryController {
         stacksTreeView.setEditable(true);
     }
 
+    private void deleteElementAction() {
+        if(lastSelectedTreeViewItem == null) return;
+
+        if(lastSelectedTreeViewItem.getValue().isFlashcard()) {
+            flashcardManager.removeFromStack((FlashcardStack) lastSelectedTreeViewItem.getParent().getValue(), (Flashcard) lastSelectedTreeViewItem.getValue());
+            lastSelectedTreeViewItem.getParent().getChildren().remove(lastSelectedTreeViewItem);
+        }else {
+            flashcardManager.removeStack((FlashcardStack) lastSelectedTreeViewItem.getValue());
+            stacksTreeView.getRoot().getChildren().remove(lastSelectedTreeViewItem);
+        }
+
+    }
+
+    private void duplicateElementAction() {
+
+    }
+
     @FXML
     private void projectBtn() {
 
@@ -103,10 +161,20 @@ public class PrimaryController {
 
     @FXML
     private void addFlashcardAction() {
-        if(lastSelectedStack == null) return;
-        var flashcard = flashcardManager.addFlashcard((FlashcardStack) lastSelectedStack.getValue());
+        if(lastSelectedTreeViewItem == null) return;
+        TreeItem<TreeViewElement> toAddToItem;
+
+        if(lastSelectedTreeViewItem.getValue().isFlashcard()) {
+            toAddToItem = lastSelectedTreeViewItem.getParent();
+        }else {
+            toAddToItem = lastSelectedTreeViewItem;
+        }
+
+        var flashcard = flashcardManager.addFlashcard((FlashcardStack) toAddToItem.getValue());
+
         TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcard);
-        lastSelectedStack.getChildren().add(treeItem);
+
+        toAddToItem.getChildren().add(treeItem);
         stacksTreeView.getSelectionModel().select(treeItem);
     }
 

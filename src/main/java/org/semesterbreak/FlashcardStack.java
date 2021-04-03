@@ -24,4 +24,8 @@ public class FlashcardStack implements TreeViewElement{
     public boolean isFlashcard() {
         return false;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

@@ -1,5 +1,7 @@
 package org.semesterbreak;
 
+import javafx.scene.control.TreeItem;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,4 +39,11 @@ public class FlashcardManager {
         return flashcardStack;
     }
 
+    public void removeFromStack(FlashcardStack flashcardStack, Flashcard flashcard) {
+        flashcardStack.getFlashcards().remove(flashcard);
+    }
+
+    public void removeStack(FlashcardStack lastSelectedTreeViewItem) {
+        getStackList().remove(lastSelectedTreeViewItem);
+    }
 }
