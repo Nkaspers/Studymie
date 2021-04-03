@@ -149,10 +149,6 @@ public class PrimaryController {
 
     }
 
-    private void duplicateElementAction() {
-
-    }
-
     @FXML
     private void projectBtn() {
 
@@ -162,17 +158,11 @@ public class PrimaryController {
     private void addFlashcardAction() {
         if(lastSelectedTreeViewItem == null) return;
         TreeItem<TreeViewElement> toAddToItem;
-
-        if(lastSelectedTreeViewItem.getValue().isFlashcard()) {
-            toAddToItem = lastSelectedTreeViewItem.getParent();
-        }else {
-            toAddToItem = lastSelectedTreeViewItem;
-        }
+        toAddToItem = (lastSelectedTreeViewItem.getValue().isFlashcard())? lastSelectedTreeViewItem.getParent(): lastSelectedTreeViewItem;
 
         var flashcard = flashcardManager.addFlashcard((FlashcardStack) toAddToItem.getValue());
 
         TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcard);
-
         toAddToItem.getChildren().add(treeItem);
         stacksTreeView.getSelectionModel().select(treeItem);
     }
@@ -184,9 +174,9 @@ public class PrimaryController {
     }
 
 
-    public TreeItem<TreeViewElement> createTree(){
+    public TreeItem<TreeViewElement> createTree() {
         TreeItem<TreeViewElement> project1 = new TreeItem<TreeViewElement>(null);
-        for(FlashcardStack stack : flashcardManager.getStackList()) {
+        for (FlashcardStack stack : flashcardManager.getStackList()) {
             TreeItem<TreeViewElement> treeItem = new TreeItem<>(stack);
             for (Flashcard f : stack.getFlashcards()) {
                 TreeItem<TreeViewElement> flashcardTreeItem = new TreeItem<>(f);
@@ -197,5 +187,35 @@ public class PrimaryController {
         return project1;
     }
 
+    @FXML
+    public void moveElementUpAction() {
+        moveTreeElementAction(-1);
+    }
 
+    @FXML
+    public void moveElementDownAction() {
+        moveTreeElementAction(+1);
+    }
+
+    public void moveTreeElementAction(int indexShift){
+
+        var parent = lastSelectedTreeViewItem.getParent();
+        int index = parent.getChildren().indexOf(lastSelectedTreeViewItem);
+        if ((index+indexShift< 0) || (index+indexShift > (parent.getChildren().size()-1))) return;
+        var temp = parent.getChildren().get(index + indexShift);
+        parent.getChildren().set(index, temp);
+        parent.getChildren().set(index + indexShift, lastSelectedTreeViewItem);
+        stacksTreeView.getSelectionModel().select(lastSelectedTreeViewItem);
+        flashcardManager.moveTreeElement(lastSelectedTreeViewItem.getValue(), indexShift);
+    }
+
+    @FXML
+    public void duplicateElementAction() {
+        if(!lastSelectedTreeViewItem.getValue().isFlashcard()) return;
+        Flashcard flashcardCopy = flashcardManager.duplicateFlashcard(lastSelectedTreeViewItem.getValue());
+        int index = lastSelectedTreeViewItem.getParent().getChildren().indexOf(lastSelectedTreeViewItem);
+        TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcardCopy);
+        lastSelectedTreeViewItem.getChildren().add(index+1,treeItem);
+        stacksTreeView.getSelectionModel().select(treeItem);
+    }
 }

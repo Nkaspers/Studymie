@@ -2,8 +2,10 @@ package org.semesterbreak;
 
 public class Flashcard implements TreeViewElement{
     private String question;
-    public Flashcard(String question) {
+    private FlashcardStack currentStack;
+    public Flashcard(String question,  FlashcardStack stack;) {
         this.question = question;
+        this.currentStack = stack;
     }
 
     @Override
@@ -17,5 +19,13 @@ public class Flashcard implements TreeViewElement{
 
     public void setQuestion(String question) {
         this.question = question;
+    }
+
+    public FlashcardStack getCurrentStack() {
+        return currentStack;
+    }
+
+    public void setCurrentStack(FlashcardStack currentStack) {
+        this.currentStack = currentStack;
     }
 }
