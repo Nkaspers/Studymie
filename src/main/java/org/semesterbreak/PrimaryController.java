@@ -124,11 +124,10 @@ public class PrimaryController {
                 TreeItem<TreeViewElement> item = change.getList().get(0);
 
                 if(!item.getValue().isFlashcard()) {
-                    lastSelectedTreeViewItem = item;
                     activeFlashcardLabel.setText(String.valueOf(((FlashcardStack)item.getValue()).getFlashcards().size()));
-                }else {
-                    lastSelectedTreeViewItem = item.getParent();
                 }
+
+                lastSelectedTreeViewItem = item;
             }
         });
 
