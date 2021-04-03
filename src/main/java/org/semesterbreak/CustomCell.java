@@ -32,7 +32,7 @@ public class CustomCell extends TreeCell<TreeViewElement> {
         }
         if (item.isFlashcard()) {
             Flashcard flashcard = (Flashcard) item;
-            setText(flashcard.question);
+            setText(flashcard.getQuestion());
             if (isSelected()) {
                 setGraphic(iconFlashSelected);
             } else {

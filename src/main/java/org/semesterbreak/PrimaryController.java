@@ -1,7 +1,6 @@
 package org.semesterbreak;
 
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -37,7 +36,7 @@ public class PrimaryController {
     public Button addBulletListButton;
     public Button addNumberedListButton;
     public TreeView<TreeViewElement> stacksTreeView;
-    public TreeItem<TreeViewElement> lastSelectedStack;
+    public TreeItem<TreeViewElement> lastSelectedTreeViewItem;
     public FlashcardManager flashcardManager = new FlashcardManager();
 
     @FXML
@@ -80,14 +79,15 @@ public class PrimaryController {
         stacksTreeView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<TreeItem<TreeViewElement>>() {
             @Override
             public void onChanged(Change<? extends TreeItem<TreeViewElement>> change) {
-                if(change.getList().isEmpty()) return;
+                if (change.getList().isEmpty()) return;
                 TreeItem<TreeViewElement> item = change.getList().get(0);
-                if(!item.getValue().isFlashcard()) {
-                    lastSelectedStack = item;
-                    activeFlashcardLabel.setText(String.valueOf(((FlashcardStack)item.getValue()).getFlashcards().size()));
-                }else {
-                    lastSelectedStack = item.getParent();
+                if (!item.getValue().isFlashcard()) {
+                    lastSelectedTreeViewItem = item;
+                    activeFlashcardLabel.setText(String.valueOf(((FlashcardStack) item.getValue()).getFlashcards().size()));
+                } else {
+                    lastSelectedTreeViewItem = item.getParent();
                 }
+
             }
         });
 
@@ -103,10 +103,10 @@ public class PrimaryController {
 
     @FXML
     private void addFlashcardAction() {
-        if(lastSelectedStack == null) return;
-        var flashcard = flashcardManager.addFlashcard((FlashcardStack) lastSelectedStack.getValue());
+        if (lastSelectedTreeViewItem == null) return;
+        var flashcard = flashcardManager.addFlashcard((FlashcardStack) lastSelectedTreeViewItem.getValue());
         TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcard);
-        lastSelectedStack.getChildren().add(treeItem);
+        lastSelectedTreeViewItem.getChildren().add(treeItem);
         stacksTreeView.getSelectionModel().select(treeItem);
     }
 
@@ -117,9 +117,9 @@ public class PrimaryController {
     }
 
 
-    public TreeItem<TreeViewElement> createTree(){
+    public TreeItem<TreeViewElement> createTree() {
         TreeItem<TreeViewElement> project1 = new TreeItem<TreeViewElement>(null);
-        for(FlashcardStack stack : flashcardManager.getStackList()) {
+        for (FlashcardStack stack : flashcardManager.getStackList()) {
             TreeItem<TreeViewElement> treeItem = new TreeItem<>(stack);
             for (Flashcard f : stack.getFlashcards()) {
                 TreeItem<TreeViewElement> flashcardTreeItem = new TreeItem<>(f);
@@ -130,5 +130,35 @@ public class PrimaryController {
         return project1;
     }
 
+    @FXML
+    public void moveElementUpAction() {
+        moveTreeElementAction(-1);
+    }
 
+    @FXML
+    public void moveElementDownAction() {
+        moveTreeElementAction(+1);
+    }
+
+    public void moveTreeElementAction(int indexShift){
+
+        var parent = lastSelectedTreeViewItem.getParent();
+        int index = parent.getChildren().indexOf(lastSelectedTreeViewItem);
+        if ((index+indexShift< 0) || (index+indexShift > (parent.getChildren().size()-1))) return;
+        var temp = parent.getChildren().get(index + indexShift);
+        parent.getChildren().set(index, temp);
+        parent.getChildren().set(index + indexShift, lastSelectedTreeViewItem);
+        stacksTreeView.getSelectionModel().select(lastSelectedTreeViewItem);
+        flashcardManager.moveTreeElement(lastSelectedTreeViewItem.getValue(), indexShift);
+    }
+
+    @FXML
+    public void duplicateElementAction() {
+        if(!lastSelectedTreeViewItem.getValue().isFlashcard()) return;
+        Flashcard flashcardCopy = flashcardManager.duplicateFlashcard(lastSelectedTreeViewItem.getValue());
+        int index = lastSelectedTreeViewItem.getParent().getChildren().indexOf(lastSelectedTreeViewItem);
+        TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcardCopy);
+        lastSelectedTreeViewItem.getChildren().add(index+1,treeItem);
+        stacksTreeView.getSelectionModel().select(treeItem);
+    }
 }
