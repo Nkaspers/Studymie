@@ -5,7 +5,21 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FlashcardManager {
-    public List<FlashcardStack> stackList = new ArrayList<>(Arrays.asList(new FlashcardStack("Stack 1"), new FlashcardStack("Stack 2")));
+    private List<FlashcardStack> stackList;
+
+    public FlashcardManager() {
+        stackList = new ArrayList<>();
+
+        FlashcardStack stack1 = new FlashcardStack("Stapel 1");
+        stack1.getFlashcards().add(new Flashcard("Frage 1"));
+        stack1.getFlashcards().add(new Flashcard("Frage 2"));
+
+        FlashcardStack stack2 = new FlashcardStack("Stapel 2");
+        stack2.getFlashcards().add(new Flashcard("Frage 1"));
+        stack2.getFlashcards().add(new Flashcard("Frage 3"));
+
+        stackList.addAll(Arrays.asList(stack1, stack2));
+    }
 
     public List<FlashcardStack> getStackList(){
         return stackList;
@@ -17,10 +31,10 @@ public class FlashcardManager {
         return flashcard;
     }
 
-    public FlashcardStack addStack(){
-        FlashcardStack stack = new FlashcardStack("Neuer Stapel");
-        stackList.add(stack);
-        return stack;
+    public FlashcardStack addFlashcardStack() {
+        FlashcardStack flashcardStack = new FlashcardStack("new Stack");
+        stackList.add(flashcardStack);
+        return flashcardStack;
     }
 
 }
