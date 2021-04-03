@@ -125,6 +125,9 @@ public class PrimaryController {
 
                 if(!item.getValue().isFlashcard()) {
                     activeFlashcardLabel.setText(String.valueOf(((FlashcardStack)item.getValue()).getFlashcards().size()));
+                }else{
+                    int index = item.getParent().getChildren().indexOf(item);
+                    activeFlashcardLabel.setText(++index +"./"+item.getParent().getChildren().size());
                 }
 
                 lastSelectedTreeViewItem = item;
@@ -140,7 +143,7 @@ public class PrimaryController {
         if(lastSelectedTreeViewItem == null) return;
 
         if(lastSelectedTreeViewItem.getValue().isFlashcard()) {
-            flashcardManager.removeFromStack((FlashcardStack) lastSelectedTreeViewItem.getParent().getValue(), (Flashcard) lastSelectedTreeViewItem.getValue());
+            flashcardManager.removeFromStack((Flashcard)lastSelectedTreeViewItem.getValue());
             lastSelectedTreeViewItem.getParent().getChildren().remove(lastSelectedTreeViewItem);
         }else {
             flashcardManager.removeStack((FlashcardStack) lastSelectedTreeViewItem.getValue());
@@ -175,7 +178,7 @@ public class PrimaryController {
 
 
     public TreeItem<TreeViewElement> createTree() {
-        TreeItem<TreeViewElement> project1 = new TreeItem<TreeViewElement>(null);
+        TreeItem<TreeViewElement> project1 = new TreeItem<>(null);
         for (FlashcardStack stack : flashcardManager.getStackList()) {
             TreeItem<TreeViewElement> treeItem = new TreeItem<>(stack);
             for (Flashcard f : stack.getFlashcards()) {
@@ -215,7 +218,7 @@ public class PrimaryController {
         Flashcard flashcardCopy = flashcardManager.duplicateFlashcard(lastSelectedTreeViewItem.getValue());
         int index = lastSelectedTreeViewItem.getParent().getChildren().indexOf(lastSelectedTreeViewItem);
         TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcardCopy);
-        lastSelectedTreeViewItem.getChildren().add(index+1,treeItem);
+        lastSelectedTreeViewItem.getParent().getChildren().add(index+1,treeItem);
         stacksTreeView.getSelectionModel().select(treeItem);
     }
 }

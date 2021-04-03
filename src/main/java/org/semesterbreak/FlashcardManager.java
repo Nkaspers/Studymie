@@ -32,7 +32,7 @@ public class FlashcardManager {
     }
 
     public Flashcard addFlashcard(FlashcardStack stack) {
-        Flashcard flashcard = new Flashcard("untitled");
+        Flashcard flashcard = new Flashcard("untitled", stack);
         stack.getFlashcards().add(flashcard);
         return flashcard;
     }
@@ -43,8 +43,8 @@ public class FlashcardManager {
         return flashcardStack;
     }
 
-    public void removeFromStack(FlashcardStack flashcardStack, Flashcard flashcard) {
-        flashcardStack.getFlashcards().remove(flashcard);
+    public void removeFromStack(Flashcard flashcard) {
+        flashcard.getCurrentStack().getFlashcards().remove(flashcard);
     }
 
     public void removeStack(FlashcardStack lastSelectedTreeViewItem) {

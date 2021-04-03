@@ -3,7 +3,7 @@ package org.semesterbreak;
 public class Flashcard implements TreeViewElement{
     private String question;
     private FlashcardStack currentStack;
-    public Flashcard(String question,  FlashcardStack stack;) {
+    public Flashcard(String question,  FlashcardStack stack) {
         this.question = question;
         this.currentStack = stack;
     }
