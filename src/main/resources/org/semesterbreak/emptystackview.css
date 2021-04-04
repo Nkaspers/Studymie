@@ -23,3 +23,15 @@
     -fx-border-width: 0 1 0 0;
     -fx-border-color: #B6B6B6;
 }
+
+.edit-button {
+    -fx-background-color: transparent;
+}
+
+.edit-button:hover {
+    -fx-background-color: #e3e3e3;
+}
+
+.expand-button:hover {
+    -fx-background-color: #151d11;
+}
