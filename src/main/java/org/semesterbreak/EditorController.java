@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.jdom2.JDOMException;
@@ -144,6 +146,7 @@ public class EditorController {
         stacksTreeView.setRoot(createTree());
         stacksTreeView.setShowRoot(false);
         stacksTreeView.setEditable(true);
+
     }
 
     private void deleteElementAction() {

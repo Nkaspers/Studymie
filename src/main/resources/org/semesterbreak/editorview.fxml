@@ -121,4 +121,7 @@
          </children>
       </VBox>
    </left>
+   <center>
+      <ListView BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>
