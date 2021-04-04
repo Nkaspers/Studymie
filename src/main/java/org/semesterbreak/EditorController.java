@@ -47,10 +47,9 @@ public class EditorController {
     public Button addBulletListButton;
     public Button addNumberedListButton;
     public TreeView<TreeViewElement> stacksTreeView;
-    public TreeItem<TreeViewElement> lastSelectedTreeViewItem;
 
     public FlashcardManager flashcardManager;
-    public WebView activeWebView;
+
     public WebViewManager webViewManager;
     public ToggleButton makeUnderlinedButton;
     public ToggleButton makeItalicButton;
@@ -102,18 +101,8 @@ public class EditorController {
             @Override
             public void onChanged(Change<? extends FlashcardPane> change) {
                 if(change.getList().isEmpty()) return;
-                Flashcard flashcard = change.getList().get(0).getFlashcard();
-                for(TreeItem<TreeViewElement> stack : stacksTreeView.getRoot().getChildren()) {
-                    if(flashcard.getCurrentStack().equals(stack.getValue())) {
-                        for(TreeItem<TreeViewElement> flash : stack.getChildren()) {
-                            if(flash.getValue().equals(flashcard)) {
-                                stacksTreeView.getSelectionModel().select(flash);
-                                lastSelectedTreeViewItem = flash;
-                                break;
-                            }
-                        }
-                    }
-                }
+                TreeItem<TreeViewElement> flashcard = findTreeItemFromFlashcardPane(change.getList().get(0));
+                stacksTreeView.getSelectionModel().select(flashcard);
             }
         });
 
@@ -135,7 +124,6 @@ public class EditorController {
                 custom.getAddFlashcardElementMenuItem().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        lastSelectedTreeViewItem = custom.getTreeItem();
                         addFlashcardAction();
                     }
                 });
@@ -143,7 +131,6 @@ public class EditorController {
                 custom.getDuplicateElementMenuItem().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        lastSelectedTreeViewItem = custom.getTreeItem();
                         duplicateElementAction();
                     }
                 });
@@ -151,7 +138,6 @@ public class EditorController {
                 custom.getDeleteElementMenuItem().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        lastSelectedTreeViewItem = custom.getTreeItem();
                         deleteElementAction();
                     }
                 });
@@ -168,17 +154,14 @@ public class EditorController {
 
                 if (!item.getValue().isFlashcard()) {
                     activeFlashcardLabel.setText(String.valueOf(((FlashcardStack) item.getValue()).getFlashcards().size()));
+                    flashcardView.getSelectionModel().select(null);
                 } else {
                     int index = item.getParent().getChildren().indexOf(item);
                     activeFlashcardLabel.setText(++index + "./" + item.getParent().getChildren().size());
-                    for(FlashcardPane p : flashcardView.getItems()) {
-                        if(p.getFlashcard().equals(item.getValue())) {
-                            flashcardView.getSelectionModel().select(p);
-                        }
-                    }
-                }
 
-                lastSelectedTreeViewItem = item;
+                    var flashcardPane = findFlashcardPaneFromTreeItem(item);
+                    flashcardView.getSelectionModel().select(flashcardPane);
+                }
             }
         });
 
@@ -187,15 +170,54 @@ public class EditorController {
         stacksTreeView.setEditable(true);
     }
 
-    private void deleteElementAction() {
-        if (lastSelectedTreeViewItem == null) return;
+    private TreeItem<TreeViewElement> findTreeItemFromFlashcardPane(FlashcardPane flashcardPane) {
+        var flashcard = flashcardPane.getFlashcard();
+        for(TreeItem<TreeViewElement> stack : stacksTreeView.getRoot().getChildren()) {
+            if(flashcard.getCurrentStack().equals(stack.getValue())) {
+                for(TreeItem<TreeViewElement> flash : stack.getChildren()) {
+                    if(flash.getValue().equals(flashcard)) {
+                        return flash;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
-        if (lastSelectedTreeViewItem.getValue().isFlashcard()) {
-            flashcardManager.removeFromStack((Flashcard) lastSelectedTreeViewItem.getValue());
-            lastSelectedTreeViewItem.getParent().getChildren().remove(lastSelectedTreeViewItem);
+    private FlashcardPane findFlashcardPaneFromTreeItem(TreeItem<TreeViewElement> treeItem) {
+        if(!treeItem.getValue().isFlashcard()) return null;
+        for(FlashcardPane p : flashcardView.getItems()) {
+            if(p.getFlashcard().equals(treeItem.getValue())) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    private void deleteElementAction() {
+        var selectedTreeItem = stacksTreeView.getSelectionModel().getSelectedItems().get(0);
+
+        if (selectedTreeItem == null) return;
+
+        if (selectedTreeItem.getValue().isFlashcard()) {
+            var selectedListViewItem = flashcardView.getSelectionModel().getSelectedItems().get(0);
+
+            flashcardManager.removeFromStack((Flashcard) selectedTreeItem.getValue());
+
+            selectedTreeItem.getParent().getChildren().remove(selectedTreeItem);
+
+            flashcardView.getItems().remove(selectedListViewItem);
         } else {
-            flashcardManager.removeStack((FlashcardStack) lastSelectedTreeViewItem.getValue());
-            stacksTreeView.getRoot().getChildren().remove(lastSelectedTreeViewItem);
+            FlashcardStack stack = (FlashcardStack) selectedTreeItem.getValue();
+            flashcardManager.removeStack(stack);
+            stacksTreeView.getRoot().getChildren().remove(selectedTreeItem);
+            if(stack.getFlashcards().isEmpty()) return;
+            int first = 0;
+            for(int i = 0; i < flashcardView.getItems().size(); i++) {
+                if(flashcardView.getItems().get(i).equals(stack.getFlashcards().get(0))) first = i;
+            }
+
+            flashcardView.getItems().remove(first, first+stack.getFlashcards().size());
         }
 
     }
@@ -207,15 +229,20 @@ public class EditorController {
 
     @FXML
     private void addFlashcardAction() {
-        if (lastSelectedTreeViewItem == null) return;
+        var selection = stacksTreeView.getSelectionModel().getSelectedItems().get(0);
+        if (selection == null) return;
         TreeItem<TreeViewElement> toAddToItem;
-        toAddToItem = (lastSelectedTreeViewItem.getValue().isFlashcard()) ? lastSelectedTreeViewItem.getParent() : lastSelectedTreeViewItem;
+        toAddToItem = (selection.getValue().isFlashcard()) ? selection.getParent() : selection;
 
         var flashcard = flashcardManager.addFlashcard((FlashcardStack) toAddToItem.getValue());
+        var flashcardPane = new FlashcardPane(flashcard);
 
         TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcard);
         toAddToItem.getChildren().add(treeItem);
+        flashcardView.getItems().add(flashcardPane);
+
         stacksTreeView.getSelectionModel().select(treeItem);
+        flashcardView.getSelectionModel().select(flashcardPane);
     }
 
     @FXML
@@ -251,44 +278,66 @@ public class EditorController {
     }
 
     public void moveTreeElementAction(int indexShift) {
-
-        var parent = lastSelectedTreeViewItem.getParent();
-        int index = parent.getChildren().indexOf(lastSelectedTreeViewItem);
+        var selection = stacksTreeView.getSelectionModel().getSelectedItems().get(0);
+        var parent = selection.getParent();
+        int index = parent.getChildren().indexOf(selection);
         if ((index + indexShift < 0) || (index + indexShift > (parent.getChildren().size() - 1))) return;
         var temp = parent.getChildren().get(index + indexShift);
         parent.getChildren().set(index, temp);
-        parent.getChildren().set(index + indexShift, lastSelectedTreeViewItem);
-        stacksTreeView.getSelectionModel().select(lastSelectedTreeViewItem);
-        flashcardManager.moveTreeElement(lastSelectedTreeViewItem.getValue(), indexShift);
+        parent.getChildren().set(index + indexShift, selection);
+        stacksTreeView.getSelectionModel().select(selection);
+        flashcardManager.moveTreeElement(selection.getValue(), indexShift);
     }
 
     @FXML
     public void duplicateElementAction() {
-        if (!lastSelectedTreeViewItem.getValue().isFlashcard()) return;
-        Flashcard flashcardCopy = flashcardManager.duplicateFlashcard(lastSelectedTreeViewItem.getValue());
-        int index = lastSelectedTreeViewItem.getParent().getChildren().indexOf(lastSelectedTreeViewItem);
+        var selection = stacksTreeView.getSelectionModel().getSelectedItems().get(0);
+
+        if (!selection.getValue().isFlashcard()) return;
+        Flashcard flashcardCopy = flashcardManager.duplicateFlashcard(selection.getValue());
+        int index = selection.getParent().getChildren().indexOf(selection);
         TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcardCopy);
-        lastSelectedTreeViewItem.getParent().getChildren().add(index + 1, treeItem);
+        selection.getParent().getChildren().add(index + 1, treeItem);
         stacksTreeView.getSelectionModel().select(treeItem);
     }
 
     @FXML
     public void makeUnderlinedAction() {
+        var selection = flashcardView.getSelectionModel().getSelectedItems().get(0);
+        if(selection == null) return;
+
+        var activeWebView = selection.getWebView();
+
         webViewManager.makeUnderlined(activeWebView);
     }
 
     @FXML
     public void makeItalicAction() {
+        var selection = flashcardView.getSelectionModel().getSelectedItems().get(0);
+        if(selection == null) return;
+
+        var activeWebView = selection.getWebView();
+
         webViewManager.makeItalic(activeWebView);
     }
 
     @FXML
     public void makeBoldAction() {
+        var selection = flashcardView.getSelectionModel().getSelectedItems().get(0);
+        if(selection == null) return;
+
+        var activeWebView = selection.getWebView();
+
         webViewManager.makeBold(activeWebView);
     }
 
     @FXML
     public void leftAlignAction() {
+        var selection = flashcardView.getSelectionModel().getSelectedItems().get(0);
+        if(selection == null) return;
+
+        var activeWebView = selection.getWebView();
+
         blockAlignButton.setSelected(false);
         rightAlignButton.setSelected(false);
         webViewManager.leftAlign(activeWebView);
@@ -296,6 +345,11 @@ public class EditorController {
 
     @FXML
     public void blockAlignAction() {
+        var selection = flashcardView.getSelectionModel().getSelectedItems().get(0);
+        if(selection == null) return;
+
+        var activeWebView = selection.getWebView();
+
         leftAlignButton.setSelected(false);
         rightAlignButton.setSelected(false);
         webViewManager.blockAlign(activeWebView);
@@ -303,6 +357,11 @@ public class EditorController {
 
     @FXML
     public void rightAlignAction() {
+        var selection = flashcardView.getSelectionModel().getSelectedItems().get(0);
+        if(selection == null) return;
+
+        var activeWebView = selection.getWebView();
+
         leftAlignButton.setSelected(false);
         blockAlignButton.setSelected(false);
         webViewManager.rightAlign(activeWebView);
@@ -310,11 +369,21 @@ public class EditorController {
 
     @FXML
     public void addBulletListAction() {
+        var selection = flashcardView.getSelectionModel().getSelectedItems().get(0);
+        if(selection == null) return;
+
+        var activeWebView = selection.getWebView();
+
         webViewManager.addBulletList(activeWebView);
     }
 
     @FXML
     public void addNumberedListAction() {
+        var selection = flashcardView.getSelectionModel().getSelectedItems().get(0);
+        if(selection == null) return;
+
+        var activeWebView = selection.getWebView();
+
         webViewManager.addNumberedList(activeWebView);
     }
 }
