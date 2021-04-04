@@ -3,17 +3,23 @@ package org.semesterbreak;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.jdom2.JDOMException;
 import javafx.scene.web.WebView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
@@ -42,12 +48,14 @@ public class EditorController {
     public Button addNumberedListButton;
     public TreeView<TreeViewElement> stacksTreeView;
     public TreeItem<TreeViewElement> lastSelectedTreeViewItem;
+
     public FlashcardManager flashcardManager;
     public WebView activeWebView;
     public WebViewManager webViewManager;
     public ToggleButton makeUnderlinedButton;
     public ToggleButton makeItalicButton;
     public ToggleButton makeBoldButton;
+    public ListView<FlashcardPane> flashcardView;
 
     @FXML
     public void initialize() {
@@ -82,6 +90,32 @@ public class EditorController {
 
         fontTypeCB.getItems().addAll(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
         fontTypeCB.setValue("Arial");
+
+        flashcardView.setCellFactory(new Callback<ListView<FlashcardPane>, ListCell<FlashcardPane>>() {
+            @Override
+            public ListCell<FlashcardPane> call(ListView<FlashcardPane> flashcardView) {
+                return new CustomFlashcardCell();
+            }
+        });
+
+        flashcardView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<FlashcardPane>() {
+            @Override
+            public void onChanged(Change<? extends FlashcardPane> change) {
+                if(change.getList().isEmpty()) return;
+                Flashcard flashcard = change.getList().get(0).getFlashcard();
+                for(TreeItem<TreeViewElement> stack : stacksTreeView.getRoot().getChildren()) {
+                    if(flashcard.getCurrentStack().equals(stack.getValue())) {
+                        for(TreeItem<TreeViewElement> flash : stack.getChildren()) {
+                            if(flash.getValue().equals(flashcard)) {
+                                stacksTreeView.getSelectionModel().select(flash);
+                                lastSelectedTreeViewItem = flash;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
 
         stacksTreeView.setEditable(true);
 
@@ -137,6 +171,11 @@ public class EditorController {
                 } else {
                     int index = item.getParent().getChildren().indexOf(item);
                     activeFlashcardLabel.setText(++index + "./" + item.getParent().getChildren().size());
+                    for(FlashcardPane p : flashcardView.getItems()) {
+                        if(p.getFlashcard().equals(item.getValue())) {
+                            flashcardView.getSelectionModel().select(p);
+                        }
+                    }
                 }
 
                 lastSelectedTreeViewItem = item;
@@ -146,7 +185,6 @@ public class EditorController {
         stacksTreeView.setRoot(createTree());
         stacksTreeView.setShowRoot(false);
         stacksTreeView.setEditable(true);
-
     }
 
     private void deleteElementAction() {
@@ -192,6 +230,8 @@ public class EditorController {
         for (FlashcardStack stack : flashcardManager.getStackList()) {
             TreeItem<TreeViewElement> treeItem = new TreeItem<>(stack);
             for (Flashcard f : stack.getFlashcards()) {
+                FlashcardPane pane = new FlashcardPane(f);
+                flashcardView.getItems().add(pane);
                 TreeItem<TreeViewElement> flashcardTreeItem = new TreeItem<>(f);
                 treeItem.getChildren().add(flashcardTreeItem);
             }

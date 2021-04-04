@@ -146,3 +146,23 @@
     -fx-padding: 20px;
     -fx-effect: dropshadow(gaussian, #d7d7d7, 20, 0.1, 0, 7);
 }
+
+.flash-card:selected {
+    /*-fx-background-color: white;*/
+    -fx-background-color: #46BCFF, #ffffff;
+
+}
+
+.list-view {
+    -fx-background-color: #DBDBDB;
+    -fx-alignment: center;
+}
+
+
+.list-cell {
+    -fx-background-color:  #DBDBDB;
+}
+
+.list-cell:selected {
+
+}
