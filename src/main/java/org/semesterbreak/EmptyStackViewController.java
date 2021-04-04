@@ -5,11 +5,13 @@ package org.semesterbreak;
         import javafx.scene.control.Button;
         import javafx.scene.control.ListView;
         import javafx.scene.layout.AnchorPane;
+        import javafx.scene.layout.VBox;
         import javafx.util.Duration;
         import org.jdom2.JDOMException;
         import javafx.animation.TranslateTransition;
 
         import java.io.IOException;
+        import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EmptyStackViewController {
 
@@ -24,6 +26,9 @@ public class EmptyStackViewController {
 
     @FXML
     private Button exportButton;
+
+    @FXML
+    private VBox MenuVBox;
 
     @FXML
     private Button editButton;
@@ -49,17 +54,22 @@ public class EmptyStackViewController {
 
     private void prepareSlide(){
 
+        AtomicBoolean navClosed = new AtomicBoolean(true);
         TranslateTransition openNav=new TranslateTransition(new Duration(350), navList);
-        openNav.setToX(0);
+        openNav.setByX(300);
         TranslateTransition closeNav=new TranslateTransition(new Duration(350), navList);
+
+
         expandButton.setOnAction((ActionEvent evt)->{
-            if(navList.getTranslateX()!=0){
+            if(navClosed.get()){
                 openNav.play();
-                //System.out.println("to Right");
+                System.out.println("to Right");
+                navClosed.set(false);
             }else{
-                closeNav.setToX(-(navList.getWidth()));
+                closeNav.setByX(-MenuVBox.getWidth());
                 closeNav.play();
-                //System.out.println("to Left");
+                System.out.println("to Left");
+                navClosed.set(true);
             }
         });
 
