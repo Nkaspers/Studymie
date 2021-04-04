@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="-Infinity" prefWidth="1300.0" style="-fx-background-color: #DBDBDB;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.PrimaryController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="-Infinity" prefWidth="1300.0" style="-fx-background-color: #DBDBDB;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.EditorController">
    <left>
       <VBox prefWidth="300.0" styleClass="left-bar" stylesheets="@editorview.css" BorderPane.alignment="CENTER">
          <children>
@@ -65,30 +65,30 @@
                   <ChoiceBox fx:id="fontSizeCB" prefHeight="30.0" prefWidth="65.0" styleClass="font-size-box" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3">
                      <children>
-                        <Button fx:id="addBulletListButton" prefHeight="31.0" prefWidth="40.0" styleClass="add-bullet-list-button" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="addNumberedListButton" prefHeight="31.0" prefWidth="40.0" styleClass="add-numbered-list-button" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="addBulletListButton" onAction="#addBulletListAction" prefHeight="31.0" prefWidth="40.0" styleClass="add-bullet-list-button" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="addNumberedListButton" onAction="#addNumberedListAction" prefHeight="31.0" prefWidth="40.0" styleClass="add-numbered-list-button" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="176.0" spacing="10" GridPane.columnSpan="3" GridPane.rowIndex="2">
                      <children>
                         <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
-                           <ToggleButton maxWidth="Infinity" prefHeight="31.0" prefWidth="43.0" styleClass="bold-button" stylesheets="@editorview.css" text="B" HBox.hgrow="ALWAYS">
+                           <ToggleButton fx:id="makeBoldButton" onAction="#makeBoldAction" maxWidth="Infinity" prefHeight="31.0" prefWidth="43.0" styleClass="bold-button" stylesheets="@editorview.css" text="B" HBox.hgrow="ALWAYS">
                               <font>
                                  <Font name="System Bold" size="13.0" />
                               </font></ToggleButton>
-                           <ToggleButton maxWidth="Infinity" prefHeight="31.0" prefWidth="43.0" styleClass="underlined-button" stylesheets="@editorview.css" text="U" underline="true" HBox.hgrow="ALWAYS">
+                           <ToggleButton fx:id="makeUnderlinedButton" onAction="#makeUnderlinedAction" maxWidth="Infinity" prefHeight="31.0" prefWidth="43.0" styleClass="underlined-button" stylesheets="@editorview.css" text="U" underline="true" HBox.hgrow="ALWAYS">
                               <font>
                                  <Font name="System Bold" size="13.0" />
                               </font></ToggleButton>
-                           <ToggleButton maxWidth="Infinity" prefHeight="31.0" prefWidth="43.0" styleClass="italic-button" stylesheets="@editorview.css" text="I" HBox.hgrow="ALWAYS">
+                           <ToggleButton fx:id="makeItalicButton" onAction="#makeItalicAction" maxWidth="Infinity" prefHeight="31.0" prefWidth="43.0" styleClass="italic-button" stylesheets="@editorview.css" text="I" HBox.hgrow="ALWAYS">
                               <font>
                                  <Font name="Times New Roman Bold Italic" size="14.0" />
                               </font></ToggleButton>
                         </HBox>
                         <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
-                           <ToggleButton fx:id="leftAlignButton" maxWidth="Infinity" prefHeight="31.0" prefWidth="42.0" styleClass="left-align-button" HBox.hgrow="ALWAYS" />
-                           <ToggleButton fx:id="blockAlignButton" maxWidth="Infinity" prefHeight="31.0" prefWidth="42.0" styleClass="block-align-button" HBox.hgrow="ALWAYS" />
-                           <ToggleButton fx:id="rightAlignButton" maxWidth="Infinity" prefHeight="31.0" prefWidth="42.0" styleClass="right-align-button" HBox.hgrow="ALWAYS" />
+                           <ToggleButton fx:id="leftAlignButton" onAction="#leftAlignAction" maxWidth="Infinity" prefHeight="31.0" prefWidth="42.0" styleClass="left-align-button" HBox.hgrow="ALWAYS" />
+                           <ToggleButton fx:id="blockAlignButton" onAction="#blockAlignAction" maxWidth="Infinity" prefHeight="31.0" prefWidth="42.0" styleClass="block-align-button" HBox.hgrow="ALWAYS" />
+                           <ToggleButton fx:id="rightAlignButton" onAction="#rightAlignAction" maxWidth="Infinity" prefHeight="31.0" prefWidth="42.0" styleClass="right-align-button" HBox.hgrow="ALWAYS" />
                         </HBox>
                      </children>
                   </HBox>

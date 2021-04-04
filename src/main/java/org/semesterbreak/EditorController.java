@@ -10,11 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.jdom2.JDOMException;
+import javafx.scene.web.WebView;
 
 import java.awt.*;
 import java.io.IOException;
 
-public class PrimaryController {
+public class EditorController {
 
 
     public Button addStackButton;
@@ -40,10 +41,16 @@ public class PrimaryController {
     public TreeView<TreeViewElement> stacksTreeView;
     public TreeItem<TreeViewElement> lastSelectedTreeViewItem;
     public FlashcardManager flashcardManager;
+    public WebView activeWebView;
+    public WebViewManager webViewManager;
+    public ToggleButton makeUnderlinedButton;
+    public ToggleButton makeItalicButton;
+    public ToggleButton makeBoldButton;
 
     @FXML
     public void initialize() {
-       flashcardManager = new FlashcardManager();
+        flashcardManager = new FlashcardManager();
+        webViewManager = new WebViewManager();
 
         try {
             undoButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/undo.svg"));
@@ -120,14 +127,14 @@ public class PrimaryController {
         stacksTreeView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<TreeItem<TreeViewElement>>() {
             @Override
             public void onChanged(Change<? extends TreeItem<TreeViewElement>> change) {
-                if(change.getList().isEmpty()) return;
+                if (change.getList().isEmpty()) return;
                 TreeItem<TreeViewElement> item = change.getList().get(0);
 
-                if(!item.getValue().isFlashcard()) {
-                    activeFlashcardLabel.setText(String.valueOf(((FlashcardStack)item.getValue()).getFlashcards().size()));
-                }else{
+                if (!item.getValue().isFlashcard()) {
+                    activeFlashcardLabel.setText(String.valueOf(((FlashcardStack) item.getValue()).getFlashcards().size()));
+                } else {
                     int index = item.getParent().getChildren().indexOf(item);
-                    activeFlashcardLabel.setText(++index +"./"+item.getParent().getChildren().size());
+                    activeFlashcardLabel.setText(++index + "./" + item.getParent().getChildren().size());
                 }
 
                 lastSelectedTreeViewItem = item;
@@ -140,12 +147,12 @@ public class PrimaryController {
     }
 
     private void deleteElementAction() {
-        if(lastSelectedTreeViewItem == null) return;
+        if (lastSelectedTreeViewItem == null) return;
 
-        if(lastSelectedTreeViewItem.getValue().isFlashcard()) {
-            flashcardManager.removeFromStack((Flashcard)lastSelectedTreeViewItem.getValue());
+        if (lastSelectedTreeViewItem.getValue().isFlashcard()) {
+            flashcardManager.removeFromStack((Flashcard) lastSelectedTreeViewItem.getValue());
             lastSelectedTreeViewItem.getParent().getChildren().remove(lastSelectedTreeViewItem);
-        }else {
+        } else {
             flashcardManager.removeStack((FlashcardStack) lastSelectedTreeViewItem.getValue());
             stacksTreeView.getRoot().getChildren().remove(lastSelectedTreeViewItem);
         }
@@ -159,9 +166,9 @@ public class PrimaryController {
 
     @FXML
     private void addFlashcardAction() {
-        if(lastSelectedTreeViewItem == null) return;
+        if (lastSelectedTreeViewItem == null) return;
         TreeItem<TreeViewElement> toAddToItem;
-        toAddToItem = (lastSelectedTreeViewItem.getValue().isFlashcard())? lastSelectedTreeViewItem.getParent(): lastSelectedTreeViewItem;
+        toAddToItem = (lastSelectedTreeViewItem.getValue().isFlashcard()) ? lastSelectedTreeViewItem.getParent() : lastSelectedTreeViewItem;
 
         var flashcard = flashcardManager.addFlashcard((FlashcardStack) toAddToItem.getValue());
 
@@ -200,11 +207,11 @@ public class PrimaryController {
         moveTreeElementAction(+1);
     }
 
-    public void moveTreeElementAction(int indexShift){
+    public void moveTreeElementAction(int indexShift) {
 
         var parent = lastSelectedTreeViewItem.getParent();
         int index = parent.getChildren().indexOf(lastSelectedTreeViewItem);
-        if ((index+indexShift< 0) || (index+indexShift > (parent.getChildren().size()-1))) return;
+        if ((index + indexShift < 0) || (index + indexShift > (parent.getChildren().size() - 1))) return;
         var temp = parent.getChildren().get(index + indexShift);
         parent.getChildren().set(index, temp);
         parent.getChildren().set(index + indexShift, lastSelectedTreeViewItem);
@@ -214,11 +221,57 @@ public class PrimaryController {
 
     @FXML
     public void duplicateElementAction() {
-        if(!lastSelectedTreeViewItem.getValue().isFlashcard()) return;
+        if (!lastSelectedTreeViewItem.getValue().isFlashcard()) return;
         Flashcard flashcardCopy = flashcardManager.duplicateFlashcard(lastSelectedTreeViewItem.getValue());
         int index = lastSelectedTreeViewItem.getParent().getChildren().indexOf(lastSelectedTreeViewItem);
         TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcardCopy);
-        lastSelectedTreeViewItem.getParent().getChildren().add(index+1,treeItem);
+        lastSelectedTreeViewItem.getParent().getChildren().add(index + 1, treeItem);
         stacksTreeView.getSelectionModel().select(treeItem);
+    }
+
+    @FXML
+    public void makeUnderlinedAction() {
+        webViewManager.makeUnderlined(activeWebView);
+    }
+
+    @FXML
+    public void makeItalicAction() {
+        webViewManager.makeItalic(activeWebView);
+    }
+
+    @FXML
+    public void makeBoldAction() {
+        webViewManager.makeBold(activeWebView);
+    }
+
+    @FXML
+    public void leftAlignAction() {
+        blockAlignButton.setSelected(false);
+        rightAlignButton.setSelected(false);
+        webViewManager.leftAlign(activeWebView);
+    }
+
+    @FXML
+    public void blockAlignAction() {
+        leftAlignButton.setSelected(false);
+        rightAlignButton.setSelected(false);
+        webViewManager.blockAlign(activeWebView);
+    }
+
+    @FXML
+    public void rightAlignAction() {
+        leftAlignButton.setSelected(false);
+        blockAlignButton.setSelected(false);
+        webViewManager.rightAlign(activeWebView);
+    }
+
+    @FXML
+    public void addBulletListAction() {
+        webViewManager.addBulletList(activeWebView);
+    }
+
+    @FXML
+    public void addNumberedListAction() {
+        webViewManager.addNumberedList(activeWebView);
     }
 }
