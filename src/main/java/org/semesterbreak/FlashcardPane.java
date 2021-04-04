@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class FlashcardWebView extends AnchorPane {
-    public FlashcardWebView() {
+public class FlashcardPane extends AnchorPane {
+    public FlashcardPane() {
         setPrefHeight(350);
         setPrefWidth(500);
         getStyleClass().add("flash-card");

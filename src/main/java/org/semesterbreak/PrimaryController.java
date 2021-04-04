@@ -42,7 +42,6 @@ public class PrimaryController {
     public TreeView<TreeViewElement> stacksTreeView;
     public TreeItem<TreeViewElement> lastSelectedTreeViewItem;
     public FlashcardManager flashcardManager;
-    public FlowPane flowPane;
 
     @FXML
     public void initialize() {
@@ -141,11 +140,6 @@ public class PrimaryController {
         stacksTreeView.setShowRoot(false);
         stacksTreeView.setEditable(true);
 
-        flowPane.setPrefWrapLength(1000);
-
-        for(int i = 0; i<9; i++) {
-            flowPane.getChildren().add(new FlashcardWebView());
-        }
     }
 
     private void deleteElementAction() {
