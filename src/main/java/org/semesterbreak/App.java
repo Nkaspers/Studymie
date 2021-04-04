@@ -21,7 +21,7 @@ public class App extends Application {
         double height = Screen.getPrimary().getBounds().getHeight() * 0.8;
         double width = Screen.getPrimary().getBounds().getWidth() * 0.7;
         //for this to have effect, remove borderpane prefWidth,height attributes
-        scene = new Scene(loadFXML("editorview"), width, height);
+        scene = new Scene(loadFXML("emptystackview"), width, height);
         stage.setScene(scene);
         stage.setTitle("Microbiology.stdmi*");
         stage.show();

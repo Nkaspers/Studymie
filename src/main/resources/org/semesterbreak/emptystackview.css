@@ -1,0 +1,25 @@
+/* Colors: */
+/*
+    main blue accent color: #46BCFF;
+    light blue accent color: #BBE6FF;
+
+    left-bar background color: #F3F3F3;
+    grey border color (also the color of the dividers): #B6B6B6;
+ */
+@font-face {
+    src: url("Roboto-Regular.ttf");
+}
+
+.expand-button {
+    -fx-background-color: #4E4E4E;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-border-color: #4E4E4E;
+    -fx-border-width: 1px;
+}
+
+.left-bar {
+    -fx-background-color: #F3F3F3;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #B6B6B6;
+}
