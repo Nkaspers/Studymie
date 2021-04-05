@@ -58,6 +58,8 @@ public class EmptyStackViewController {
          e.printStackTrace();
      }
         prepareSlide();
+
+        //stacksListView.setItems(FlashcardManager.getStackList());
     }
 
     private void prepareSlide(){
