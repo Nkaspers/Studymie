@@ -1,0 +1,15 @@
+<svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="17"
+        height="25"
+        fill="none"
+        viewBox="0 0 17 25">
+    <path
+            id="rect1995"
+            fill="#46bcff"
+
+            d="M 6.2859745,0.03005303 H 10.332148 V 12.881782 H 6.2859745 Z" />
+    <path
+            fill="#46bcff"
+            d="M 0,14.5 H 17 L 8.5,25 Z"/>
+</svg>
