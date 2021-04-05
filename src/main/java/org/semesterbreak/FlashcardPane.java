@@ -18,8 +18,8 @@ public class FlashcardPane extends AnchorPane{
     private Flashcard flashcard;
 
     public FlashcardPane(Flashcard flashcard) {
-        setPrefHeight(350);
-        setPrefWidth(500);
+        setPrefHeight(500);
+        setPrefWidth(800);
         getStyleClass().add("flash-card");
 
         this.flashcard = flashcard;

@@ -155,12 +155,13 @@ public class EditorController {
                 if (!item.getValue().isFlashcard()) {
                     activeFlashcardLabel.setText(String.valueOf(((FlashcardStack) item.getValue()).getFlashcards().size()));
                     flashcardView.getSelectionModel().select(null);
+                    duplicateFlashcardButton.setDisable(true);
                 } else {
                     int index = item.getParent().getChildren().indexOf(item);
                     activeFlashcardLabel.setText(++index + "./" + item.getParent().getChildren().size());
-
                     var flashcardPane = findFlashcardPaneFromTreeItem(item);
                     flashcardView.getSelectionModel().select(flashcardPane);
+                    duplicateFlashcardButton.setDisable(false);
                 }
             }
         });
