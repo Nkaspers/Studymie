@@ -6,7 +6,7 @@ public class Flashcard implements TreeViewElement{
     private String htmlContent;
 
     public Flashcard(String htmlContent,  FlashcardStack stack) {
-        this.question = question;
+        this.htmlContent = htmlContent;
         this.currentStack = stack;
     }
 
@@ -33,5 +33,9 @@ public class Flashcard implements TreeViewElement{
 
     public String getHTMLContent() {
         return htmlContent;
+    }
+
+    public void setHTMLContent(String htmlContent) {
+        this.htmlContent = htmlContent;
     }
 }

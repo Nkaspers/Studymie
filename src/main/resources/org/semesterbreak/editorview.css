@@ -139,34 +139,29 @@
     -fx-background-radius: 10px;
 }
 
-.flash-card {
-    /*-fx-background-color: white;*/
+.flashcard {
     -fx-background-color: #F3F3F3, #ffffff;
     -fx-background-insets: 15px, 17px;
     -fx-padding: 20px;
     -fx-effect: dropshadow(gaussian, #d7d7d7, 20, 0.1, 0, 7);
 }
 
-.flash-card:selected {
-    /*-fx-background-color: white;*/
-
-
+.flashcard:selected {
+    -fx-background-color: #46BCFF, #ffffff;
+    -fx-background-insets: 15px, 17px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, #d7d7d7, 20, 0.1, 0, 7);
 }
 
 .list-view {
     -fx-background-color: #DBDBDB;
 }
 
-
-.list-cell {
-    -fx-max-width: 800px;
-    -fx-alignment: Center;
-    -fx-background-color: #F3F3F3, #ffffff;
-    -fx-background-insets: 15px, 17px;
-    -fx-padding: 20px;
-    -fx-effect: dropshadow(gaussian, #d7d7d7, 20, 0.1, 0, 7);
+.list-cell:even, .list-cell:odd{
+    -fx-background-color: transparent;
+    -fx-alignment: center;
 }
 
 .list-cell:selected {
-    -fx-background-color: #46BCFF, #ffffff;
+
 }

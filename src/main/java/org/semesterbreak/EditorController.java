@@ -85,14 +85,6 @@ public class EditorController {
 
         initializeListView();
 
-        flashcardListView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Flashcard>() {
-            @Override
-            public void onChanged(Change<? extends Flashcard> change) {
-                if(change.getList().isEmpty()) return;
-                stacksTreeView.getSelectionModel().select(findTreeItemFromFlashcardPane(change.getList().get(0)));
-            }
-        });
-
         stacksTreeView.setEditable(true);
 
         stacksTreeView.setOnEditCommit(new EventHandler<TreeView.EditEvent<TreeViewElement>>() {
@@ -159,6 +151,14 @@ public class EditorController {
     }
 
     private void initializeListView() {
+        flashcardListView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Flashcard>() {
+            @Override
+            public void onChanged(Change<? extends Flashcard> change) {
+                if(change.getList().isEmpty()) return;
+                stacksTreeView.getSelectionModel().select(findTreeItemFromFlashcardPane(change.getList().get(0)));
+            }
+        });
+
         flashcardListView.setCellFactory(new Callback<ListView<Flashcard>, ListCell<Flashcard>>() {
             @Override
             public ListCell<Flashcard> call(ListView<Flashcard> flashcardPaneListView) {

@@ -13,15 +13,26 @@ public class CustomFlashcardCell extends ListCell<Flashcard>{
     @Override
     protected void updateItem(Flashcard item, boolean empty) {
         super.updateItem(item, empty);
-        if (empty){
+
+        if (empty || item == null){
             setGraphic(null);
             return;
         }
-        if(flashcardWebView.getFlashcard() == null) flashcardWebView.setFlashcard(item);
-        if(!flashcardWebView.getFlashcard().equals(item)) {
+
+        if(flashcardWebView.getFlashcard() == null) {
+            flashcardWebView.setFlashcard(item);
             flashcardWebView.getWebView().getEngine().loadContent(item.getHTMLContent());
         }
-        setGraphic(flashcardWebView.getWebView());
+
+        if(!flashcardWebView.getFlashcard().equals(item)) {
+            String changedContent = (String) flashcardWebView.getWebView().getEngine().executeScript("document.documentElement.outerHTML");
+            flashcardWebView.getFlashcard().setHTMLContent(changedContent);
+            flashcardWebView.setFlashcard(item);
+            flashcardWebView.getWebView().getEngine().loadContent(item.getHTMLContent());
+        }
+
+        flashcardWebView.setSelected(isSelected());
+        setGraphic(flashcardWebView.getWebViewContainer());
     }
 
     public FlashcardWebView getFlashcardWebView() {
