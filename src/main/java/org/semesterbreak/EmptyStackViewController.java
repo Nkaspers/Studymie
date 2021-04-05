@@ -39,7 +39,7 @@ public class EmptyStackViewController {
     private Button editButton;
 
     @FXML
-    private ListView<?> stacksListView;
+    private ListView<String> stacksListView;
 
     @FXML
     void projectBtn(ActionEvent event) {
@@ -60,6 +60,7 @@ public class EmptyStackViewController {
         prepareSlide();
 
         //stacksListView.setItems(FlashcardManager.getStackList());
+        stacksListView.getItems().addAll("Biology", "LudS", "Lineare Algebra");
     }
 
     private void prepareSlide(){
