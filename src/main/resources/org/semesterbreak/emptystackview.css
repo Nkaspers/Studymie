@@ -24,6 +24,12 @@
     -fx-border-color: #B6B6B6;
 }
 
+.list-view {
+    -fx-background-color: #F3F3F3;
+    -fx-border-color: #B6B6B6;
+    -fx-border-width: 1 0 1 0;
+}
+
 .edit-button {
     -fx-background-color: transparent;
 }
