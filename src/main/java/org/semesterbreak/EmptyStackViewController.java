@@ -6,6 +6,7 @@ package org.semesterbreak;
         import javafx.scene.control.Button;
         import javafx.scene.control.Label;
         import javafx.scene.control.ListView;
+        import javafx.scene.control.SelectionMode;
         import javafx.scene.layout.AnchorPane;
         import javafx.scene.layout.VBox;
         import javafx.util.Duration;
@@ -61,6 +62,7 @@ public class EmptyStackViewController {
 
         //stacksListView.setItems(FlashcardManager.getStackList());
         stacksListView.getItems().addAll("Biology", "LudS", "Lineare Algebra");
+        stacksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     private void prepareSlide(){
