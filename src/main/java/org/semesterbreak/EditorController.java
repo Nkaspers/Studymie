@@ -234,12 +234,24 @@ public class EditorController {
         TreeItem<TreeViewElement> toAddToItem;
         toAddToItem = (selection.getValue().isFlashcard()) ? selection.getParent() : selection;
 
-        var flashcard = flashcardManager.addFlashcard((FlashcardStack) toAddToItem.getValue());
+        var stack = (FlashcardStack) toAddToItem.getValue();
+        var flashcard = flashcardManager.addFlashcard(stack);
         var flashcardPane = new FlashcardPane(flashcard);
 
         TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcard);
         toAddToItem.getChildren().add(treeItem);
-        flashcardView.getItems().add(flashcardPane);
+
+        int index = 0;
+        for(int i = 0; i<flashcardManager.getStackList().size(); i++) {
+            var tmpStack = flashcardManager.getStackList().get(i);
+            if (stack.equals(tmpStack)) {
+                index += tmpStack.getFlashcards().size() - 1;
+                break;
+            }
+            index += tmpStack.getFlashcards().size();
+        }
+
+        flashcardView.getItems().add(index, flashcardPane);
 
         stacksTreeView.getSelectionModel().select(treeItem);
         flashcardView.getSelectionModel().select(flashcardPane);
