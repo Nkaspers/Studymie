@@ -297,6 +297,7 @@ public class EditorController {
         var temp = parent.getChildren().get(index + indexShift);
         parent.getChildren().set(index, temp);
         parent.getChildren().set(index + indexShift, selection);
+
         stacksTreeView.getSelectionModel().select(selection);
         flashcardManager.moveTreeElement(selection.getValue(), indexShift);
     }
@@ -304,13 +305,23 @@ public class EditorController {
     @FXML
     public void duplicateElementAction() {
         var selection = stacksTreeView.getSelectionModel().getSelectedItems().get(0);
+        var listViewSelection = flashcardView.getSelectionModel().getSelectedItems().get(0);
 
         if (!selection.getValue().isFlashcard()) return;
+
         Flashcard flashcardCopy = flashcardManager.duplicateFlashcard(selection.getValue());
-        int index = selection.getParent().getChildren().indexOf(selection);
+
+        int treeViewIndex = selection.getParent().getChildren().indexOf(selection);
         TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcardCopy);
-        selection.getParent().getChildren().add(index + 1, treeItem);
+
+        int listViewIndex = flashcardView.getItems().indexOf(listViewSelection);
+        FlashcardPane duplicatePane = new FlashcardPane(flashcardCopy);
+
+        selection.getParent().getChildren().add(treeViewIndex + 1, treeItem);
         stacksTreeView.getSelectionModel().select(treeItem);
+
+        flashcardView.getItems().add(listViewIndex + 1, duplicatePane);
+        flashcardView.getSelectionModel().select(duplicatePane);
     }
 
     @FXML
