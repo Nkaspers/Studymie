@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -37,12 +38,12 @@ public class FlashcardPane extends AnchorPane{
         this.getChildren().add(webView);
 
         try {
-            String doc = Files.readString(Paths.get(getClass().getResource("Flashcard.html").getPath()));
+            String doc = Files.readString(Paths.get(getClass().getResource("Flashcard.html").toURI()));
             doc = String.format(doc, getClass().getResource("NotoSansHK-Regular.otf").toExternalForm());
 
             webView.getEngine().loadContent(doc);
 
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
 
