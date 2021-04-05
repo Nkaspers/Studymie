@@ -122,6 +122,6 @@
       </VBox>
    </left>
    <center>
-      <ListView fx:id="flashcardView" BorderPane.alignment="CENTER" />
+      <ListView fx:id="flashcardListView" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

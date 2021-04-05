@@ -1,40 +1,31 @@
 package org.semesterbreak;
 
-import javafx.event.EventHandler;
-import javafx.event.EventTarget;
-import javafx.geometry.Pos;
 import javafx.scene.control.ListCell;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 
-public class CustomFlashcardCell extends ListCell<FlashcardPane> implements EventHandler<MouseEvent> {
-    private HBox hBox;
+public class CustomFlashcardCell extends ListCell<Flashcard>{
+
+    FlashcardWebView flashcardWebView;
+
     public CustomFlashcardCell() {
-        hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER);
+        flashcardWebView = new FlashcardWebView(null);
     }
 
     @Override
-    protected void updateItem(FlashcardPane item, boolean empty) {
+    protected void updateItem(Flashcard item, boolean empty) {
         super.updateItem(item, empty);
-        if(empty) {
+        if (empty){
             setGraphic(null);
             return;
         }
-
-        if(isSelected()) {
-            item.setSelected(true);
-        }else {
-            item.setSelected(false);
+        if(flashcardWebView.getFlashcard() == null) flashcardWebView.setFlashcard(item);
+        if(!flashcardWebView.getFlashcard().equals(item)) {
+            flashcardWebView.getWebView().getEngine().loadContent(item.getHTMLContent());
         }
-        item.setWebViewOnMousePressedListener(this);
-
-        hBox.getChildren().setAll(item);
-        setGraphic(hBox);
+        setGraphic(flashcardWebView.getWebView());
     }
 
-    @Override
-    public void handle(MouseEvent mouseEvent) {
-        getListView().getSelectionModel().select(this.getItem());
+    public FlashcardWebView getFlashcardWebView() {
+        return flashcardWebView;
     }
 }
+

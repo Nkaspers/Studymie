@@ -2,6 +2,10 @@ package org.semesterbreak;
 
 import javafx.scene.control.TreeItem;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,17 +15,26 @@ public class FlashcardManager {
 
     public FlashcardManager() {
         stackList = new ArrayList<>();
+        String doc = null;
+        try {
+            doc = Files.readString(Paths.get(getClass().getResource("Flashcard.html").toURI()));
+            doc = String.format(doc, getClass().getResource("NotoSansHK-Regular.otf").toExternalForm());
+
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
 
         FlashcardStack stack1 = new FlashcardStack("Stapel 1");
-        stack1.getFlashcards().add(new Flashcard("Frage 1", stack1));
-        stack1.getFlashcards().add(new Flashcard("Frage 2", stack1));
-        stack1.getFlashcards().add(new Flashcard("Frage 3", stack1));
-        stack1.getFlashcards().add(new Flashcard("Frage 4", stack1));
+
+        stack1.getFlashcards().add(new Flashcard(doc, stack1));
+        stack1.getFlashcards().add(new Flashcard(doc, stack1));
+        stack1.getFlashcards().add(new Flashcard(doc, stack1));
+        stack1.getFlashcards().add(new Flashcard(doc, stack1));
 
 
         FlashcardStack stack2 = new FlashcardStack("Stapel 2");
-        stack2.getFlashcards().add(new Flashcard("Frage 1", stack2));
-        stack2.getFlashcards().add(new Flashcard("Frage 2", stack2));
+        stack2.getFlashcards().add(new Flashcard(doc, stack2));
+        stack2.getFlashcards().add(new Flashcard(doc, stack2));
 
 
         stackList.addAll(Arrays.asList(stack1, stack2));
