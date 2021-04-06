@@ -1,17 +1,20 @@
 package org.semesterbreak;
 
 import javafx.scene.control.ListCell;
+import javafx.scene.web.WebEngine;
 
-public class CustomFlashcardCell extends ListCell<Flashcard> implements Flashcard.CommandExecutor {
+public class CustomFlashcardCell extends ListCell<FlashcardBridge> {
 
-    FlashcardWebView flashcardWebView;
+    private FlashcardContainer flashcardContainer;
+    private WebEngine engine;
 
     public CustomFlashcardCell() {
-        flashcardWebView = new FlashcardWebView(null);
+        flashcardContainer = new FlashcardContainer(null);
+        engine = flashcardContainer.getWebView().getEngine();
     }
 
     @Override
-    protected void updateItem(Flashcard item, boolean empty) {
+    protected void updateItem(FlashcardBridge item, boolean empty) {
         super.updateItem(item, empty);
 
         if (empty || item == null){
@@ -19,33 +22,26 @@ public class CustomFlashcardCell extends ListCell<Flashcard> implements Flashcar
             return;
         }
 
-        if(flashcardWebView.getFlashcard() == null) {
-            flashcardWebView.setFlashcard(item);
-            flashcardWebView.getWebView().getEngine().loadContent(item.getHTMLContent());
-            item.commandExecutor = this;
+        Flashcard flashcard = item.getFlashcard();
+
+        if(flashcardContainer.getFlashcard() == null) {
+            flashcardContainer.setFlashcard(flashcard);
+            engine.loadContent(flashcard.getHTMLContent());
+            item.setWebView(flashcardContainer.getWebView());
         }
 
-        if(!flashcardWebView.getFlashcard().equals(item)) {
-            String changedContent = (String) flashcardWebView.getWebView().getEngine().executeScript("document.documentElement.outerHTML");
-            flashcardWebView.getFlashcard().setHTMLContent(changedContent);
-            flashcardWebView.getFlashcard().commandExecutor = null;
-            flashcardWebView.setFlashcard(item);
-            flashcardWebView.getWebView().getEngine().loadContent(item.getHTMLContent());
-            item.commandExecutor = this;
+        if(!flashcardContainer.getFlashcard().equals(item.getFlashcard())) {
+            String changedContent = (String) engine.executeScript("document.documentElement.outerHTML");
+            flashcardContainer.getFlashcard().setHTMLContent(changedContent);
+            item.setWebView(null);
+            flashcardContainer.setFlashcard(flashcard);
+            engine.loadContent(flashcard.getHTMLContent());
+            item.setWebView(flashcardContainer.getWebView());
         }
 
-        flashcardWebView.setSelected(isSelected());
-        System.out.println(flashcardWebView.getFlashcard().commandExecutor == null);
-        setGraphic(flashcardWebView.getWebViewContainer());
-    }
+        flashcardContainer.setSelected(isSelected());
 
-    public FlashcardWebView getFlashcardWebView() {
-        return flashcardWebView;
-    }
-
-    @Override
-    public void executeCommand(String command) {
-        flashcardWebView.getWebView().getEngine().executeScript(command);
+        setGraphic(flashcardContainer.getWebViewContainer());
     }
 }
 

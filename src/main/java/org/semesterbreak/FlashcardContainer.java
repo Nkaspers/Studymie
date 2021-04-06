@@ -4,13 +4,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 
-public class FlashcardWebView {
+public class FlashcardContainer {
 
     private final WebView webView;
     private Flashcard flashcard;
     private AnchorPane container;
 
-    public FlashcardWebView(Flashcard flashcard) {
+    public FlashcardContainer(Flashcard flashcard) {
 
         this.flashcard = flashcard;
 

@@ -4,11 +4,6 @@ public class Flashcard implements TreeViewElement{
     private String question;
     private FlashcardStack currentStack;
     private String htmlContent;
-    public CommandExecutor commandExecutor;
-
-    public static interface CommandExecutor {
-        public void executeCommand(String command);
-    }
 
     public Flashcard(String htmlContent,  FlashcardStack stack) {
         this.htmlContent = htmlContent;
