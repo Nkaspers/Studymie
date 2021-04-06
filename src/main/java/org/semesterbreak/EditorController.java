@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
 import org.jdom2.JDOMException;
+import org.jdom2.output.support.SAXOutputProcessor;
 
 import java.awt.*;
 import java.io.IOException;
@@ -146,7 +147,7 @@ public class EditorController {
             public void onChanged(Change<? extends FlashcardBridge> change) {
                 if(change.getList().isEmpty()) return;
                 selectTreeViewElement(change.getList().get(0).getFlashcard());
-                activeWebView = change.getList().get(0).getWebView();
+                //activeWebView = change.getList().get(0).getWebView();
             }
         });
 
@@ -173,7 +174,6 @@ public class EditorController {
             if(bridge.getFlashcard().equals(flashcard)) toBeSelected = bridge;
         }
         flashcardListView.getSelectionModel().select(toBeSelected);
-        flashcardListView.scrollTo(toBeSelected);
     }
 
     private void loadNewStack(FlashcardStack stack){
@@ -284,22 +284,28 @@ public class EditorController {
     }
 
     public void moveTreeElementAction(int indexShift) {
-        var selection = stacksTreeView.getSelectionModel().getSelectedItems().get(0);
-        var parent = selection.getParent();
-        int index = parent.getChildren().indexOf(selection);
-        if ((index + indexShift < 0) || (index + indexShift > (parent.getChildren().size() - 1))) return;
-        var temp = parent.getChildren().get(index + indexShift);
-        parent.getChildren().set(index, temp);
-        parent.getChildren().set(index + indexShift, selection);
+        var selectedTreeItem = stacksTreeView.getSelectionModel().getSelectedItem();
+        var parent = selectedTreeItem.getParent();
+        int index = parent.getChildren().indexOf(selectedTreeItem);
+        if ((index + indexShift < 0) || (index + indexShift > parent.getChildren().size())) return;
 
-        stacksTreeView.getSelectionModel().select(selection);
-        flashcardManager.moveTreeElement(selection.getValue(), indexShift);
+        parent.getChildren().remove(index);
+        parent.getChildren().add(index+indexShift, selectedTreeItem);
+        flashcardManager.moveTreeElement(selectedTreeItem.getValue(), indexShift);
+        stacksTreeView.getSelectionModel().select(selectedTreeItem);
+
+        if(selectedTreeItem.getValue().isFlashcard()){
+            var listViewItem = flashcardListView.getItems().remove(index);
+            flashcardListView.getItems().add(index+indexShift,listViewItem);
+            selectListViewElement((Flashcard)selectedTreeItem.getValue());
+        }
     }
+
 
     @FXML
     public void duplicateElementAction() {
-        /*var selection = stacksTreeView.getSelectionModel().getSelectedItems().get(0);
-        var listViewSelection = flashcardListView.getSelectionModel().getSelectedItems().get(0);
+        var selection = stacksTreeView.getSelectionModel().getSelectedItem();
+        var listViewSelection = flashcardListView.getSelectionModel().getSelectedItem();
 
         if (!selection.getValue().isFlashcard()) return;
 
@@ -307,14 +313,14 @@ public class EditorController {
 
         int treeViewIndex = selection.getParent().getChildren().indexOf(selection);
         TreeItem<TreeViewElement> treeItem = new TreeItem<>(flashcardCopy);
-
+        FlashcardBridge bridge = new FlashcardBridge(flashcardCopy);
         int listViewIndex = flashcardListView.getItems().indexOf(listViewSelection);
 
         selection.getParent().getChildren().add(treeViewIndex + 1, treeItem);
         stacksTreeView.getSelectionModel().select(treeItem);
 
-        flashcardListView.getItems().add(listViewIndex + 1, flashcardCopy);
-        flashcardListView.getSelectionModel().select(flashcardCopy);*/
+        flashcardListView.getItems().add(listViewIndex + 1, bridge);
+        flashcardListView.getSelectionModel().select(bridge);
     }
 
     @FXML

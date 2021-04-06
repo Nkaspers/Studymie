@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FlashcardManager {
-    private List<FlashcardStack> stackList;
+    private final List<FlashcardStack> stackList;
     private String defaultFlashcardHTML;
 
     public FlashcardManager() {
@@ -23,9 +23,9 @@ public class FlashcardManager {
     }
 
     private List<FlashcardStack> generateTestFlashcards() {
-        int testStackCount = (int) (Math.random() * 6);
+        int testStackCount = (int) (Math.random() * 6 +1);
         List<FlashcardStack> list = new ArrayList<>();
-        for(int i = 0; i<testStackCount; i++) {
+        for(int i = 1; i<testStackCount; i++) {
             FlashcardStack stack = new FlashcardStack("Stapel " + (i+1));
             int testFlashcardCount = (int) (Math.random() * 10);
             for(int j = 0; j<testFlashcardCount; j++) {
