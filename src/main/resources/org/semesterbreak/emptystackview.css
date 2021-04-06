@@ -27,7 +27,17 @@
 .list-view {
     -fx-background-color: #F3F3F3;
     -fx-border-color: #B6B6B6;
-    -fx-border-width: 1 0 1 0;
+    -fx-border-width: 1 1 1 0;
+}
+
+.list-cell {
+    -fx-background-color: #F3F3F3;
+}
+
+.list-cell:selected {
+    -fx-border-color:  #46BCFF;
+    -fx-border-width: 0 0 0 2;
+    -fx-text-fill: black;
 }
 
 .edit-button {
