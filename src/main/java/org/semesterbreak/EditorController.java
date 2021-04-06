@@ -14,6 +14,7 @@ import org.jdom2.JDOMException;
 
 import java.awt.*;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 public class EditorController {
 
@@ -54,26 +55,7 @@ public class EditorController {
         flashcardManager = new FlashcardManager();
         webViewManager = new WebViewManager();
 
-        try {
-            undoButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/undo.svg"));
-            redoButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/redo.svg"));
-            exportButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/export.svg"));
-            addStackButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/add_stack.svg"));
-            playButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/play_button.svg"));
-            addFlashcardButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/add_flashcard.svg"));
-
-            leftAlignButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/text_left_align.svg"));
-            blockAlignButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/text_block_align.svg"));
-            rightAlignButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/text_right_align.svg"));
-            addBulletListButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/add_bullet_list.svg"));
-            addNumberedListButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/add_numbered_list.svg"));
-
-            moveFlashcardDownButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/move_down.svg"));
-            moveFlashcardUpButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/move_up.svg"));
-            duplicateFlashcardButton.setGraphic(Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/duplicate.svg"));
-        } catch (JDOMException | IOException e) {
-            e.printStackTrace();
-        }
+        initializeButtonGraphics();
 
         fontColorPicker.setValue(Color.BLACK);
 
@@ -85,6 +67,10 @@ public class EditorController {
 
         initializeListView();
 
+        initializeStacksTreeView();
+    }
+
+    private void initializeStacksTreeView() {
         stacksTreeView.setEditable(true);
 
         stacksTreeView.setOnEditCommit(new EventHandler<TreeView.EditEvent<TreeViewElement>>() {
@@ -135,6 +121,8 @@ public class EditorController {
                     activeFlashcardLabel.setText(String.valueOf(((FlashcardStack) item.getValue()).getFlashcards().size()));
                     activeStack = (FlashcardStack) item.getValue();
                     flashcardListView.getSelectionModel().select(null);
+                    flashcardListView.getItems().remove(0, flashcardListView.getItems().size());
+                    flashcardListView.getItems().addAll(activeStack.getFlashcards());
                     duplicateFlashcardButton.setDisable(true);
                 } else {
                     int index = item.getParent().getChildren().indexOf(item);
@@ -160,23 +148,20 @@ public class EditorController {
         });
 
         flashcardListView.setCellFactory(new Callback<ListView<Flashcard>, ListCell<Flashcard>>() {
+
             @Override
             public ListCell<Flashcard> call(ListView<Flashcard> flashcardPaneListView) {
                 CustomFlashcardCell cell = new CustomFlashcardCell();
                 cell.setOnMouseClicked(new EventHandler<>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        changeSelectedFlashcardPaneAction(cell);
+                        flashcardListView.getSelectionModel().select(cell.getItem());
                     }
                 });
                 return cell;
             }
         });
     }
-        private void changeSelectedFlashcardPaneAction(CustomFlashcardCell cell){
-
-            stacksTreeView.getSelectionModel().select(cell.getIndex()+1);
-        }
 
     private TreeItem<TreeViewElement> findTreeItemFromFlashcardPane(Flashcard flashcard) {
         for(TreeItem<TreeViewElement> stack : stacksTreeView.getRoot().getChildren()) {
@@ -341,7 +326,7 @@ public class EditorController {
     public void makeBoldAction() {
         var selection = flashcardListView.getSelectionModel().getSelectedItems().get(0);
         if(selection == null) return;
-
+        selection.commandExecutor.executeCommand("document.execCommand(\"bold\");");
         /*var activeWebView = selection.getWebView();
 
         webViewManager.makeBold(activeWebView);*/
@@ -401,5 +386,28 @@ public class EditorController {
         /*var activeWebView = selection.getWebView();
 
         webViewManager.addNumberedList(activeWebView);*/
+    }
+
+    private void initializeButtonGraphics() {
+        try {
+            undoButton.setGraphic(Utilities.getIconGroup("undo.svg", true));
+            redoButton.setGraphic(Utilities.getIconGroup("redo.svg", true));
+            exportButton.setGraphic(Utilities.getIconGroup("export.svg", true));
+            addStackButton.setGraphic(Utilities.getIconGroup("add_stack.svg", true));
+            playButton.setGraphic(Utilities.getIconGroup("play_button.svg", true));
+            addFlashcardButton.setGraphic(Utilities.getIconGroup("add_flashcard.svg", true));
+
+            leftAlignButton.setGraphic(Utilities.getIconGroup("text_left_align.svg", true));
+            blockAlignButton.setGraphic(Utilities.getIconGroup("text_block_align.svg", true));
+            rightAlignButton.setGraphic(Utilities.getIconGroup("text_right_align.svg", true));
+            addBulletListButton.setGraphic(Utilities.getIconGroup("add_bullet_list.svg", true));
+            addNumberedListButton.setGraphic(Utilities.getIconGroup("add_numbered_list.svg", true));
+
+            moveFlashcardDownButton.setGraphic(Utilities.getIconGroup("move_down.svg", true));
+            moveFlashcardUpButton.setGraphic(Utilities.getIconGroup("move_up.svg", true));
+            duplicateFlashcardButton.setGraphic(Utilities.getIconGroup("duplicate.svg", true));
+        } catch (JDOMException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

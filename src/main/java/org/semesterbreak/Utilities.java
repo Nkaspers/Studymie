@@ -10,6 +10,12 @@ import java.util.List;
 
 public class Utilities {
 
+    public static String defaultIconPath = "src/main/resources/org/semesterbreak/icons/";
+
+    public static Group getIconGroup(String iconName, boolean defaultPath) throws JDOMException, IOException{
+        return getIconGroup(defaultIconPath+iconName);
+    }
+
     public static Group getIconGroup(String filepath) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder();
         Document doc = builder.build(new File(filepath));

@@ -3,11 +3,11 @@ import javafx.scene.web.WebView;
 
 public class WebViewManager {
 
-    public void makeUnderlined(WebView webView){webView.getEngine().executeScript("document.execCommand(\"underline\");");}
+    public void makeUnderlined(WebView webView){ webView.getEngine().executeScript("document.execCommand(\"underline\");"); }
 
     public void makeItalic(WebView webView) { webView.getEngine().executeScript("document.execCommand(\"italic\");"); }
 
-    public void makeBold(WebView webView) {webView.getEngine().executeScript("document.execCommand(\"bold\");");}
+    public void makeBold(WebView webView) { webView.getEngine().executeScript("document.execCommand(\"bold\");"); }
 
     public void leftAlign(WebView webView) {}
 
