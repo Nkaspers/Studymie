@@ -49,7 +49,9 @@ public class EmptyStackViewController {
 
     @FXML
     private ListView<String> stacksListView;
-    //private static final ObservableList<FlashcardStack> data = FXCollections.observableArrayList(FlashcardManager.getStackList());
+
+
+    private FlashcardManager flashcardManager = new FlashcardManager();
 
     @FXML
     void projectBtn(ActionEvent event) {
@@ -69,8 +71,8 @@ public class EmptyStackViewController {
      }
         prepareSlide();
 
-        //stacksListView.setItems(data);
-        stacksListView.getItems().addAll("LudS", "Biology", "TI");
+        stacksListView.setItems(prepareListView());
+        //stacksListView.getItems().addAll("LudS", "Biology", "TI");
         stacksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
@@ -99,6 +101,15 @@ public class EmptyStackViewController {
             }
         });
 
+    }
+
+    private ObservableList<String> prepareListView(){
+        ObservableList<String> data = FXCollections.observableArrayList();
+            for(FlashcardStack stack: flashcardManager.getStackList()){
+                data.add(stack.getTitle());
+            }
+
+        return data;
     }
 }
 
