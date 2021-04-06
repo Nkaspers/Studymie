@@ -69,7 +69,6 @@ public class EditorController {
         fontTypeCB.setValue("Arial");
 
         initializeListView();
-
         initializeStacksTreeView();
     }
 
@@ -122,16 +121,15 @@ public class EditorController {
 
                 if (!item.getValue().isFlashcard()) {
                     activeFlashcardLabel.setText(String.valueOf(((FlashcardStack) item.getValue()).getFlashcards().size()));
-                    activeStack = (FlashcardStack) item.getValue();
                     flashcardListView.getSelectionModel().select(null);
-                    //flashcardListView.getItems().remove(0, flashcardListView.getItems().size());
-                    //flashcardListView.getItems().addAll(activeStack.getFlashcards());
                     duplicateFlashcardButton.setDisable(true);
+                    if(!item.getValue().equals(activeStack)) loadNewStack((FlashcardStack) item.getValue());
                 } else {
                     int index = item.getParent().getChildren().indexOf(item);
                     activeFlashcardLabel.setText(++index + "./" + item.getParent().getChildren().size());
-                    //flashcardListView.getSelectionModel().select(item);
                     duplicateFlashcardButton.setDisable(false);
+                    if(!item.getParent().getValue().equals(activeStack)) loadNewStack((FlashcardStack) item.getParent().getValue());
+                    selectListViewElement((Flashcard) item.getValue());
                 }
             }
         });
@@ -139,6 +137,7 @@ public class EditorController {
         stacksTreeView.setRoot(createTree());
         stacksTreeView.setShowRoot(false);
         stacksTreeView.setEditable(true);
+        stacksTreeView.getSelectionModel().select(stacksTreeView.getRoot().getChildren().get(0));
     }
 
     private void initializeListView() {
@@ -146,7 +145,7 @@ public class EditorController {
             @Override
             public void onChanged(Change<? extends FlashcardBridge> change) {
                 if(change.getList().isEmpty()) return;
-                stacksTreeView.getSelectionModel().select(findTreeItemFromFlashcardPane(change.getList().get(0).getFlashcard()));
+                selectTreeViewElement(change.getList().get(0).getFlashcard());
                 activeWebView = change.getList().get(0).getWebView();
             }
         });
@@ -165,24 +164,31 @@ public class EditorController {
                 return cell;
             }
         });
+        loadNewStack(flashcardManager.getStackList().get(0));
+    }
+
+    private void selectListViewElement(Flashcard flashcard) {
+        FlashcardBridge toBeSelected = null;
+        for(FlashcardBridge bridge: flashcardListView.getItems()){
+            if(bridge.getFlashcard().equals(flashcard)) toBeSelected = bridge;
+        }
+        flashcardListView.getSelectionModel().select(toBeSelected);
+        flashcardListView.scrollTo(toBeSelected);
     }
 
     private void loadNewStack(FlashcardStack stack){
-        /*ObservableList<FlashcardBridge> flashcards = FXCollections.observableArrayList(stack.getFlashcards());
-        flashcardListView.setItems(null);*/
+        flashcardListView.getItems().remove(0,flashcardListView.getItems().size());
+        for(Flashcard f: stack.getFlashcards()){
+            flashcardListView.getItems().add(new FlashcardBridge(f));
+        }
+        activeStack = stack;
     }
 
-    private TreeItem<TreeViewElement> findTreeItemFromFlashcardPane(Flashcard flashcard) {
-        for(TreeItem<TreeViewElement> stack : stacksTreeView.getRoot().getChildren()) {
-            if(flashcard.getCurrentStack().equals(stack.getValue())) {
-                for(TreeItem<TreeViewElement> flash : stack.getChildren()) {
-                    if(flash.getValue().equals(flashcard)) {
-                        return flash;
-                    }
-                }
-            }
-        }
-        return null;
+    private void selectTreeViewElement(Flashcard flashcard) {
+        int stackIndex = flashcardManager.getStackList().indexOf(activeStack);
+        int flashcardIndex = activeStack.getFlashcards().indexOf(flashcard);
+        TreeItem<TreeViewElement> item = stacksTreeView.getRoot().getChildren().get(stackIndex).getChildren().get(flashcardIndex);
+        stacksTreeView.getSelectionModel().select(item);
     }
 
     private void deleteElementAction() {
@@ -259,7 +265,6 @@ public class EditorController {
             TreeItem<TreeViewElement> treeItem = new TreeItem<>(stack);
             for (Flashcard f : stack.getFlashcards()) {
                 FlashcardBridge bridge = new FlashcardBridge(f);
-                flashcardListView.getItems().add(bridge);
                 TreeItem<TreeViewElement> flashcardTreeItem = new TreeItem<>(f);
                 treeItem.getChildren().add(flashcardTreeItem);
             }
