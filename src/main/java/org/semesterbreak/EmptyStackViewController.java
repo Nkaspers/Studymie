@@ -1,5 +1,9 @@
 package org.semesterbreak;
 
+        import javafx.beans.InvalidationListener;
+        import javafx.collections.FXCollections;
+        import javafx.collections.ListChangeListener;
+        import javafx.collections.ObservableList;
         import javafx.event.ActionEvent;
         import javafx.fxml.FXML;
         import javafx.geometry.Pos;
@@ -14,6 +18,10 @@ package org.semesterbreak;
         import javafx.animation.TranslateTransition;
 
         import java.io.IOException;
+        import java.util.Collection;
+        import java.util.Iterator;
+        import java.util.List;
+        import java.util.ListIterator;
         import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EmptyStackViewController {
@@ -41,6 +49,7 @@ public class EmptyStackViewController {
 
     @FXML
     private ListView<String> stacksListView;
+    //private static final ObservableList<FlashcardStack> data = FXCollections.observableArrayList(FlashcardManager.getStackList());
 
     @FXML
     void projectBtn(ActionEvent event) {
@@ -60,10 +69,14 @@ public class EmptyStackViewController {
      }
         prepareSlide();
 
-        //stacksListView.setItems(FlashcardManager.getStackList());
-        stacksListView.getItems().addAll("Biology", "LudS", "Lineare Algebra");
+        //stacksListView.setItems(data);
+        stacksListView.getItems().addAll("LudS", "Biology", "TI");
         stacksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
+
+    /*private void prepareListView(){
+        for
+    }*/
 
     private void prepareSlide(){
 

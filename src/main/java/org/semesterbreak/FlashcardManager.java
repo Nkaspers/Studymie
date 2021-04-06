@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FlashcardManager {
-    private static List<FlashcardStack> stackList;
+    private List<FlashcardStack> stackList;
 
     public FlashcardManager() {
         stackList = new ArrayList<>();
@@ -21,7 +21,7 @@ public class FlashcardManager {
         stackList.addAll(Arrays.asList(stack1, stack2));
     }
 
-    public static List<FlashcardStack> getStackList(){
+    public List<FlashcardStack> getStackList(){
         return stackList;
     }
 
