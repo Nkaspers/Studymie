@@ -17,7 +17,11 @@ public class FlashcardManager {
     public FlashcardManager() {
         stackList = new ArrayList<>();
 
-
+        try {
+            defaultFlashcardHTML = Files.readString(Paths.get(getClass().getResource("Flashcard.html").toURI()));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
 
         stackList.addAll(generateTestFlashcards());
     }
@@ -37,15 +41,10 @@ public class FlashcardManager {
     }
 
     private Flashcard generateNewFlashcardWithRandomContent(FlashcardStack stack) {
-        try {
-            defaultFlashcardHTML = Files.readString(Paths.get(getClass().getResource("Flashcard.html").toURI()));
-            defaultFlashcardHTML = String.format(defaultFlashcardHTML, getClass().getResource("NotoSansHK-Regular.otf").toExternalForm(),
-                    lorem.substring(0, (int)(Math.random()*(lorem.length()-1) / 60)), lorem.substring((int)(Math.random()*(lorem.length()-1))));
+        String randomContentHTML = String.format(defaultFlashcardHTML, getClass().getResource("NotoSansHK-Regular.otf").toExternalForm(),
+                lorem.substring(0, (int)(Math.random()*(lorem.length()-1) / 60)), lorem.substring((int)(Math.random()*(lorem.length()-1))));
 
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return new Flashcard(defaultFlashcardHTML, stack);
+        return new Flashcard(randomContentHTML, stack);
     }
 
     public List<FlashcardStack> getStackList(){
@@ -53,7 +52,9 @@ public class FlashcardManager {
     }
 
     public Flashcard addFlashcard(FlashcardStack stack) {
-        Flashcard flashcard = new Flashcard(defaultFlashcardHTML, stack);
+        String content = String.format(defaultFlashcardHTML, getClass().getResource("NotoSansHK-Regular.otf").toExternalForm(), "", "");
+
+        Flashcard flashcard = new Flashcard(content, stack);
         stack.getFlashcards().add(flashcard);
         return flashcard;
     }
@@ -71,31 +72,25 @@ public class FlashcardManager {
     public void removeStack(FlashcardStack lastSelectedTreeViewItem) {
         getStackList().remove(lastSelectedTreeViewItem);
     }
-    public void moveTreeElement(TreeViewElement element, int shift){
-        if(element.isFlashcard()){
-            Flashcard flashcard = (Flashcard) element;
-            int index = flashcard.getCurrentStack().getFlashcards().indexOf(flashcard);
-            flashcard.getCurrentStack().getFlashcards().remove(flashcard);
-            flashcard.getCurrentStack().getFlashcards().add(index+shift, flashcard);
-        }else{
-            FlashcardStack stack = (FlashcardStack) element;
-            int index = stackList.indexOf(stack);
-            stackList.remove(stack);
-            stackList.add((index+shift), stack);
-        }
+
+    public void moveFlashcard(Flashcard flashcard, int shift) {
+        int index = flashcard.getCurrentStack().getFlashcards().indexOf(flashcard);
+        flashcard.getCurrentStack().getFlashcards().remove(flashcard);
+        flashcard.getCurrentStack().getFlashcards().add(index+shift, flashcard);
     }
-    public Flashcard duplicateFlashcard(TreeViewElement element) {
-            Flashcard flashcard = (Flashcard) element;
+
+    public void moveFlashcardStack(FlashcardStack stack, int shift) {
+        int index = stackList.indexOf(stack);
+        stackList.remove(stack);
+        stackList.add((index+shift), stack);
+    }
+
+    public Flashcard duplicateFlashcard(Flashcard flashcard) {
             FlashcardStack stack = flashcard.getCurrentStack();
             int index = stack.getFlashcards().indexOf(flashcard);
-            Flashcard flashcardCopy = new Flashcard(flashcard.getQuestion(), stack);
+            Flashcard flashcardCopy = flashcard.clone();
             stack.getFlashcards().add(index+1, flashcardCopy);
             return flashcardCopy;
-    }
-
-    public String getQuestionFromHTMLContent(String content){
-
-        return null;
     }
 
     private String lorem = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." +

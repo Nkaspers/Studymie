@@ -2,9 +2,11 @@ package org.semesterbreak;
 
 import javafx.scene.web.WebView;
 
+import java.lang.ref.WeakReference;
+
 public class FlashcardBridge {
     private Flashcard flashcard;
-    private WebView webView;
+    private WeakReference<WebView> webView;
 
     public FlashcardBridge(Flashcard flashcard){
         this.flashcard = flashcard;
@@ -14,11 +16,11 @@ public class FlashcardBridge {
         return flashcard;
     }
 
-    public void setWebView(WebView webView) {
+    public void setWebView(WeakReference<WebView> webView) {
         this.webView = webView;
     }
 
     public WebView getWebView(){
-        return webView;
+        return webView.get();
     }
 }

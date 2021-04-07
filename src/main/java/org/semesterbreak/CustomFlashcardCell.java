@@ -3,6 +3,8 @@ package org.semesterbreak;
 import javafx.scene.control.ListCell;
 import javafx.scene.web.WebEngine;
 
+import java.lang.ref.WeakReference;
+
 public class CustomFlashcardCell extends ListCell<FlashcardBridge> {
 
     private FlashcardContainer flashcardContainer;
@@ -27,7 +29,7 @@ public class CustomFlashcardCell extends ListCell<FlashcardBridge> {
         if(flashcardContainer.getFlashcard() == null) {
             flashcardContainer.setFlashcard(flashcard);
             engine.loadContent(flashcard.getHTMLContent());
-            item.setWebView(flashcardContainer.getWebView());
+            item.setWebView(new WeakReference<>(flashcardContainer.getWebView()));
         }
 
         if(!flashcardContainer.getFlashcard().equals(item.getFlashcard())) {
@@ -36,7 +38,7 @@ public class CustomFlashcardCell extends ListCell<FlashcardBridge> {
             item.setWebView(null);
             flashcardContainer.setFlashcard(flashcard);
             engine.loadContent(flashcard.getHTMLContent());
-            item.setWebView(flashcardContainer.getWebView());
+            item.setWebView(new WeakReference<>(flashcardContainer.getWebView()));
         }
 
         flashcardContainer.setSelected(isSelected());

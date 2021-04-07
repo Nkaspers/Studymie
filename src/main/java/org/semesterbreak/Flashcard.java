@@ -2,8 +2,11 @@ package org.semesterbreak;
 
 public class Flashcard implements TreeViewElement{
     private String question;
-    private FlashcardStack currentStack;
     private String htmlContent;
+
+    private FlashcardStack currentStack;
+
+    public Flashcard() {}
 
     public Flashcard(String htmlContent,  FlashcardStack stack) {
         this.htmlContent = htmlContent;
@@ -37,5 +40,13 @@ public class Flashcard implements TreeViewElement{
 
     public void setHTMLContent(String htmlContent) {
         this.htmlContent = htmlContent;
+    }
+
+    public Flashcard clone() {
+        Flashcard flashcard = new Flashcard();
+        flashcard.setQuestion(this.getQuestion());
+        flashcard.setHTMLContent(this.getHTMLContent());
+        flashcard.setCurrentStack(flashcard.getCurrentStack());
+        return flashcard;
     }
 }
