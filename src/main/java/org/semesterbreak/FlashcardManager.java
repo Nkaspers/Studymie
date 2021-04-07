@@ -1,13 +1,23 @@
 package org.semesterbreak;
 
+import com.google.gson.Gson;
 import javafx.scene.control.TreeItem;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class FlashcardManager {
     private List<FlashcardStack> stackList;
+    private int projectCounter = 0;
 
     public FlashcardManager() {
         stackList = new ArrayList<>();
@@ -30,6 +40,67 @@ public class FlashcardManager {
     public List<FlashcardStack> getStackList(){
         return stackList;
     }
+
+     public void createJsonProject() throws IOException {
+        JSONObject project = new JSONObject();
+        project.put("Name", "Projekt 1");
+        project.put("Id", projectCounter);
+        JSONArray stackListJson = new JSONArray();
+        for(FlashcardStack stack : stackList) {
+            stackListJson.add(stack);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        String projectNumber = String.valueOf(projectCounter);
+        String projectPath = MessageFormat.format("C:\\Development\\project{0}", projectNumber);
+        try {
+            File file = new File(projectPath);
+            mapper.writeValue(file, project);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        projectCounter++;
+     }
+    // to-do: Übergabe des Project Paths und der gesuchten Id/values als Parameter
+     public JSONArray getJsonStack() {
+         JSONParser parser = new JSONParser();
+         JSONArray searchedStackFromProject = new JSONArray();
+         try {
+            JSONObject selectedProject = (JSONObject) parser.parse(new FileReader("C:\\Development\\project0"));
+            JSONArray stackListFromProject = (JSONArray) selectedProject.get("StackList");
+            searchedStackFromProject = (JSONArray) stackListFromProject.get(0);
+         } catch (ParseException e) {
+             e.printStackTrace();
+         } catch (FileNotFoundException e) {
+             e.printStackTrace();
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+         return searchedStackFromProject;
+     }
+
+     public void deleteJsonStack() {
+        JSONParser parser = new JSONParser();
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String path = "C:\\Development\\project0";
+            JSONObject selectedProject = (JSONObject) parser.parse(new FileReader(path));
+            JSONArray stackListFromProject = (JSONArray) selectedProject.get("StackList");
+            stackListFromProject.remove(0);
+            selectedProject.remove("StackList");
+
+            File updatedFile = new File(path);
+            selectedProject.put("StackList", stackListFromProject);
+            mapper.writeValue(updatedFile, selectedProject);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+     }
+
+
 
     public Flashcard addFlashcard(FlashcardStack stack) {
         Flashcard flashcard = new Flashcard("untitled", stack);
