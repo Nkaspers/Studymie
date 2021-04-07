@@ -76,62 +76,34 @@ public class EditorController {
     private void initializeStacksTreeView() {
         stacksTreeView.setEditable(true);
 
-        stacksTreeView.setOnEditCommit(new EventHandler<TreeView.EditEvent<TreeViewElement>>() {
-            @Override
-            public void handle(TreeView.EditEvent<TreeViewElement> treeViewElementEditEvent) {
-                System.out.println("Cell was edited");
-            }
+        stacksTreeView.setOnEditCommit(treeViewElementEditEvent -> System.out.println("Cell was edited"));
+
+        stacksTreeView.setCellFactory(treeViewElementTreeView -> {
+            var custom = new CustomCell();
+            custom.prefWidthProperty().bind(stacksTreeView.prefWidthProperty().subtract(5));
+            custom.getAddFlashcardElementMenuItem().setOnAction(actionEvent -> addFlashcardAction());
+            custom.getDuplicateElementMenuItem().setOnAction(actionEvent -> duplicateElementAction());
+            custom.getDeleteElementMenuItem().setOnAction(actionEvent -> deleteElementAction());
+
+            return custom;
         });
 
-        stacksTreeView.setCellFactory(new Callback<TreeView<TreeViewElement>, TreeCell<TreeViewElement>>() {
-            @Override
-            public TreeCell<TreeViewElement> call(TreeView<TreeViewElement> treeViewElementTreeView) {
-                var custom = new CustomCell();
-                custom.prefWidthProperty().bind(stacksTreeView.prefWidthProperty().subtract(5));
+        stacksTreeView.getSelectionModel().getSelectedItems().addListener((ListChangeListener<TreeItem<TreeViewElement>>) change -> {
+            if (change.getList().isEmpty()) return;
+            TreeItem<TreeViewElement> item = change.getList().get(0);
 
-                custom.getAddFlashcardElementMenuItem().setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        addFlashcardAction();
-                    }
-                });
-
-                custom.getDuplicateElementMenuItem().setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        //duplicateElementAction();
-                    }
-                });
-
-                custom.getDeleteElementMenuItem().setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        deleteElementAction();
-                    }
-                });
-
-                return custom;
-            }
-        });
-
-        stacksTreeView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<TreeItem<TreeViewElement>>() {
-            @Override
-            public void onChanged(Change<? extends TreeItem<TreeViewElement>> change) {
-                if (change.getList().isEmpty()) return;
-                TreeItem<TreeViewElement> item = change.getList().get(0);
-
-                if (!item.getValue().isFlashcard()) {
-                    activeFlashcardLabel.setText(String.valueOf(((FlashcardStack) item.getValue()).getFlashcards().size()));
-                    flashcardListView.getSelectionModel().select(null);
-                    duplicateFlashcardButton.setDisable(true);
-                    if(!item.getValue().equals(activeStack)) loadNewStack((FlashcardStack) item.getValue());
-                } else {
-                    int index = item.getParent().getChildren().indexOf(item);
-                    activeFlashcardLabel.setText(++index + "./" + item.getParent().getChildren().size());
-                    duplicateFlashcardButton.setDisable(false);
-                    if(!item.getParent().getValue().equals(activeStack)) loadNewStack((FlashcardStack) item.getParent().getValue());
-                    selectListViewElement((Flashcard) item.getValue());
-                }
+            if (!item.getValue().isFlashcard()) {
+                activeFlashcardLabel.setText(String.valueOf(((FlashcardStack) item.getValue()).getFlashcards().size()));
+                flashcardListView.getSelectionModel().select(null);
+                duplicateFlashcardButton.setDisable(true);
+                if (!item.getValue().equals(activeStack)) loadNewStack((FlashcardStack) item.getValue());
+            } else {
+                int index = item.getParent().getChildren().indexOf(item);
+                activeFlashcardLabel.setText(++index + "./" + item.getParent().getChildren().size());
+                duplicateFlashcardButton.setDisable(false);
+                if (!item.getParent().getValue().equals(activeStack))
+                    loadNewStack((FlashcardStack) item.getParent().getValue());
+                selectListViewElement((Flashcard) item.getValue());
             }
         });
 
@@ -142,30 +114,18 @@ public class EditorController {
     }
 
     private void initializeListView() {
-        flashcardListView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<FlashcardBridge>() {
-            @Override
-            public void onChanged(Change<? extends FlashcardBridge> change) {
-                if(change.getList().isEmpty()) return;
-                selectTreeViewElement(change.getList().get(0).getFlashcard());
-                //activeWebView = change.getList().get(0).getWebView();
-            }
+        flashcardListView.getSelectionModel().getSelectedItems().addListener((ListChangeListener<FlashcardBridge>) change -> {
+            if(change.getList().isEmpty()) return;
+            selectTreeViewElement(change.getList().get(0).getFlashcard());
+            activeWebView = change.getList().get(0).getWebView();
         });
 
-        flashcardListView.setCellFactory(new Callback<ListView<FlashcardBridge>, ListCell<FlashcardBridge>>() {
-
-            @Override
-            public ListCell<FlashcardBridge> call(ListView<FlashcardBridge> flashcardPaneListView) {
-                CustomFlashcardCell cell = new CustomFlashcardCell();
-                cell.setOnMouseClicked(new EventHandler<>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        flashcardListView.getSelectionModel().select(cell.getItem());
-                    }
-                });
-                return cell;
-            }
+        flashcardListView.setCellFactory(flashcardPaneListView -> {
+            CustomFlashcardCell cell = new CustomFlashcardCell();
+            cell.setOnMouseClicked(mouseEvent -> flashcardListView.getSelectionModel().select(cell.getItem()));
+            return cell;
         });
-        loadNewStack(flashcardManager.getStackList().get(0));
+        if(!flashcardManager.getStackList().isEmpty()) loadNewStack(flashcardManager.getStackList().get(0));
     }
 
     private void selectListViewElement(Flashcard flashcard) {
@@ -264,7 +224,6 @@ public class EditorController {
         for (FlashcardStack stack : flashcardManager.getStackList()) {
             TreeItem<TreeViewElement> treeItem = new TreeItem<>(stack);
             for (Flashcard f : stack.getFlashcards()) {
-                FlashcardBridge bridge = new FlashcardBridge(f);
                 TreeItem<TreeViewElement> flashcardTreeItem = new TreeItem<>(f);
                 treeItem.getChildren().add(flashcardTreeItem);
             }
@@ -287,7 +246,7 @@ public class EditorController {
         var selectedTreeItem = stacksTreeView.getSelectionModel().getSelectedItem();
         var parent = selectedTreeItem.getParent();
         int index = parent.getChildren().indexOf(selectedTreeItem);
-        if ((index + indexShift < 0) || (index + indexShift > parent.getChildren().size())) return;
+        if ((index + indexShift < 0) || (index + indexShift > parent.getChildren().size()-1)) return;
 
         parent.getChildren().remove(index);
         parent.getChildren().add(index+indexShift, selectedTreeItem);
