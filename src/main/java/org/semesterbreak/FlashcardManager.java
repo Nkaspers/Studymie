@@ -26,11 +26,11 @@ public class FlashcardManager {
     }
 
     private List<FlashcardStack> generateTestFlashcards() {
-        int testStackCount = (int) (Math.random() * 6 +1);
+        int testStackCount = (int) (Math.random() * 7) + 4;
         List<FlashcardStack> list = new ArrayList<>();
         for(int i = 1; i<testStackCount; i++) {
             FlashcardStack stack = new FlashcardStack("Stapel " + (i+1));
-            int testFlashcardCount = (int) (Math.random() * 10);
+            int testFlashcardCount = (int) (Math.random() * 10 + 3);
             for(int j = 0; j<testFlashcardCount; j++) {
                 stack.getFlashcards().add(generateNewFlashcardWithRandomContent(stack));
             }
@@ -68,8 +68,8 @@ public class FlashcardManager {
         flashcard.getCurrentStack().getFlashcards().remove(flashcard);
     }
 
-    public void removeStack(FlashcardStack lastSelectedTreeViewItem) {
-        getStackList().remove(lastSelectedTreeViewItem);
+    public void removeStack(FlashcardStack stack) {
+        getStackList().remove(stack);
     }
 
     public void moveFlashcard(Flashcard flashcard, int shift) {

@@ -27,12 +27,11 @@ public class WebViewManager {
 
     public void addNumberedList(WebView webView) {
         webView.getEngine().executeScript("document.execCommand(\"insertOrderedList\");");
-
     }
 
     public String getQuestion(WebView webView){
         try{
-            return (String) webView.getEngine().executeScript("document.getElementById('question').textContent");
+            return (String) webView.getEngine().executeScript("document.getElementById('question').innerText");
         }catch (JSException e){
             return null;
         }

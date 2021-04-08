@@ -166,12 +166,17 @@ public class EditorController {
             FlashcardStack stack = (FlashcardStack) selectedTreeItem.getValue();
             flashcardManager.removeStack(stack);
             stacksTreeView.getRoot().getChildren().remove(selectedTreeItem);
-            if(stack.getFlashcards().isEmpty()) return;
-            int first = 0;
-            for(int i = 0; i < flashcardListView.getItems().size(); i++) {
-                if(flashcardListView.getItems().get(i).getFlashcard().equals(stack.getFlashcards().get(0))) first = i;
+            if(stack.getFlashcards().isEmpty()) {
+                stacksTreeView.getSelectionModel().clearSelection();
+                return;
             }
-            flashcardListView.getItems().remove(first, first+stack.getFlashcards().size());
+            flashcardListView.getItems().removeAll(flashcardListView.getItems());
+            if(!stacksTreeView.getRoot().getChildren().isEmpty()) {
+                var newSelectedStack = (FlashcardStack) stacksTreeView.getSelectionModel().getSelectedItem().getValue();
+                loadNewStack(newSelectedStack);
+            }else {
+                stacksTreeView.getSelectionModel().clearSelection();
+            }
         }
 
     }
@@ -278,31 +283,36 @@ public class EditorController {
 
     @FXML
     public void makeUnderlinedAction() {
-        var activeWebView = flashcardListView.getSelectionModel().getSelectedItem().getWebView();
-        if(activeWebView == null) return;
+        var selection = flashcardListView.getSelectionModel().getSelectedItem();
+        if(selection == null) return;
+        var activeWebView = selection.getWebView();
 
         webViewManager.makeUnderlined(activeWebView);
     }
 
     @FXML
     public void makeItalicAction() {
-        var activeWebView = flashcardListView.getSelectionModel().getSelectedItem().getWebView();
-        if(activeWebView == null) return;
+        var selection = flashcardListView.getSelectionModel().getSelectedItem();
+        if(selection == null) return;
+        var activeWebView = selection.getWebView();
 
         webViewManager.makeItalic(activeWebView);
     }
 
     @FXML
     public void makeBoldAction() {
-        var activeWebView = flashcardListView.getSelectionModel().getSelectedItem().getWebView();
-        if(activeWebView == null) return;
+        var selection = flashcardListView.getSelectionModel().getSelectedItem();
+        if(selection == null) return;
+        var activeWebView = selection.getWebView();
+
         webViewManager.makeBold(activeWebView);
     }
 
     @FXML
     public void leftAlignAction() {
-        var activeWebView = flashcardListView.getSelectionModel().getSelectedItem().getWebView();
-        if(activeWebView == null) return;
+        var selection = flashcardListView.getSelectionModel().getSelectedItem();
+        if(selection == null) return;
+        var activeWebView = selection.getWebView();
 
         blockAlignButton.setSelected(false);
         rightAlignButton.setSelected(false);
@@ -311,8 +321,9 @@ public class EditorController {
 
     @FXML
     public void blockAlignAction() {
-        var activeWebView = flashcardListView.getSelectionModel().getSelectedItem().getWebView();
-        if(activeWebView == null) return;
+        var selection = flashcardListView.getSelectionModel().getSelectedItem();
+        if(selection == null) return;
+        var activeWebView = selection.getWebView();
 
         leftAlignButton.setSelected(false);
         rightAlignButton.setSelected(false);
@@ -321,8 +332,9 @@ public class EditorController {
 
     @FXML
     public void rightAlignAction() {
-        var activeWebView = flashcardListView.getSelectionModel().getSelectedItem().getWebView();
-        if(activeWebView == null) return;
+        var selection = flashcardListView.getSelectionModel().getSelectedItem();
+        if(selection == null) return;
+        var activeWebView = selection.getWebView();
 
         leftAlignButton.setSelected(false);
         blockAlignButton.setSelected(false);
@@ -331,16 +343,18 @@ public class EditorController {
 
     @FXML
     public void addBulletListAction() {
-        var activeWebView = flashcardListView.getSelectionModel().getSelectedItem().getWebView();
-        if(activeWebView == null) return;
+        var selection = flashcardListView.getSelectionModel().getSelectedItem();
+        if(selection == null) return;
+        var activeWebView = selection.getWebView();
 
         webViewManager.addBulletList(activeWebView);
     }
 
     @FXML
     public void addNumberedListAction() {
-        var activeWebView = flashcardListView.getSelectionModel().getSelectedItem().getWebView();
-        if(activeWebView == null) return;
+        var selection = flashcardListView.getSelectionModel().getSelectedItem();
+        if(selection == null) return;
+        var activeWebView = selection.getWebView();
 
         webViewManager.addNumberedList(activeWebView);
     }
