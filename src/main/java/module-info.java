@@ -4,6 +4,7 @@ module org.semesterbreak {
     requires jdom2;
     requires java.desktop;
     requires javafx.web;
+    requires jdk.jsobject;
 
     opens org.semesterbreak to javafx.fxml;
     exports org.semesterbreak;

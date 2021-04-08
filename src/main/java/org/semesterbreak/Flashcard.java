@@ -46,7 +46,7 @@ public class Flashcard implements TreeViewElement{
         Flashcard flashcard = new Flashcard();
         flashcard.setQuestion(this.getQuestion());
         flashcard.setHTMLContent(this.getHTMLContent());
-        flashcard.setCurrentStack(flashcard.getCurrentStack());
+        flashcard.setCurrentStack(this.getCurrentStack());
         return flashcard;
     }
 }

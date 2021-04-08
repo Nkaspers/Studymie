@@ -106,15 +106,24 @@ public class EditorController {
     private void initializeListView() {
         flashcardListView.getSelectionModel().getSelectedItems().addListener((ListChangeListener<FlashcardBridge>) change -> {
             if(change.getList().isEmpty()) return;
-            selectTreeViewElement(change.getList().get(0).getFlashcard());
+            var selectedFlashcardBridge = change.getList().get(0);
+            selectTreeViewElement(selectedFlashcardBridge.getFlashcard());
+            refreshQuestion(selectedFlashcardBridge);
         });
 
         flashcardListView.setCellFactory(flashcardPaneListView -> {
             CustomFlashcardCell cell = new CustomFlashcardCell();
-            cell.setOnMouseClicked(mouseEvent -> flashcardListView.getSelectionModel().select(cell.getItem()));
+            cell.setOnMouseClicked(mouseEvent -> {
+                flashcardListView.getSelectionModel().select(cell.getItem());
+                refreshQuestion(cell.getItem());
+            });
             return cell;
         });
         if(!flashcardManager.getStackList().isEmpty()) loadNewStack(flashcardManager.getStackList().get(0));
+    }
+
+    private void refreshQuestion(FlashcardBridge selectedFlashcardBridge) {
+        selectedFlashcardBridge.getFlashcard().setQuestion(webViewManager.getQuestion(selectedFlashcardBridge.getWebView()));
     }
 
     private void selectListViewElement(Flashcard flashcard) {
@@ -235,7 +244,6 @@ public class EditorController {
 
         if(selectedTreeItem.getValue().isFlashcard()) {
             flashcardManager.moveFlashcard((Flashcard) selectedTreeItem.getValue(), indexShift);
-
             var listViewItem = flashcardListView.getItems().remove(index);
             flashcardListView.getItems().add(index+indexShift,listViewItem);
             selectListViewElement((Flashcard)selectedTreeItem.getValue());
@@ -288,8 +296,6 @@ public class EditorController {
     public void makeBoldAction() {
         var activeWebView = flashcardListView.getSelectionModel().getSelectedItem().getWebView();
         if(activeWebView == null) return;
-
-
         webViewManager.makeBold(activeWebView);
     }
 
