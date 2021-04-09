@@ -11,7 +11,7 @@ import org.semesterbreak.TreeViewElement;
 
 public class BasicEditorActions {
 
-    public static void addFlashcard(FlashcardManager flashcardManager, TreeView<TreeViewElement> stacksTreeView, ListView<FlashcardBridge> flashcardListView) {
+    static void addFlashcard(FlashcardManager flashcardManager, TreeView<TreeViewElement> stacksTreeView, ListView<FlashcardBridge> flashcardListView) {
         var selection = stacksTreeView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
 
@@ -31,7 +31,7 @@ public class BasicEditorActions {
         stacksTreeView.getSelectionModel().select(treeItem);
     }
 
-    public static void addFlashcardStack(FlashcardManager flashcardManager, TreeView<TreeViewElement> stacksTreeView) {
+    static void addFlashcardStack(FlashcardManager flashcardManager, TreeView<TreeViewElement> stacksTreeView) {
         var stack = flashcardManager.addFlashcardStack();
         stacksTreeView.getRoot().getChildren().add(new TreeItem<>(stack));
     }
@@ -131,7 +131,7 @@ public class BasicEditorActions {
         }
     }
 
-    public static TreeItem<TreeViewElement> createTree(FlashcardManager flashcardManager) {
+    static TreeItem<TreeViewElement> createTree(FlashcardManager flashcardManager) {
         TreeItem<TreeViewElement> project1 = new TreeItem<>(null);
         for (FlashcardStack stack : flashcardManager.getStackList()) {
             TreeItem<TreeViewElement> treeItem = new TreeItem<>(stack);
