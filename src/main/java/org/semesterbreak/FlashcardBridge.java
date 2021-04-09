@@ -21,6 +21,7 @@ public class FlashcardBridge {
     }
 
     public WebView getWebView(){
+        if(webView == null) return null;
         return webView.get();
     }
 }

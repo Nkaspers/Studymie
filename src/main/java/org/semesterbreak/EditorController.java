@@ -108,11 +108,11 @@ public class EditorController {
     }
 
     private void initializeListView() {
+        flashcardListView.setPlaceholder(new Label("Willkommen zum Karteikarten Editor."));
         flashcardListView.getSelectionModel().getSelectedItems().addListener((ListChangeListener<FlashcardBridge>) change -> {
             if (change.getList().isEmpty()) return;
             var selectedFlashcardBridge = change.getList().get(0);
             selectTreeViewElement(selectedFlashcardBridge.getFlashcard());
-            refreshQuestion(selectedFlashcardBridge);
         });
 
         flashcardListView.setCellFactory(flashcardPaneListView -> {
@@ -128,7 +128,10 @@ public class EditorController {
     }
 
     private void refreshQuestion(FlashcardBridge selectedFlashcardBridge) {
-        selectedFlashcardBridge.getFlashcard().setQuestion(webViewManager.getQuestion(selectedFlashcardBridge.getWebView()));
+        var webView = selectedFlashcardBridge.getWebView();
+        if(webView == null) return;
+        selectedFlashcardBridge.getFlashcard().setQuestion(webViewManager.getQuestion(webView));
+        stacksTreeView.refresh();
     }
 
     private void selectListViewElement(Flashcard flashcard) {
@@ -181,6 +184,7 @@ public class EditorController {
                 loadNewStack(newSelectedStack);
             } else {
                 stacksTreeView.getSelectionModel().clearSelection();
+                activeFlashcardLabel.setText("-");
             }
         }
 
@@ -260,6 +264,8 @@ public class EditorController {
 
     public void moveTreeElementAction(int indexShift) {
         var selectedTreeItem = stacksTreeView.getSelectionModel().getSelectedItem();
+        if(selectedTreeItem == null) return;
+
         var parent = selectedTreeItem.getParent();
         int index = parent.getChildren().indexOf(selectedTreeItem);
         if ((index + indexShift < 0) || (index + indexShift > parent.getChildren().size() - 1)) return;
@@ -283,6 +289,8 @@ public class EditorController {
     @FXML
     public void duplicateElementAction() {
         var selection = stacksTreeView.getSelectionModel().getSelectedItem();
+        if(selection == null) return;
+
         var listViewSelection = flashcardListView.getSelectionModel().getSelectedItem();
 
         if (!selection.getValue().isFlashcard()) return;
@@ -306,6 +314,7 @@ public class EditorController {
         var selection = flashcardListView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
         var activeWebView = selection.getWebView();
+        if(activeWebView == null) return;
 
         webViewManager.makeUnderlined(activeWebView);
     }
@@ -315,6 +324,7 @@ public class EditorController {
         var selection = flashcardListView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
         var activeWebView = selection.getWebView();
+        if(activeWebView == null) return;
 
         webViewManager.makeItalic(activeWebView);
     }
@@ -324,6 +334,7 @@ public class EditorController {
         var selection = flashcardListView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
         var activeWebView = selection.getWebView();
+        if(activeWebView == null) return;
 
         webViewManager.makeBold(activeWebView);
     }
@@ -333,6 +344,8 @@ public class EditorController {
         var selection = flashcardListView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
         var activeWebView = selection.getWebView();
+        if(activeWebView == null) return;
+
         String color = fontColorPicker.getValue().toString().substring(2, 8);
         webViewManager.changeFontColor(activeWebView, color);
     }
@@ -341,6 +354,8 @@ public class EditorController {
         var selection = flashcardListView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
         var activeWebView = selection.getWebView();
+        if(activeWebView == null) return;
+
         webViewManager.changeFontSize(activeWebView, fontSizeCB.getValue());
     }
 
@@ -348,6 +363,8 @@ public class EditorController {
         var selection = flashcardListView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
         var activeWebView = selection.getWebView();
+        if(activeWebView == null) return;
+
         webViewManager.changeFontType(activeWebView, fontTypeCB.getValue());
     }
 
@@ -356,6 +373,7 @@ public class EditorController {
         var selection = flashcardListView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
         var activeWebView = selection.getWebView();
+        if(activeWebView == null) return;
 
         blockAlignButton.setSelected(false);
         rightAlignButton.setSelected(false);
@@ -367,6 +385,7 @@ public class EditorController {
         var selection = flashcardListView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
         var activeWebView = selection.getWebView();
+        if(activeWebView == null) return;
 
         leftAlignButton.setSelected(false);
         rightAlignButton.setSelected(false);
@@ -378,6 +397,7 @@ public class EditorController {
         var selection = flashcardListView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
         var activeWebView = selection.getWebView();
+        if(activeWebView == null) return;
 
         leftAlignButton.setSelected(false);
         blockAlignButton.setSelected(false);
@@ -389,6 +409,7 @@ public class EditorController {
         var selection = flashcardListView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
         var activeWebView = selection.getWebView();
+        if(activeWebView == null) return;
 
         webViewManager.addBulletList(activeWebView);
     }
@@ -398,6 +419,7 @@ public class EditorController {
         var selection = flashcardListView.getSelectionModel().getSelectedItem();
         if (selection == null) return;
         var activeWebView = selection.getWebView();
+        if(activeWebView == null) return;
 
         webViewManager.addNumberedList(activeWebView);
     }
