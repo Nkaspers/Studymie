@@ -129,7 +129,6 @@ public class BasicEditorActions {
         for (Flashcard f : stack.getFlashcards()) {
             flashcardListView.getItems().add(new FlashcardBridge(f));
         }
-        EditorController.activeStack = stack;
     }
 
     public static TreeItem<TreeViewElement> createTree(FlashcardManager flashcardManager) {

@@ -16,7 +16,6 @@ import java.io.IOException;
 
 public class EditorController {
 
-
     public Button addStackButton;
     public Button playButton;
     public Button addFlashcardButton;
@@ -27,25 +26,24 @@ public class EditorController {
     public Button moveFlashcardUpButton;
     public Button moveFlashcardDownButton;
     public Button duplicateFlashcardButton;
-    public ChoiceBox<String> fontTypeCB;
-    public ColorPicker fontColorPicker;
-    public ChoiceBox<Integer> fontSizeCB;
+    public Button addBulletListButton;
+    public Button addNumberedListButton;
     public Label projectNameLabel;
     public Label activeFlashcardLabel;
     public ToggleButton leftAlignButton;
     public ToggleButton blockAlignButton;
     public ToggleButton rightAlignButton;
-    public Button addBulletListButton;
-    public Button addNumberedListButton;
-    public TreeView<TreeViewElement> stacksTreeView;
-
-    public FlashcardManager flashcardManager;
-
     public ToggleButton makeUnderlinedButton;
     public ToggleButton makeItalicButton;
     public ToggleButton makeBoldButton;
+    public ChoiceBox<String> fontTypeCB;
+    public ChoiceBox<Integer> fontSizeCB;
+    public ColorPicker fontColorPicker;
+    public TreeView<TreeViewElement> stacksTreeView;
     public ListView<FlashcardBridge> flashcardListView;
-    public static FlashcardStack activeStack;
+
+    private FlashcardStack activeStack;
+    private FlashcardManager flashcardManager;
     private WebViewManager webViewManager;
 
     @FXML
@@ -92,13 +90,19 @@ public class EditorController {
                 activeFlashcardLabel.setText(String.valueOf(((FlashcardStack) item.getValue()).getFlashcards().size()));
                 flashcardListView.getSelectionModel().select(null);
                 duplicateFlashcardButton.setDisable(true);
-                if (!item.getValue().equals(activeStack)) BasicEditorActions.loadNewStack(flashcardListView, (FlashcardStack) item.getValue());
+                if (!item.getValue().equals(activeStack)) {
+                    BasicEditorActions.loadNewStack(flashcardListView, (FlashcardStack) item.getValue());
+                    activeStack = (FlashcardStack) item.getValue();
+                }
             } else {
                 int index = item.getParent().getChildren().indexOf(item);
                 activeFlashcardLabel.setText(++index + "./" + item.getParent().getChildren().size());
                 duplicateFlashcardButton.setDisable(false);
-                if (!item.getParent().getValue().equals(activeStack))
-                    BasicEditorActions.loadNewStack(flashcardListView, (FlashcardStack) item.getParent().getValue());
+                if (!item.getParent().getValue().equals(activeStack)) {
+                    var stack = (FlashcardStack) item.getParent().getValue();
+                    BasicEditorActions.loadNewStack(flashcardListView, stack);
+                    activeStack = stack;
+                }
                 BasicEditorActions.selectListViewElement(flashcardListView, (Flashcard) item.getValue());
             }
         });
@@ -108,7 +112,7 @@ public class EditorController {
         stacksTreeView.setEditable(true);
     }
 
-    private static void initializeListView(EditorController editorController, FlashcardManager flashcardManager, TreeView<TreeViewElement> stacksTreeView, ListView<FlashcardBridge> flashcardListView) {
+    private void initializeListView(EditorController editorController, FlashcardManager flashcardManager, TreeView<TreeViewElement> stacksTreeView, ListView<FlashcardBridge> flashcardListView) {
         flashcardListView.setPlaceholder(new Label("Willkommen zum Karteikarten Editor."));
         flashcardListView.getSelectionModel().getSelectedItems().addListener((ListChangeListener<FlashcardBridge>) change -> {
             if (change.getList().isEmpty()) return;
@@ -125,7 +129,10 @@ public class EditorController {
             });
             return cell;
         });
-        if (!flashcardManager.getStackList().isEmpty()) BasicEditorActions.loadNewStack(flashcardListView, flashcardManager.getStackList().get(0));
+        if (!flashcardManager.getStackList().isEmpty()) {
+            BasicEditorActions.loadNewStack(flashcardListView, flashcardManager.getStackList().get(0));
+            activeStack = flashcardManager.getStackList().get(0);
+        }
     }
 
     private void refreshQuestion(FlashcardBridge selectedFlashcardBridge) {
