@@ -1,10 +1,11 @@
-package org.semesterbreak;
+package org.semesterbreak.scenes.editor;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.scene.control.ListCell;
 import javafx.scene.web.WebEngine;
+import org.semesterbreak.Flashcard;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
@@ -12,12 +13,12 @@ import org.w3c.dom.events.EventTarget;
 
 import java.lang.ref.WeakReference;
 
-public class CustomFlashcardCell extends ListCell<FlashcardBridge> {
+public class CustomListViewCell extends ListCell<FlashcardBridge> {
 
     private FlashcardContainer flashcardContainer;
     private WebEngine engine;
 
-    public CustomFlashcardCell() {
+    public CustomListViewCell() {
         flashcardContainer = new FlashcardContainer(null);
         engine = flashcardContainer.getWebView().getEngine();
 
@@ -33,7 +34,6 @@ public class CustomFlashcardCell extends ListCell<FlashcardBridge> {
                             flashcardContainer.getFlashcard().setHTMLContent((String) engine.executeScript("document.documentElement.outerHTML"));
                             String newQuestion = (String) engine.executeScript("document.getElementById('question').innerText");
                             flashcardContainer.getFlashcard().setQuestion(newQuestion);
-                            System.out.println(Math.random());
                         }
                     }, false);
                 }

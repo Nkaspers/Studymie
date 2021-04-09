@@ -6,6 +6,7 @@ module org.semesterbreak {
     requires javafx.web;
     requires jdk.jsobject;
 
-    opens org.semesterbreak to javafx.fxml;
+    opens org.semesterbreak.scenes.editor to javafx.fxml;
     exports org.semesterbreak;
+    exports org.semesterbreak.scenes.editor;
 }

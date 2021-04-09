@@ -1,14 +1,18 @@
-package org.semesterbreak;
+package org.semesterbreak.scenes.editor;
 
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.util.StringConverter;
 import org.jdom2.JDOMException;
+import org.semesterbreak.Flashcard;
+import org.semesterbreak.FlashcardStack;
+import org.semesterbreak.TreeViewElement;
+import org.semesterbreak.Utilities;
 
 import java.io.IOException;
 
-public class CustomCell extends TextFieldTreeCell<TreeViewElement> {
+public class CustomTreeViewCell extends TextFieldTreeCell<TreeViewElement> {
     private Group iconFlash;
     private Group iconFlashSelected;
     private Group iconFlashStack;
@@ -18,7 +22,7 @@ public class CustomCell extends TextFieldTreeCell<TreeViewElement> {
     private MenuItem duplicateElementMenuItem;
     private MenuItem addFlashcardElementMenuItem;
 
-    public CustomCell() {
+    public CustomTreeViewCell() {
         try {
             iconFlashSelected = Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard_selected.svg");
             iconFlash = Utilities.getIconGroup("src/main/resources/org/semesterbreak/icons/preview_flashcard.svg");

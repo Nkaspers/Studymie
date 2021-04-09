@@ -1,8 +1,9 @@
-package org.semesterbreak;
+package org.semesterbreak.scenes.editor;
 import javafx.css.PseudoClass;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
+import org.semesterbreak.Flashcard;
 
 public class FlashcardContainer {
 

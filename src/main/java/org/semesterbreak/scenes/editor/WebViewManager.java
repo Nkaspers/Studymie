@@ -1,4 +1,4 @@
-package org.semesterbreak;
+package org.semesterbreak.scenes.editor;
 
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;

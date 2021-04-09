@@ -1,6 +1,7 @@
-package org.semesterbreak;
+package org.semesterbreak.scenes.editor;
 
 import javafx.scene.web.WebView;
+import org.semesterbreak.Flashcard;
 
 import java.lang.ref.WeakReference;
 

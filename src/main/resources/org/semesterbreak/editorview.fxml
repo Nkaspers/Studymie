@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane minHeight="100.0" minWidth="-Infinity" style="-fx-background-color: #DBDBDB;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.EditorController">
+<BorderPane minHeight="100.0" minWidth="-Infinity" style="-fx-background-color: #DBDBDB;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.scenes.editor.EditorController">
    <left>
       <VBox prefWidth="300.0" styleClass="left-bar" stylesheets="@editorview.css" BorderPane.alignment="CENTER">
          <children>
