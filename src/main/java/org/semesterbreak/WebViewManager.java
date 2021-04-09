@@ -85,7 +85,7 @@ public class WebViewManager {
         return Color.rgb(Integer.parseInt(rgb[0]),Integer.parseInt(rgb[1]),Integer.parseInt(rgb[2]));
     }
 
-    public String getSelectionFontType(WebView webView) {
+    public String getSelectionFontType(WebView webView) throws JSException {
         return (String) webView.getEngine()
                 .executeScript("window.getComputedStyle(window.getSelection().anchorNode.parentElement, null).getPropertyValue('font-family');");
     }

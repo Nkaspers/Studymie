@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
+import netscape.javascript.JSException;
 import org.jdom2.JDOMException;
 
 import java.awt.*;
@@ -192,10 +193,12 @@ public class EditorController {
         if(webViewManager.noSelection(activeWebview)) return;
         int size = webViewManager.getSelectionFontSize(activeWebview);
         Color color = webViewManager.getSelectionFontColor(activeWebview);
-        String type = webViewManager.getSelectionFontType(activeWebview);
         fontSizeCB.setValue(size);
-        fontTypeCB.setValue(type);
         fontColorPicker.setValue(color);
+        try{
+            String type = webViewManager.getSelectionFontType(activeWebview);
+            fontTypeCB.setValue(type);
+        }catch(JSException ignored){}
     }
 
     @FXML
