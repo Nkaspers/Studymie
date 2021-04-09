@@ -1,8 +1,14 @@
 package org.semesterbreak.scenes.editor;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSException;
+import org.semesterbreak.Flashcard;
 
 import java.util.Arrays;
 
@@ -93,5 +99,29 @@ public class WebViewManager {
     public boolean noSelection(WebView webView){
         return (boolean) webView.getEngine()
                 .executeScript("window.getSelection().anchorNode == null");
+    }
+
+    public void setQuestion(FlashcardBridge selectedItem) {
+        WebEngine engine;
+        Flashcard flashcard = selectedItem.getFlashcard();
+
+        if(selectedItem.getWebView() != null) {
+            engine = selectedItem.getWebView().getEngine();
+        }else {
+            engine = new WebEngine();
+            engine.loadContent(selectedItem.getFlashcard().getHTMLContent());
+            engine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+                if(newValue == Worker.State.SUCCEEDED) {
+                    updateQuestion(engine, flashcard);
+                }
+            });
+            return;
+        }
+        updateQuestion(engine, flashcard);
+    }
+
+    private void updateQuestion(WebEngine engine, Flashcard flashcard) {
+        engine.executeScript("document.getElementById('question').innerText = '" + flashcard.getQuestion() + "';");
+        flashcard.setHTMLContent((String) engine.executeScript("document.documentElement.outerHTML"));
     }
 }

@@ -1,6 +1,7 @@
 package org.semesterbreak.scenes.editor;
 
 import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -78,7 +79,12 @@ public class EditorController {
             custom.getAddFlashcardElementMenuItem().setOnAction(actionEvent -> addFlashcardAction());
             custom.getDuplicateElementMenuItem().setOnAction(actionEvent -> duplicateElementAction());
             custom.getDeleteElementMenuItem().setOnAction(actionEvent -> deleteElementAction());
-
+            treeViewElementTreeView.setOnEditCommit(event -> {
+                TreeViewElement element = event.getTreeItem().getValue();
+                if(element.isFlashcard()) {
+                    webViewManager.setQuestion(flashcardListView.getSelectionModel().getSelectedItem());
+                }
+            });
             return custom;
         });
 
