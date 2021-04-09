@@ -1,14 +1,12 @@
 package org.semesterbreak;
 
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebView;
 import org.jdom2.JDOMException;
 
 import java.awt.*;
@@ -121,6 +119,7 @@ public class EditorController {
             cell.setOnMouseClicked(mouseEvent -> {
                 flashcardListView.getSelectionModel().select(cell.getItem());
                 refreshQuestion(cell.getItem());
+                updateFontProperties();
             });
             return cell;
         });
@@ -184,6 +183,19 @@ public class EditorController {
             }
         }
 
+    }
+
+    private void updateFontProperties(){
+        var selection = flashcardListView.getSelectionModel().getSelectedItem();
+        if (selection == null) return;
+        WebView activeWebview = selection.getWebView();
+        if(webViewManager.noSelection(activeWebview)) return;
+        int size = webViewManager.getSelectionFontSize(activeWebview);
+        Color color = webViewManager.getSelectionFontColor(activeWebview);
+        String type = webViewManager.getSelectionFontType(activeWebview);
+        fontSizeCB.setValue(size);
+        fontTypeCB.setValue(type);
+        fontColorPicker.setValue(color);
     }
 
     @FXML

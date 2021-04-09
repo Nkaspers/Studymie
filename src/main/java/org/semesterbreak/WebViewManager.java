@@ -1,7 +1,10 @@
 package org.semesterbreak;
 
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSException;
+
+import java.util.Arrays;
 
 
 public class WebViewManager {
@@ -59,4 +62,36 @@ public class WebViewManager {
         }
     }
 
+    public int getSelectionFontSize(WebView webView){
+        int size = Integer.parseInt(webView.getEngine()
+                .executeScript("window.getComputedStyle(window.getSelection().anchorNode.parentElement, null).getPropertyValue('font-size');")
+                .toString().replace("px", ""));
+        switch (size) {
+            case 10: return 1;
+            case 13: return 2;
+            case 16: return 3;
+            case 18: return 4;
+            case 24: return 5;
+            case 32: return 6;
+            case 48: return 7;
+            default: return 0;
+            }
+    }
+
+    public Color getSelectionFontColor(WebView webView) {
+        String colorString = (String) webView.getEngine()
+                .executeScript("window.getComputedStyle(window.getSelection().anchorNode.parentElement, null).getPropertyValue('color');");
+        String[] rgb = colorString.substring(4, colorString.length()-1).replace(" ", "").split(",");
+        return Color.rgb(Integer.parseInt(rgb[0]),Integer.parseInt(rgb[1]),Integer.parseInt(rgb[2]));
+    }
+
+    public String getSelectionFontType(WebView webView) {
+        return (String) webView.getEngine()
+                .executeScript("window.getComputedStyle(window.getSelection().anchorNode.parentElement, null).getPropertyValue('font-family');");
+    }
+
+    public boolean noSelection(WebView webView){
+        return (boolean) webView.getEngine()
+                .executeScript("window.getSelection().anchorNode == null");
+    }
 }
