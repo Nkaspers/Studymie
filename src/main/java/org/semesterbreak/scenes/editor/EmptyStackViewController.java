@@ -57,7 +57,9 @@ public class EmptyStackViewController {
 
     @FXML
     private Label spacerLabel;
+    @FXML
     private WebView questionWebView;
+    @FXML
     private Button answerButton;
 
 
