@@ -6,12 +6,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
@@ -58,16 +60,24 @@ public class EmptyStackViewController {
     private ListView<FlashcardStack> stacksListView;
 
     @FXML
+    private VBox playVBox;
+
+    @FXML
     private Label spacerLabel;
     @FXML
     private WebView questionWebView;
     private WebEngine engine = new WebEngine();
+    private final WebViewManager manager = new WebViewManager();
     @FXML
     private Button answerButton;
 
+    @FXML Button nextButton;
 
 
     private FlashcardManager flashcardManager = new FlashcardManager();
+    private FlashcardStack currentFlashCardStack;
+    private Flashcard currentFlashcard;
+    private int currentFlashcardIndex = -1;
 
     @FXML
     void projectBtn(ActionEvent event) {
@@ -88,14 +98,46 @@ public class EmptyStackViewController {
         }
         prepareSlide();
 
-        stacksListView.setItems(prepareListView());
-        Flashcard testCard = stacksListView.getItems().get(0).getFlashcards().get(0);
-        stacksListView.setCellFactory(stackListView -> new StackListCell());
-        stacksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        showQuestion(testCard);
+        initializeListView();
+
+        initiazeCurrent();
     }
 
+    private void initiazeCurrent(){
+        if(!stacksListView.getItems().isEmpty()){
+            currentFlashCardStack = stacksListView.getItems().get(0);
+            stacksListView.getSelectionModel().select(0);
+            if(!currentFlashCardStack.getFlashcards().isEmpty()){
+                currentFlashcardIndex = 0;
+                currentFlashcard = currentFlashCardStack.getFlashcards().get(currentFlashcardIndex);
+                showQuestion(currentFlashcard);
+            }
+        } else {
+            playVBox.setVisible(false);
+        }
 
+        nextButton.setVisible(false);
+    }
+
+    private void initializeListView(){
+        stacksListView.setItems(prepareListView());
+        stacksListView.setCellFactory(stackListView -> new StackListCell());
+        stacksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+
+        stacksListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                //add case: empty Stack
+                currentFlashCardStack = stacksListView.getSelectionModel().getSelectedItem();
+                currentFlashcard = currentFlashCardStack.getFlashcards().get(0);
+                currentFlashcardIndex = 0;
+                playVBox.setVisible(true);
+                showQuestion(currentFlashcard);
+            }
+        });
+
+    }
 
     private void prepareSlide(){
 
@@ -129,7 +171,30 @@ public class EmptyStackViewController {
 
     private void showQuestion(Flashcard flashcard){
         engine = questionWebView.getEngine();
-        engine.loadContent(flashcard.getHTMLContent(), "text/html");
+        String content = flashcard.getHTMLContent();
+        content = content.replace("contenteditable=\"true\"", "contenteditable=\"false\"");
+        engine.loadContent(content, "text/html");
+        answerButton.setVisible(true);
+        nextButton.setVisible(false);
+    }
+
+    @FXML
+    private void showAnswer(){
+        String content = currentFlashcard.getHTMLContent();
+        content = content.replace("contenteditable=\"true\"", "contenteditable=\"false\"");
+        engine.loadContent(content, "text/html");
+        answerButton.setVisible(false);
+        nextButton.setVisible(true);
+    }
+
+    @FXML
+    private void showNext(){
+        if(++currentFlashcardIndex < currentFlashCardStack.getFlashcards().size()){
+            currentFlashcard = currentFlashCardStack.getFlashcards().get(currentFlashcardIndex);
+            showQuestion(currentFlashcard);
+        }else {
+            playVBox.setVisible(false);
+        }
     }
 }
 

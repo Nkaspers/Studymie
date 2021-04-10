@@ -51,3 +51,11 @@
 .expand-button:hover {
     -fx-background-color: #151d11;
 }
+
+.answer-button, .next-button{
+    -fx-background-color: #46BCFF;
+}
+
+.answer-button:hover, .next-button:hover{
+    -fx-background-color: #0da6ff;
+}
