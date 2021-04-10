@@ -14,10 +14,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Duration;
 import org.jdom2.JDOMException;
 import javafx.animation.TranslateTransition;
+import org.semesterbreak.Flashcard;
 import org.semesterbreak.FlashcardManager;
 import org.semesterbreak.FlashcardStack;
 import org.semesterbreak.Utilities;
@@ -59,6 +61,7 @@ public class EmptyStackViewController {
     private Label spacerLabel;
     @FXML
     private WebView questionWebView;
+    private WebEngine engine = new WebEngine();
     @FXML
     private Button answerButton;
 
@@ -86,8 +89,10 @@ public class EmptyStackViewController {
         prepareSlide();
 
         stacksListView.setItems(prepareListView());
+        Flashcard testCard = stacksListView.getItems().get(0).getFlashcards().get(0);
         stacksListView.setCellFactory(stackListView -> new StackListCell());
         stacksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        showQuestion(testCard);
     }
 
 
@@ -120,6 +125,11 @@ public class EmptyStackViewController {
         data.addAll(flashcardManager.getStackList());
 
         return data;
+    }
+
+    private void showQuestion(Flashcard flashcard){
+        engine = questionWebView.getEngine();
+        engine.loadContent(flashcard.getHTMLContent(), "text/html");
     }
 }
 
