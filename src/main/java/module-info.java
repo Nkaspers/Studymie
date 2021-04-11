@@ -8,5 +8,6 @@ module org.semesterbreak {
 
     opens org.semesterbreak.scenes.editor to javafx.fxml;
     opens org.semesterbreak.scenes.playmode to javafx.fxml;
+    opens org.semesterbreak.scenes.welcome to javafx.fxml;
     exports org.semesterbreak;
 }

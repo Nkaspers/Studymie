@@ -3,12 +3,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER" fillHeight="false" stylesheets="@welcomeview.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER" fillHeight="false" stylesheets="@welcomeview.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.scenes.welcome.WelcomeController">
    <children>
       <Pane prefHeight="263.0" prefWidth="364.0" styleClass="welcome-pane">
         <Label layoutX="43.0" layoutY="22.0" prefHeight="42.0" prefWidth="279.0" styleClass="title" text="Willkommen zu Studymie!" textAlignment="CENTER" textFill="Grey" />
-         <Button fx:id="addStackButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="109.0" mnemonicParsing="false" prefHeight="108.0" prefWidth="153.0" styleClass="add-stack-button" text="Neues Projekt erstellen" textFill="WHITE" />
-         <Button fx:id="openProjectButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="189.0" layoutY="109.0" mnemonicParsing="false" prefHeight="108.0" prefWidth="153.0" styleClass="open-project-button" text="Projekt öffnen..." textFill="WHITE" />
+         <Button fx:id="addStackButton" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="109.0" mnemonicParsing="false" prefHeight="108.0" prefWidth="153.0" styleClass="add-stack-button" textFill="WHITE" />
+         <Button fx:id="openProjectButton" alignment="CENTER" contentDisplay="CENTER" layoutX="189.0" layoutY="109.0" mnemonicParsing="false" prefHeight="108.0" prefWidth="153.0" styleClass="open-project-button" textFill="WHITE" />
+         <Label alignment="CENTER" layoutX="189.0" layoutY="194.0" prefHeight="17.0" prefWidth="153.0" text="Projekt öffnen" textFill="WHITE" />
+         <Label alignment="CENTER" layoutX="22.0" layoutY="194.0" prefHeight="17.0" prefWidth="153.0" text="Neues Projekt erstellen" textFill="WHITE" />
       </Pane>
    </children>
 </HBox>
