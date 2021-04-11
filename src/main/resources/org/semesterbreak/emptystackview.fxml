@@ -13,7 +13,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.scenes.playmode.EmptyStackViewController">
    <children>
-      <BorderPane>
+      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <AnchorPane>
                <children>
@@ -25,21 +25,27 @@
                   <VBox fx:id="playVBox" alignment="TOP_CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label fx:id="spacerLabel" alignment="CENTER" minHeight="100.0" />
-                        <WebView fx:id="questionWebView" minHeight="-1.0" minWidth="-1.0" prefHeight="400.0" prefWidth="700.0" />
-                        <Label fx:id="spacerLabel1" alignment="CENTER" minHeight="74.0" prefHeight="74.0" prefWidth="0.0" />
+                        <VBox styleClass="webview-container">
+                           <children>
+                              <WebView fx:id="questionWebView" minHeight="-1.0" minWidth="-1.0" prefHeight="500.0" prefWidth="750.0" />
+                           </children>
+                        </VBox>
                         <AnchorPane>
                            <children>
-                              <Button fx:id="answerButton" alignment="CENTER" mnemonicParsing="false" onAction="#showAnswer" prefHeight="50.0" prefWidth="200.0" styleClass="answer-button" stylesheets="@emptystackview.css" text="Antwort">
+                              <Button fx:id="answerButton" alignment="CENTER" mnemonicParsing="false" onAction="#showAnswer" prefHeight="50.0" prefWidth="200.0" styleClass="answer-button" stylesheets="@emptystackview.css" text="Antwort" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="nextButton" alignment="CENTER" mnemonicParsing="false" onAction="#showNext" prefHeight="50.0" prefWidth="200.0" styleClass="next-button" stylesheets="@emptystackview.css" text="Nächste">
+                              <Button fx:id="nextButton" alignment="CENTER" mnemonicParsing="false" onAction="#showNext" prefHeight="50.0" prefWidth="200.0" styleClass="next-button" stylesheets="@emptystackview.css" text="Nächste" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </Button>
                            </children>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
                         </AnchorPane>
                      </children>
                   </VBox>
@@ -47,13 +53,13 @@
             </AnchorPane>
          </center>
       </BorderPane>
-      <AnchorPane fx:id="navList" layoutX="-300.0" minHeight="700.0" prefWidth="300.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="navList" layoutX="-300.0" minHeight="700.0" prefWidth="300.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox style="-fx-background-color: transparent;">
+            <HBox style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <VBox fx:id="MenuVBox" minHeight="700.0" prefWidth="300.0" style="-fx-background-color: transparent;" styleClass="left-bar" stylesheets="@editorview.css">
+                  <VBox fx:id="MenuVBox" prefWidth="300.0" styleClass="left-bar" stylesheets="@editorview.css">
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefHeight="50.0" prefWidth="200.0" styleClass="button-bar">
                            <children>
                               <Button fx:id="projectButton" mnemonicParsing="false" onAction="#projectBtn" prefWidth="100.0" styleClass="project-button" stylesheets="@editorview.css" text="Projekt" textFill="WHITE">
                                  <HBox.margin>
@@ -72,7 +78,6 @@
                               </Button>
                            </children>
                         </HBox>
-                        <Label minHeight="20.0" style="-fx-background-color: transparant;" />
                         <Label text="Stapel">
                            <font>
                               <Font size="15.0" />
@@ -80,8 +85,11 @@
                            <VBox.margin>
                               <Insets left="15.0" />
                            </VBox.margin>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
                         </Label>
-                        <ListView fx:id="stacksListView" prefWidth="300.0" stylesheets="@emptystackview.css" />
+                        <ListView fx:id="stacksListView" prefWidth="300.0" stylesheets="@emptystackview.css" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
                   <AnchorPane style="-fx-background-color: transparent;">

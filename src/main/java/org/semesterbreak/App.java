@@ -20,11 +20,11 @@ public class App extends Application {
         double height = Screen.getPrimary().getBounds().getHeight() * 0.8;
         double width = Screen.getPrimary().getBounds().getWidth() * 0.7;
         //for this to have effect, remove borderpane prefWidth,height attributes
-        scene = new Scene(loadFXML("editorview"), width, height);
-        scene.getStylesheets().add(getClass().getResource("editorview.css").toExternalForm());
+        //scene = new Scene(loadFXML("editorview"), width, height);
+        //scene.getStylesheets().add(getClass().getResource("editorview.css").toExternalForm());
 
-        //scene = new Scene(loadFXML("emptystackview"), width, height);
-        //scene.getStylesheets().add(getClass().getResource("emptystackview.css").toExternalForm());
+        scene = new Scene(loadFXML("emptystackview"), width, height);
+        scene.getStylesheets().add(getClass().getResource("emptystackview.css").toExternalForm());
 
         stage.setScene(scene);
         stage.setTitle("Microbiology.stdmi*");
