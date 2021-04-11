@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane stylesheets="@emptystackview.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.scenes.playmode.EmptyStackViewController">
+<AnchorPane stylesheets="@playmodeview.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.scenes.playmode.PlaymodeController">
    <children>
       <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -71,7 +71,7 @@
                                     <Insets top="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="editButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="edit-button" stylesheets="@emptystackview.css">
+                              <Button fx:id="editButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="edit-button" stylesheets="@playmodeview.css">
                                  <HBox.margin>
                                     <Insets top="10.0" />
                                  </HBox.margin>
@@ -89,12 +89,12 @@
                               <Insets top="30.0" />
                            </padding>
                         </Label>
-                        <ListView fx:id="stacksListView" prefWidth="300.0" stylesheets="@emptystackview.css" VBox.vgrow="ALWAYS" />
+                        <ListView fx:id="stacksListView" prefWidth="300.0" stylesheets="@playmodeview.css" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
                   <AnchorPane style="-fx-background-color: transparent;">
                      <children>
-                        <Button fx:id="expandButton" prefHeight="35.0" prefWidth="75.0" styleClass="expand-button" stylesheets="@emptystackview.css" AnchorPane.topAnchor="50.0" />
+                        <Button fx:id="expandButton" prefHeight="35.0" prefWidth="75.0" styleClass="expand-button" stylesheets="@playmodeview.css" AnchorPane.topAnchor="50.0" />
                      </children>
                   </AnchorPane>
                </children>

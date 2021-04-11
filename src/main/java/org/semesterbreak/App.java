@@ -14,26 +14,23 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    private static Scene scene;
+    private Scene editorScene;
+    private Scene welcomeScene;
+    private Scene playScene;
 
     @Override
     public void start(Stage stage) throws IOException {
         double height = Screen.getPrimary().getBounds().getHeight() * 0.8;
         double width = Screen.getPrimary().getBounds().getWidth() * 0.7;
         //for this to have effect, remove borderpane prefWidth,height attributes
-        //scene = new Scene(loadFXML("editorview"), width, height);
 
-        scene = new Scene(loadFXML("welcomeview"), width, height);
+        welcomeScene = new Scene(loadFXML("welcomeview"), width, height);
+        editorScene = new Scene(loadFXML("editorview"), width, height);
+        playScene = new Scene(loadFXML("playmodeview"), width, height);
 
-        //scene = new Scene(loadFXML("emptystackview"), width, height);
-
-        stage.setScene(scene);
-        stage.setTitle("Microbiology.stdmi*");
+        stage.setScene(welcomeScene);
+        stage.setTitle("Untitled.stdmi");
         stage.show();
-    }
-
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
     }
 
     private static Parent loadFXML(String fxml) throws IOException {

@@ -28,7 +28,7 @@ import org.semesterbreak.scenes.editor.WebViewManager;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class EmptyStackViewController {
+public class PlaymodeController {
 
     @FXML
     private Button expandButton;
