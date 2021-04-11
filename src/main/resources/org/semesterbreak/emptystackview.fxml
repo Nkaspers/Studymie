@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.scenes.playmode.EmptyStackViewController">
+<AnchorPane stylesheets="@emptystackview.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.scenes.playmode.EmptyStackViewController">
    <children>
       <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -32,12 +32,12 @@
                         </VBox>
                         <AnchorPane>
                            <children>
-                              <Button fx:id="answerButton" alignment="CENTER" mnemonicParsing="false" onAction="#showAnswer" prefHeight="50.0" prefWidth="200.0" styleClass="answer-button" stylesheets="@emptystackview.css" text="Antwort" textFill="WHITE">
+                              <Button fx:id="answerButton" alignment="CENTER" mnemonicParsing="false" onAction="#showAnswer" prefHeight="50.0" prefWidth="200.0" styleClass="answer-button" text="Antwort" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="nextButton" alignment="CENTER" mnemonicParsing="false" onAction="#showNext" prefHeight="50.0" prefWidth="200.0" styleClass="next-button" stylesheets="@emptystackview.css" text="Nächste" textFill="WHITE">
+                              <Button fx:id="nextButton" alignment="CENTER" mnemonicParsing="false" onAction="#showNext" prefHeight="50.0" prefWidth="200.0" styleClass="next-button" text="Nächste" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -57,16 +57,16 @@
          <children>
             <HBox style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <VBox fx:id="MenuVBox" prefWidth="300.0" styleClass="left-bar" stylesheets="@editorview.css">
+                  <VBox fx:id="MenuVBox" prefWidth="300.0" styleClass="left-bar">
                      <children>
                         <HBox prefHeight="50.0" prefWidth="200.0" styleClass="button-bar">
                            <children>
-                              <Button fx:id="projectButton" mnemonicParsing="false" onAction="#projectBtn" prefWidth="100.0" styleClass="project-button" stylesheets="@editorview.css" text="Projekt" textFill="WHITE">
+                              <Button fx:id="projectButton" mnemonicParsing="false" onAction="#projectBtn" prefWidth="100.0" styleClass="project-button" text="Projekt" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets left="10.0" right="40.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="exportButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="export-button" stylesheets="@editorview.css">
+                              <Button fx:id="exportButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="export-button">
                                  <HBox.margin>
                                     <Insets top="10.0" />
                                  </HBox.margin>

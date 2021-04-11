@@ -5,19 +5,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane minHeight="100.0" minWidth="-Infinity" style="-fx-background-color: #DBDBDB;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.scenes.editor.EditorController">
+<BorderPane stylesheets="@editorview.css" minHeight="100.0"  minWidth="-Infinity" style="-fx-background-color: #DBDBDB;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.scenes.editor.EditorController">
    <left>
-      <VBox prefWidth="300.0" styleClass="left-bar" stylesheets="@editorview.css" BorderPane.alignment="CENTER">
+      <VBox prefWidth="300.0" styleClass="left-bar" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER_LEFT" maxWidth="Infinity" minHeight="-Infinity" prefHeight="50.0">
                <children>
-                  <Button fx:id="projectButton" mnemonicParsing="false" onAction="#projectBtn" prefWidth="100.0" styleClass="project-button" stylesheets="@editorview.css" text="Projekt" textFill="WHITE">
+                  <Button fx:id="projectButton" mnemonicParsing="false" onAction="#projectBtn" prefWidth="100.0" styleClass="project-button" text="Projekt" textFill="WHITE">
                      <HBox.margin>
                         <Insets right="40.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="undoButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="undo-button" stylesheets="@editorview.css" />
-                  <Button fx:id="redoButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="redo-button" stylesheets="@editorview.css" />
-                  <Button fx:id="exportButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="export-button" stylesheets="@editorview.css">
+                  <Button fx:id="undoButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="undo-button"  />
+                  <Button fx:id="redoButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="redo-button"  />
+                  <Button fx:id="exportButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="export-button" >
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
@@ -72,15 +72,15 @@
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="176.0" spacing="10" GridPane.columnSpan="3" GridPane.rowIndex="2">
                      <children>
                         <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
-                           <ToggleButton fx:id="makeBoldButton" maxWidth="Infinity" onAction="#makeBoldAction" prefHeight="31.0" prefWidth="43.0" styleClass="bold-button" stylesheets="@editorview.css" text="B" HBox.hgrow="ALWAYS">
+                           <ToggleButton fx:id="makeBoldButton" maxWidth="Infinity" onAction="#makeBoldAction" prefHeight="31.0" prefWidth="43.0" styleClass="bold-button"  text="B" HBox.hgrow="ALWAYS">
                               <font>
                                  <Font name="System Bold" size="13.0" />
                               </font></ToggleButton>
-                           <ToggleButton fx:id="makeUnderlinedButton" maxWidth="Infinity" onAction="#makeUnderlinedAction" prefHeight="31.0" prefWidth="43.0" styleClass="underlined-button" stylesheets="@editorview.css" text="U" underline="true" HBox.hgrow="ALWAYS">
+                           <ToggleButton fx:id="makeUnderlinedButton" maxWidth="Infinity" onAction="#makeUnderlinedAction" prefHeight="31.0" prefWidth="43.0" styleClass="underlined-button"  text="U" underline="true" HBox.hgrow="ALWAYS">
                               <font>
                                  <Font name="System Bold" size="13.0" />
                               </font></ToggleButton>
-                           <ToggleButton fx:id="makeItalicButton" maxWidth="Infinity" onAction="#makeItalicAction" prefHeight="31.0" prefWidth="43.0" styleClass="italic-button" stylesheets="@editorview.css" text="I" HBox.hgrow="ALWAYS">
+                           <ToggleButton fx:id="makeItalicButton" maxWidth="Infinity" onAction="#makeItalicAction" prefHeight="31.0" prefWidth="43.0" styleClass="italic-button"  text="I" HBox.hgrow="ALWAYS">
                               <font>
                                  <Font name="Times New Roman Bold Italic" size="14.0" />
                               </font></ToggleButton>
