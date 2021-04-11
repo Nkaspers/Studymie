@@ -22,19 +22,16 @@
     -fx-background-color: #24637d;
 }
 
-.add-stack-button {
+.add-stack-button, .open-project-button {
     -fx-background-color: #46BCFF;
 }
 
-.open-project-button {
-    -fx-background-color: #46BCFF;
-}
 
-.add-stack-button:hover {
+.add-stack-button:hover, .open-project-button:hover{
     -fx-background-color: #e3e3e3;
 }
 
-.add-stack-button:pressed {
+.add-stack-button:pressed, .open-project-button:pressed {
     -fx-background-color: #b5b5b5;
 
 }
