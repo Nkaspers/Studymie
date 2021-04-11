@@ -5,12 +5,32 @@
 
 <HBox alignment="CENTER" fillHeight="false" stylesheets="@welcomeview.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.scenes.welcome.WelcomeController">
    <children>
-      <Pane prefHeight="263.0" prefWidth="364.0" styleClass="welcome-pane">
-        <Label layoutX="43.0" layoutY="22.0" prefHeight="42.0" prefWidth="279.0" styleClass="title" text="Willkommen zu Studymie!" textAlignment="CENTER" textFill="Grey" />
-         <Button fx:id="addStackButton" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="109.0" mnemonicParsing="false" prefHeight="108.0" prefWidth="153.0" styleClass="add-stack-button" textFill="WHITE" />
-         <Button fx:id="openProjectButton" alignment="CENTER" contentDisplay="CENTER" layoutX="189.0" layoutY="109.0" mnemonicParsing="false" prefHeight="108.0" prefWidth="153.0" styleClass="open-project-button" textFill="WHITE" />
-         <Label alignment="CENTER" layoutX="189.0" layoutY="194.0" prefHeight="17.0" prefWidth="153.0" text="Projekt öffnen" textFill="WHITE" />
-         <Label alignment="CENTER" layoutX="22.0" layoutY="194.0" prefHeight="17.0" prefWidth="153.0" text="Neues Projekt erstellen" textFill="WHITE" />
+      <Pane prefHeight="300.0" prefWidth="500.0" styleClass="welcome-pane">
+        <Label layoutX="111.0" layoutY="38.0" prefHeight="42.0" prefWidth="279.0" styleClass="title" text="Willkommen zu Studymie!" textAlignment="CENTER" textFill="Grey" />
+         <HBox alignment="CENTER" fillHeight="false" layoutY="110.0" prefWidth="500.0" spacing="25.0">
+            <children>
+               <Button fx:id="addStackButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="110.0" prefWidth="155.0" styleClass="add-stack-button" textFill="WHITE">
+                  <graphic>
+                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                        <children>
+                           <Label fx:id="graphic" alignment="CENTER" prefWidth="153.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           <Label alignment="CENTER" prefHeight="17.0" prefWidth="153.0" text="Neues Projekt erstellen" textFill="WHITE" AnchorPane.bottomAnchor="0.0" />
+                        </children>
+                     </AnchorPane>
+                  </graphic>
+               </Button>
+               <Button fx:id="openProjectButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="110.0" prefWidth="155.0" styleClass="add-stack-button" textFill="WHITE">
+                  <graphic>
+                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                        <children>
+                           <Label fx:id="graphic1" alignment="CENTER" prefWidth="153.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           <Label alignment="CENTER" prefHeight="17.0" prefWidth="153.0" text="Projekt öffnen" textFill="WHITE" AnchorPane.bottomAnchor="0.0" />
+                        </children>
+                     </AnchorPane>
+                  </graphic>
+               </Button>
+            </children>
+         </HBox>
       </Pane>
    </children>
 </HBox>
