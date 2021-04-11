@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -22,6 +23,9 @@ public class App extends Application {
         //for this to have effect, remove borderpane prefWidth,height attributes
         //scene = new Scene(loadFXML("editorview"), width, height);
         //scene.getStylesheets().add(getClass().getResource("editorview.css").toExternalForm());
+
+        //scene = new Scene(loadFXML("welcomeview"), width, height);
+        //scene.getStylesheets().add(getClass().getResource("welcomeview.css").toExternalForm());
 
         scene = new Scene(loadFXML("emptystackview"), width, height);
         scene.getStylesheets().add(getClass().getResource("emptystackview.css").toExternalForm());
