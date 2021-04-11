@@ -60,6 +60,18 @@
     -fx-background-color: transparent;
 }
 
+.project-button {
+    -fx-background-color: #46BCFF;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-border-color: #BBE6FF;
+    -fx-border-width: 1px;
+}
+
+.project-button:pressed {
+    -fx-background-color: #24637d;
+}
+
 .scroll-bar > .increment-button > .increment-arrow,
 .scroll-bar > .decrement-button > .decrement-arrow{
     -fx-background-color: transparent;
@@ -72,11 +84,11 @@
     -fx-background-radius: 10px;
 }
 
-.edit-button {
+.edit-button, .export-button {
     -fx-background-color: transparent;
 }
 
-.edit-button:hover {
+.edit-button:hover, .export-button:hover{
     -fx-background-color: #e3e3e3;
 }
 

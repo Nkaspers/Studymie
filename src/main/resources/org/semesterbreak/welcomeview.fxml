@@ -9,7 +9,7 @@
         <Label layoutX="111.0" layoutY="38.0" prefHeight="42.0" prefWidth="279.0" styleClass="title" text="Willkommen zu Studymie!" textAlignment="CENTER" textFill="Grey" />
          <HBox alignment="CENTER" fillHeight="false" layoutY="110.0" prefWidth="500.0" spacing="25.0">
             <children>
-               <Button fx:id="addStackButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="110.0" prefWidth="155.0" styleClass="add-stack-button" textFill="WHITE">
+               <Button fx:id="newProjectButton" alignment="CENTER" contentDisplay="CENTER" onAction="#newProjectAction" mnemonicParsing="false" prefHeight="110.0" prefWidth="155.0" styleClass="new-project-button" textFill="WHITE">
                   <graphic>
                      <AnchorPane prefHeight="200.0" prefWidth="200.0">
                         <children>
@@ -19,7 +19,7 @@
                      </AnchorPane>
                   </graphic>
                </Button>
-               <Button fx:id="openProjectButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="110.0" prefWidth="155.0" styleClass="add-stack-button" textFill="WHITE">
+               <Button fx:id="openProjectButton" alignment="CENTER" contentDisplay="CENTER" onAction="#openProjectAction" mnemonicParsing="false" prefHeight="110.0" prefWidth="155.0" styleClass="open-project-button" textFill="WHITE">
                   <graphic>
                      <AnchorPane prefHeight="200.0" prefWidth="200.0">
                         <children>

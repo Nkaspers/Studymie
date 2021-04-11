@@ -10,28 +10,15 @@
     src: url("Roboto-Light.ttf");
 }
 
-.project-button {
-    -fx-background-color: #46BCFF;
-    -fx-border-radius: 3px;
-    -fx-background-radius: 3px;
-    -fx-border-color: #BBE6FF;
-    -fx-border-width: 1px;
-}
-
-.project-button:pressed, .open-project-button:pressed, .add-stack-button:pressed {
-    -fx-background-color: #24637d;
-}
-
-.add-stack-button, .open-project-button {
+.new-project-button, .open-project-button {
     -fx-background-color: #46BCFF;
 }
 
-
-.add-stack-button:hover, .open-project-button:hover{
+.new-project-button:hover, .open-project-button:hover{
     -fx-background-color: #e3e3e3;
 }
 
-.add-stack-button:pressed, .open-project-button:pressed {
+.new-project-button:pressed, .open-project-button:pressed {
     -fx-background-color: #b5b5b5;
 
 }

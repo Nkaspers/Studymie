@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,13 +17,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.jdom2.JDOMException;
 import javafx.animation.TranslateTransition;
-import org.semesterbreak.Flashcard;
-import org.semesterbreak.FlashcardManager;
-import org.semesterbreak.FlashcardStack;
-import org.semesterbreak.Utilities;
+import org.semesterbreak.*;
+import org.semesterbreak.scenes.editor.EditorController;
 import org.semesterbreak.scenes.editor.WebViewManager;
 
 import java.io.IOException;
@@ -91,12 +91,9 @@ public class PlaymodeController {
         catch (JDOMException | IOException e) {
             e.printStackTrace();
         }
-        prepareSlide();
 
-        initializeListView();
-
-        initiazeCurrent();
     }
+
 
     private void initiazeCurrent(){
         if(!stacksListView.getItems().isEmpty()){
@@ -112,6 +109,24 @@ public class PlaymodeController {
         }
 
         nextButton.setVisible(false);
+    }
+
+    public void editAction(){
+        Stage mainStage = (Stage) projectButton.getScene().getWindow();
+        try {
+            FXMLLoader loader = App.fxmlLoader("editorview");
+            mainStage.getScene().setRoot(loader.load());
+            ((EditorController)loader.getController()).initializeData(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void initializeData(FlashcardManager flashcardManager) {
+        this.flashcardManager = flashcardManager;
+
+        prepareSlide();
+        initializeListView();
+        initiazeCurrent();
     }
 
     private void initializeListView(){

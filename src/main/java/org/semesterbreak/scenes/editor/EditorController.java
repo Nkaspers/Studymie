@@ -3,14 +3,17 @@ package org.semesterbreak.scenes.editor;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import netscape.javascript.JSException;
 import org.jdom2.JDOMException;
 import org.semesterbreak.*;
+import org.semesterbreak.scenes.playmode.PlaymodeController;
 
 import java.awt.*;
 import java.io.IOException;
@@ -49,8 +52,6 @@ public class EditorController {
 
     @FXML
     public void initialize() {
-        flashcardManager = new FlashcardManager();
-        webViewManager = new WebViewManager();
 
         initializeButtonGraphics();
 
@@ -63,6 +64,16 @@ public class EditorController {
         fontTypeCB.getItems().addAll(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
         fontTypeCB.setValue("Arial");
         fontTypeCB.setOnAction(actionEvent -> fontTypeAction());
+
+    }
+
+    public void initializeData(String path) {
+        if(path == null) {
+            flashcardManager = new FlashcardManager();
+        }else {
+            flashcardManager = new FlashcardManager(path);
+        }
+        webViewManager = new WebViewManager();
 
         initializeListView(this, flashcardManager, stacksTreeView, flashcardListView);
         initializeStacksTreeView();
@@ -138,6 +149,17 @@ public class EditorController {
         if (!flashcardManager.getStackList().isEmpty()) {
             BasicEditorActions.loadNewStack(flashcardListView, flashcardManager.getStackList().get(0));
             activeStack = flashcardManager.getStackList().get(0);
+        }
+    }
+
+    public void playAction(){
+        Stage mainStage = (Stage) playButton.getScene().getWindow();
+        try {
+            FXMLLoader loader = App.fxmlLoader("playmodeview");
+            mainStage.getScene().setRoot(loader.load());
+            ((PlaymodeController)loader.getController()).initializeData(flashcardManager);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

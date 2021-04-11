@@ -24,18 +24,19 @@ public class App extends Application {
         double width = Screen.getPrimary().getBounds().getWidth() * 0.7;
         //for this to have effect, remove borderpane prefWidth,height attributes
 
-        welcomeScene = new Scene(loadFXML("welcomeview"), width, height);
-        editorScene = new Scene(loadFXML("editorview"), width, height);
-        playScene = new Scene(loadFXML("playmodeview"), width, height);
+        welcomeScene = new Scene(fxmlLoader("welcomeview").load(), width, height);
+
+
+        /*editorScene = new Scene(loadFXML("editorview"), width, height);
+        playScene = new Scene(loadFXML("playmodeview"), width, height);*/
 
         stage.setScene(welcomeScene);
         stage.setTitle("Untitled.stdmi");
         stage.show();
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+    public static FXMLLoader fxmlLoader(String fxml) throws IOException {
+        return new FXMLLoader(App.class.getResource(fxml + ".fxml"));
     }
 
     public static void main(String[] args) {

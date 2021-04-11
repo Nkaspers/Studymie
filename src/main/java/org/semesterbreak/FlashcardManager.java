@@ -12,6 +12,7 @@ import java.util.List;
 public class FlashcardManager {
     private final List<FlashcardStack> stackList;
     private String defaultFlashcardHTML;
+    private String filePath;
 
     public FlashcardManager() {
         stackList = new ArrayList<>();
@@ -22,7 +23,13 @@ public class FlashcardManager {
             e.printStackTrace();
         }
 
-        stackList.addAll(generateTestFlashcards());
+        //stackList.addAll(generateTestFlashcards());
+    }
+
+    public FlashcardManager(String filePath) {
+        this();
+        this.filePath = filePath;
+        //stackliste mit inhalt des json files füllen
     }
 
     private List<FlashcardStack> generateTestFlashcards() {
