@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.semesterbreak.scenes.editor.EmptyStackViewController">
+   <children>
+      <BorderPane>
+         <center>
+            <AnchorPane>
+               <children>
+                  <Label fx:id="textLabel" alignment="CENTER" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: DBDBDB;" text="Du hast alle für heute zu lernenden Karteikarten des Stapels “Cell Structure” abgearbeitet." textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <VBox fx:id="playVBox" alignment="TOP_CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="spacerLabel" alignment="CENTER" minHeight="100.0" />
+                        <WebView fx:id="questionWebView" minHeight="-1.0" minWidth="-1.0" prefHeight="400.0" prefWidth="700.0" />
+                        <Label fx:id="spacerLabel1" alignment="CENTER" minHeight="74.0" prefHeight="74.0" prefWidth="0.0" />
+                        <AnchorPane>
+                           <children>
+                              <Button fx:id="answerButton" alignment="CENTER" mnemonicParsing="false" onAction="#showAnswer" prefHeight="50.0" prefWidth="200.0" styleClass="answer-button" stylesheets="@emptystackview.css" text="Antwort">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="nextButton" alignment="CENTER" mnemonicParsing="false" onAction="#showNext" prefHeight="50.0" prefWidth="200.0" styleClass="next-button" stylesheets="@emptystackview.css" text="Nächste">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+      <AnchorPane fx:id="navList" layoutX="-300.0" minHeight="700.0" prefWidth="300.0" style="-fx-background-color: transparent;" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox style="-fx-background-color: transparent;">
+               <children>
+                  <VBox fx:id="MenuVBox" minHeight="700.0" prefWidth="300.0" style="-fx-background-color: transparent;" styleClass="left-bar" stylesheets="@editorview.css">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="projectButton" mnemonicParsing="false" onAction="#projectBtn" prefWidth="100.0" styleClass="project-button" stylesheets="@editorview.css" text="Projekt" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="40.0" top="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="exportButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="export-button" stylesheets="@editorview.css">
+                                 <HBox.margin>
+                                    <Insets top="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="editButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="edit-button" stylesheets="@emptystackview.css">
+                                 <HBox.margin>
+                                    <Insets top="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Label minHeight="20.0" style="-fx-background-color: transparant;" />
+                        <Label text="Stapel">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="15.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ListView fx:id="stacksListView" prefWidth="300.0" stylesheets="@emptystackview.css" />
+                     </children>
+                  </VBox>
+                  <AnchorPane style="-fx-background-color: transparent;">
+                     <children>
+                        <Button fx:id="expandButton" prefHeight="35.0" prefWidth="75.0" styleClass="expand-button" stylesheets="@emptystackview.css" AnchorPane.topAnchor="50.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
