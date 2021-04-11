@@ -161,12 +161,11 @@ public class EditorController {
         Color color = webViewManager.getSelectionFontColor(activeWebview);
         fontSizeCB.setValue(size);
         fontColorPicker.setValue(color);
-        try{
-            String type = webViewManager.getSelectionFontType(activeWebview);
-            //if(!fontTypeCB.getItems().contains(type)) return;
-            fontTypeCB.setValue(type);
-            System.out.println(type);
-        }catch(JSException ignored){}
+
+        //String type = webViewManager.getSelectionFontType(activeWebview);
+        //fontTypeCB.setValue(type);
+
+
     }
 
     @FXML

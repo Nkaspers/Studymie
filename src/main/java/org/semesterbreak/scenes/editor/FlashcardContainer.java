@@ -19,7 +19,7 @@ public class FlashcardContainer {
 
         container = new AnchorPane();
 
-        container.setMaxWidth(500);
+        container.setMaxWidth(600);
         container.setPrefHeight(400);
 
         container.getStyleClass().add("flashcard");

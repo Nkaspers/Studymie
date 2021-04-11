@@ -93,7 +93,7 @@ public class WebViewManager {
 
     public String getSelectionFontType(WebView webView) throws JSException {
         return (String) webView.getEngine()
-                .executeScript("window.getComputedStyle(window.getSelection().anchorNode.parentElement, null).getPropertyValue('font-family');");
+                .executeScript("window.getComputedStyle(window.getSelection().anchorNode.parentElement).getPropertyValue('font-family');");
     }
 
     public boolean noSelection(WebView webView){
