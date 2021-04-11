@@ -6,6 +6,9 @@
     left-bar background color: #F3F3F3;
     grey border color (also the color of the dividers): #B6B6B6;
  */
+@font-face {
+    src: url("Roboto-Light.ttf");
+}
 
 .project-button {
     -fx-background-color: #46BCFF;
@@ -34,6 +37,11 @@
 .add-stack-button:pressed {
     -fx-background-color: #b5b5b5;
 
+}
+
+.title {
+    -fx-font-family: "Roboto Light";
+    -fx-font-size: 24px;
 }
 
 
