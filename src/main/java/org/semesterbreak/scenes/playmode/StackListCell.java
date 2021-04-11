@@ -1,4 +1,4 @@
-package org.semesterbreak.scenes.editor;
+package org.semesterbreak.scenes.playmode;
 
 
 import javafx.fxml.FXML;

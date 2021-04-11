@@ -7,6 +7,6 @@ module org.semesterbreak {
     requires jdk.jsobject;
 
     opens org.semesterbreak.scenes.editor to javafx.fxml;
+    opens org.semesterbreak.scenes.playmode to javafx.fxml;
     exports org.semesterbreak;
-    exports org.semesterbreak.scenes.editor;
 }
