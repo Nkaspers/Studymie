@@ -17,7 +17,7 @@
                      </HBox.margin></Button>
                   <Button fx:id="undoButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="undo-button"  />
                   <Button fx:id="redoButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="redo-button"  />
-                  <Button fx:id="exportButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="export-button" >
+                  <Button fx:id="exportButton" maxWidth="Infinity" mnemonicParsing="false" styleClass="export-button" onAction="#saveProjectAction">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

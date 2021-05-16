@@ -1,27 +1,36 @@
 package org.semesterbreak;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlashcardManager {
-    private final List<FlashcardStack> stackList;
+    private Type stackListType;
+    private List<FlashcardStack> stackList;
     private String defaultFlashcardHTML;
     private String filePath;
+    private Gson gson;
 
     public FlashcardManager() {
-        stackList = new ArrayList<>();
-
         try {
             defaultFlashcardHTML = Files.readString(Paths.get(getClass().getResource("Flashcard.html").toURI()));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
+
+        gson = new GsonBuilder().setPrettyPrinting().create();
 
         //stackList.addAll(generateTestFlashcards());
     }
@@ -29,7 +38,24 @@ public class FlashcardManager {
     public FlashcardManager(String filePath) {
         this();
         this.filePath = filePath;
-        //stackliste mit inhalt des json files füllen
+        String content = "";
+        try {
+            content = Files.readString(Paths.get(filePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        stackListType = new TypeToken<ArrayList<FlashcardStack>>() {}.getType();
+        stackList = gson.fromJson(content, stackListType);
+        if(stackList == null) {
+            stackList = new ArrayList<>();
+        }else {
+            for(FlashcardStack stack : stackList) {
+                for(Flashcard flashcard : stack.getFlashcards()) {
+                    flashcard.setCurrentStack(stack);
+                }
+            }
+        }
     }
 
     private List<FlashcardStack> generateTestFlashcards() {
@@ -114,4 +140,10 @@ public class FlashcardManager {
             "nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.   \n" +
             "Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.   \n" +
             "At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur";
+
+    public void saveFlashcards() throws IOException {
+        String flashcards = gson.toJson(stackList, stackListType);
+        Files.write(Paths.get(filePath), flashcards.getBytes(StandardCharsets.UTF_8));
+    }
+
 }

@@ -1,6 +1,7 @@
 package org.semesterbreak.scenes.editor;
 
 import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -68,11 +69,8 @@ public class EditorController {
     }
 
     public void initializeData(String path) {
-        if(path == null) {
-            flashcardManager = new FlashcardManager();
-        }else {
-            flashcardManager = new FlashcardManager(path);
-        }
+        flashcardManager = new FlashcardManager(path);
+
         webViewManager = new WebViewManager();
 
         initializeListView(this, flashcardManager, stacksTreeView, flashcardListView);
@@ -193,6 +191,16 @@ public class EditorController {
     @FXML
     private void projectBtn() {
 
+    }
+
+    public void saveProjectAction(ActionEvent actionEvent) {
+        try {
+            flashcardManager.saveFlashcards();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("There was a problem saving your file");
+        }
     }
 
     @FXML
@@ -358,4 +366,6 @@ public class EditorController {
             e.printStackTrace();
         }
     }
+
+
 }

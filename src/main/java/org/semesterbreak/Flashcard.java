@@ -4,7 +4,7 @@ public class Flashcard implements TreeViewElement{
     private String question;
     private String htmlContent;
 
-    private FlashcardStack currentStack;
+    private transient FlashcardStack currentStack;
 
     public Flashcard() {}
 
